@@ -22,9 +22,6 @@ jobs:
             script:
                 - bin/CIConfigGen.php gc:WhatTime
 
-matrix:
-    fast_finish: true
-
 cache:
     directories:
         - $HOME/.composer/cache
