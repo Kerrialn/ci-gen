@@ -20,7 +20,7 @@ jobs:
             php: 7.2
             name: Run Command
             script:
-                - bin/CIConfigGen.php gc:WhatTime
+                - bin/CIConfigGen.php craft:generate
 
 cache:
     directories:
