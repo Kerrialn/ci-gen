@@ -1,6 +1,7 @@
 {
     "name": "kerrialn/ci-config-generator",
     "require": {
+        "php": "^7.2",
         "symfony/console": "^5.0"
     },
     "autoload": {
