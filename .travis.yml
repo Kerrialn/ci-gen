@@ -15,13 +15,6 @@ jobs:
             script:
                 - bin/CIConfigGen.php
 
-        -
-            stage: test
-            php: 7.2
-            name: Run Command
-            script:
-                - bin/CIConfigGen.php craft:generate
-
 cache:
     directories:
         - $HOME/.composer/cache
