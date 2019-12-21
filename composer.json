@@ -1,4 +1,5 @@
 {
+    "name": "kerrialn/ci-config-generator",
     "require": {
         "symfony/console": "^5.0"
     },
