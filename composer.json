@@ -7,9 +7,7 @@
         "symfony/finder": "^5.0",
         "symfony/yaml": "^5.0",
         "symfony/serializer": "^5.0",
-        "symfony/property-access": "^5.0",
-      "ext-http": "*",
-      "ext-yaml": "*"
+        "symfony/property-access": "^5.0"
     },
     "autoload": {
         "psr-4": {
