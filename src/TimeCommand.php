@@ -8,11 +8,11 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\NullOutput;
 use Symfony\Component\Console\Output\OutputInterface;
 
-class WhatTimeCommand extends Command {
+class TimeCommand extends Command {
 
     protected function configure()
     {
-        $this->setName('gc:WhatTime')->setDescription('Display current time')->setHelp('Print the current time to STDOUT');
+        $this->setName('craft:time')->setDescription('Display current time')->setHelp('Print the current time to STDOUT');
     }
 
     public function execute(InputInterface $input, OutputInterface $output): int
