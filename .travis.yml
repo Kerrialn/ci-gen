@@ -1,0 +1,28 @@
+language: php
+
+php:
+    - '7.2'
+    - '7.3'
+    - '7.4'
+
+install:
+    - composer install
+
+jobs:
+    include:
+        -
+            stage: test
+            name: Run bin
+            script:
+                - bin/CIConfigGen.php
+
+matrix:
+    fast_finish: true
+
+cache:
+    directories:
+        - $HOME/.composer/cache
+
+notifications:
+    email:
+        on_success: never
