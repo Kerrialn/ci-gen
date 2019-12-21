@@ -1,20 +1,26 @@
 language: php
 
-php:
-    - '7.2'
-    - '7.3'
-    - '7.4'
-
 install:
     - composer install
+
+# phpunit is run by default, skip it
+script: skip
 
 jobs:
     include:
         -
             stage: test
+            php: 7.2
             name: Run bin
             script:
                 - bin/CIConfigGen.php
+
+        -
+            stage: test
+            php: 7.2
+            name: Run Command
+            script:
+                - bin/CIConfigGen.php gc:WhatTime
 
 matrix:
     fast_finish: true

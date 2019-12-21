@@ -1,6 +1,8 @@
 {
     "name": "kerrialn/ci-config-generator",
+    "license": "MIT",
     "require": {
+        "php": "^7.2",
         "symfony/console": "^5.0"
     },
     "autoload": {
