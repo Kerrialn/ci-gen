@@ -16,6 +16,12 @@ jobs:
             script:
                 - bin/CIConfigGen.php
 
+        -
+            stage: test
+            name: Run Command
+            script:
+                - bin/CIConfigGen.php gc:WhatTime
+
 matrix:
     fast_finish: true
 
