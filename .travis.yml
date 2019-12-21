@@ -3,6 +3,9 @@ language: php
 install:
     - composer install
 
+# phpunit is run by default, skip it
+script: skip
+
 jobs:
     include:
         -
