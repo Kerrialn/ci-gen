@@ -3,9 +3,9 @@
 
 require_once  __DIR__ . '/../vendor/autoload.php';
 
-use CIConfigGen\WhatTimeCommand;
+use CIConfigGen\GenerateConfigCommand;
 use Symfony\Component\Console\Application;
 
 $application = new Application();
-$application->add(new WhatTimeCommand());
+$application->add(new GenerateConfigCommand());
 $application->run();
