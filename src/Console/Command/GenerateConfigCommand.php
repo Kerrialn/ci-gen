@@ -14,8 +14,8 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 use Symfony\Component\Yaml\Yaml;
 use Symplify\PackageBuilder\Console\ShellCode;
 
-final class GenerateConfigCommand extends Command
-{
+final class GenerateConfigCommand extends Command {
+
     /**
      * @var WorkerInterface[]
      */
@@ -42,16 +42,17 @@ final class GenerateConfigCommand extends Command
 
         $composerJsonContent = Json::decode(FileSystem::read($composerJsonFile), Json::FORCE_ARRAY);
 
-        $ciYaml = [];
-        foreach ($this->workers as $worker) {
-            if (! $worker->isMatch($composerJsonContent)) {
-                continue;
-            }
+        $ciYaml = array();
+        foreach ($this->workers as $worker)
+        {
+            $worker->isMatch($composerJsonContent, "require", "php") ? $ciYaml["language"] = "php" : $ciYaml["language"] = "unknown";
+            $worker->isMatch($composerJsonContent, "require", "php") ? $ciYaml["install"] = "- composer install" : $ciYaml["install"] = "unknown";
+            $worker->isMatch($composerJsonContent, "require", "symfony") ? $ciYaml["framework"] = "symfony" : $ciYaml["framework"] = "unknown";
 
             $ciYaml = $worker->decorate($composerJsonContent, $ciYaml);
         }
 
-        $yaml = Yaml::dump($composerJsonContent, 2, 4, Yaml::DUMP_OBJECT_AS_MAP);
+        $yaml = Yaml::dump($ciYaml, 2, 4, Yaml::DUMP_OBJECT_AS_MAP);
         FileSystem::write('example.yaml', $yaml);
 
         // @see https://symfony.com/blog/new-in-symfony-2-8-console-style-guide

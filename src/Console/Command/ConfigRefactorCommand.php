@@ -14,7 +14,6 @@ final class ConfigRefactorCommand extends Command
     public function execute(InputInterface $input, OutputInterface $output): int
     {
         $output->writeln('refactoring & formatting yaml');
-
         return ShellCode::SUCCESS;
     }
 

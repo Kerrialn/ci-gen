@@ -8,9 +8,9 @@ use CIConfigGen\Contract\WorkerInterface;
 
 final class AddPhpVersionWorker implements WorkerInterface
 {
-    public function isMatch(array $composerJsonData): bool
+    public function isMatch(array $composerJsonData, string $level,  string $expected): bool
     {
-        return isset($composerJsonData['require']['php']);
+        return isset($composerJsonData[$level][$expected]);
     }
 
     public function decorate(array $composerJsonData, array $ciData): array
