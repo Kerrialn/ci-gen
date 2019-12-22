@@ -14,8 +14,8 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 use Symfony\Component\Yaml\Yaml;
 use Symplify\PackageBuilder\Console\ShellCode;
 
-final class GenerateConfigCommand extends Command {
-
+final class GenerateConfigCommand extends Command
+{
     /**
      * @var WorkerInterface[]
      */
@@ -42,31 +42,26 @@ final class GenerateConfigCommand extends Command {
 
         $composerJsonContent = Json::decode(FileSystem::read($composerJsonFile), Json::FORCE_ARRAY);
 
-        $ciYaml = array();
-        foreach ($this->workers as $worker)
-        {
-            if ($worker->isMatch($composerJsonContent, "require", "php"))
-            {
-                $ciYaml["language"] = "php";
-                $ciYaml["install"] = "- composer install";
-                $ciYaml["script"] = "skip";
+        $ciYaml = [];
+        foreach ($this->workers as $worker) {
+            if ($worker->isMatch($composerJsonContent, 'require', 'php')) {
+                $ciYaml['language'] = 'php';
+                $ciYaml['install'] = '- composer install';
+                $ciYaml['script'] = 'skip';
 
-                $ciYaml["jobs"]['include']['stage'] = "preparing";
-                $ciYaml["jobs"]['include']['name:'] = "prepare";
-                $ciYaml["jobs"]['include']['php'] = $composerJsonContent['require']['php'];
-                $ciYaml["jobs"]['include']['script'] = "- do something";
+                $ciYaml['jobs']['include']['stage'] = 'preparing';
+                $ciYaml['jobs']['include']['name:'] = 'prepare';
+                $ciYaml['jobs']['include']['php'] = $composerJsonContent['require']['php'];
+                $ciYaml['jobs']['include']['script'] = '- do something';
 
-                if ($worker->isMatch($composerJsonContent, "require-dev", "phpstan/phpstan"))
-                {
-                    $ciYaml["jobs"]['include']['stage'] = "testing";
-                    $ciYaml["jobs"]['include']['name'] = "phpstan/phpstan";
-                    $ciYaml["jobs"]['include']['php'] = $composerJsonContent['require']['php'];
-                    $ciYaml["jobs"]['include']['script'] = "- composer check-cs";
+                if ($worker->isMatch($composerJsonContent, 'require-dev', 'phpstan/phpstan')) {
+                    $ciYaml['jobs']['include']['stage'] = 'testing';
+                    $ciYaml['jobs']['include']['name'] = 'phpstan/phpstan';
+                    $ciYaml['jobs']['include']['php'] = $composerJsonContent['require']['php'];
+                    $ciYaml['jobs']['include']['script'] = '- composer check-cs';
                 }
-
-            } else
-            {
-                $ciYaml["language"] = "other";
+            } else {
+                $ciYaml['language'] = 'other';
             }
         }
 
