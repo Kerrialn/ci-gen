@@ -1,14 +1,29 @@
-<?php
+<?php declare(strict_types=1);
 
-namespace CIConfigGen;
+namespace CIConfigGen\Console\Command;
 
+use CIConfigGen\Contract\WorkerInterface;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Yaml\Yaml;
 
-class GenerateConfigCommand extends Command {
+final class GenerateConfigCommand extends Command
+{
+    /**
+     * @var WorkerInterface[]
+     */
+    private $workers = [];
+
+    /**
+     * @param WorkerInterface[] $workers
+     */
+    public function __construct(array $workers)
+    {
+        parent::__construct();
+        $this->workers = $workers;
+    }
 
     protected function configure()
     {
@@ -17,12 +32,11 @@ class GenerateConfigCommand extends Command {
 
     public function execute(InputInterface $input, OutputInterface $output): int
     {
-
         try
         {
-            $file = file('./composer.json');
+            $composerJsonFile = __DIR__ . '/../../../composer.json';
 
-            $object = json_decode(file_get_contents('./composer.json'));
+            $object = json_decode(file_get_contents($composerJsonFile));
             $yaml = Yaml::dump($object, 2, 4, Yaml::DUMP_OBJECT_AS_MAP);
 
             $fp = fopen('example.yaml', 'wb');

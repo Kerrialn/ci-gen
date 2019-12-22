@@ -1,6 +1,6 @@
-<?php
+<?php declare(strict_types=1);
 
-namespace CIConfigGen;
+namespace CIConfigGen\Console\Command;
 
 use DateTime;
 use Symfony\Component\Console\Command\Command;
@@ -8,17 +8,17 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\NullOutput;
 use Symfony\Component\Console\Output\OutputInterface;
 
-class TimeCommand extends Command {
-
+final class ConfigRefactorCommand extends Command
+{
     protected function configure()
     {
-        $this->setName('craft:time')->setDescription('Display current time')->setHelp('Print the current time to STDOUT');
+        $this->setName('craft:refactor')->setDescription('Refactors & formats the generated yaml file');
     }
 
     public function execute(InputInterface $input, OutputInterface $output): int
     {
         $now = new DateTime();
-        $output->writeln('its now ' . $now->format('g:i a'));
+        $output->writeln('refactoring & formatting yaml');
 
         return 0;
     }
