@@ -8,6 +8,7 @@ use DateTime;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symplify\PackageBuilder\Console\ShellCode;
 
 final class TimeCommand extends Command
 {
@@ -16,13 +17,13 @@ final class TimeCommand extends Command
         $now = new DateTime();
         $output->writeln('its now ' . $now->format('g:i a'));
 
-        return 0;
+        return ShellCode::SUCCESS;
     }
 
     protected function configure(): void
     {
-        $this->setName('craft:time')->setDescription('Display current time')->setHelp(
-            'Print the current time to STDOUT'
-        );
+        $this->setName('craft:time');
+        $this->setDescription('Display current time');
+        $this->setHelp('Print the current time to STDOUT');
     }
 }
