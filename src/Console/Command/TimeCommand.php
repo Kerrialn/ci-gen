@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace CIConfigGen\Console\Command;
 
@@ -9,12 +11,6 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 final class TimeCommand extends Command
 {
-
-    protected function configure()
-    {
-        $this->setName('craft:time')->setDescription('Display current time')->setHelp('Print the current time to STDOUT');
-    }
-
     public function execute(InputInterface $input, OutputInterface $output): int
     {
         $now = new DateTime();
@@ -23,5 +19,10 @@ final class TimeCommand extends Command
         return 0;
     }
 
+    protected function configure(): void
+    {
+        $this->setName('craft:time')->setDescription('Display current time')->setHelp(
+            'Print the current time to STDOUT'
+        );
+    }
 }
-

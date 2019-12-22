@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace CIConfigGen\Console\Command;
 
@@ -34,12 +36,6 @@ final class GenerateConfigCommand extends Command
         $this->symfonyStyle = $symfonyStyle;
     }
 
-    protected function configure(): void
-    {
-        $this->setName('craft:generate');
-        $this->setDescription('Generate a yml file for continuous delivery & integration platforms');
-    }
-
     public function execute(InputInterface $input, OutputInterface $output): int
     {
         $composerJsonFile = __DIR__ . '/../../../composer.json';
@@ -64,5 +60,9 @@ final class GenerateConfigCommand extends Command
         return ShellCode::SUCCESS;
     }
 
+    protected function configure(): void
+    {
+        $this->setName('craft:generate');
+        $this->setDescription('Generate a yml file for continuous delivery & integration platforms');
+    }
 }
-
