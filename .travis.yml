@@ -15,6 +15,13 @@ jobs:
             script:
                 - bin/CIConfigGen.php
 
+        -
+            stage: test
+            php: 7.2
+            name: "Coding Standards"
+            script:
+                - composer check-cs
+
 cache:
     directories:
         - $HOME/.composer/cache

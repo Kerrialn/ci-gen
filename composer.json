@@ -21,7 +21,12 @@
         }
     },
     "require-dev": {
-        "phpstan/phpstan": "^0.12.3"
+        "phpstan/phpstan": "^0.12.3",
+        "symplify/easy-coding-standard": "^7.2"
+    },
+    "scripts": {
+        "check-cs": "vendor/bin/ecs check src --ansi",
+        "fix-cs": "vendor/bin/ecs check src --ansi --fix"
     },
     "minimum-stability": "dev",
     "prefer-stable": true
