@@ -27,9 +27,10 @@ final class GenerateConfigCommand extends Command
         $this->workers = $workers;
     }
 
-    protected function configure()
+    protected function configure(): void
     {
-        $this->setName('craft:generate')->setDescription('Generate a yml file for continuous delivery & integration platforms');
+        $this->setName('craft:generate');
+        $this->setDescription('Generate a yml file for continuous delivery & integration platforms');
     }
 
     public function execute(InputInterface $input, OutputInterface $output): int
@@ -39,6 +40,7 @@ final class GenerateConfigCommand extends Command
         $object = Json::decode(FileSystem::read($composerJsonFile), Json::FORCE_ARRAY);
 
         // @todo modify
+
 
         $yaml = Yaml::dump($object, 2, 4, Yaml::DUMP_OBJECT_AS_MAP);
         FileSystem::write('example.yaml', $yaml);
