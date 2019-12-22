@@ -68,7 +68,6 @@ final class GenerateConfigCommand extends Command
         $yaml = Yaml::dump($ciYaml, 2, 4, Yaml::DUMP_OBJECT_AS_MAP);
         FileSystem::write('example.yaml', $yaml);
 
-        // @see https://symfony.com/blog/new-in-symfony-2-8-console-style-guide
         $this->symfonyStyle->success('Complete');
 
         return ShellCode::SUCCESS;
