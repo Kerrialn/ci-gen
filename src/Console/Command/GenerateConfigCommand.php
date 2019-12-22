@@ -8,7 +8,9 @@ use Nette\Utils\Json;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Console\Style\SymfonyStyle;
 use Symfony\Component\Yaml\Yaml;
+use Symplify\PackageBuilder\Console\ShellCode;
 
 final class GenerateConfigCommand extends Command
 {
@@ -18,12 +20,18 @@ final class GenerateConfigCommand extends Command
     private $workers = [];
 
     /**
+     * @var SymfonyStyle
+     */
+    private $symfonyStyle;
+
+    /**
      * @param WorkerInterface[] $workers
      */
-    public function __construct(array $workers)
+    public function __construct(array $workers, SymfonyStyle $symfonyStyle)
     {
         parent::__construct();
         $this->workers = $workers;
+        $this->symfonyStyle = $symfonyStyle;
     }
 
     protected function configure(): void
@@ -50,9 +58,10 @@ final class GenerateConfigCommand extends Command
         $yaml = Yaml::dump($composerJsonContent, 2, 4, Yaml::DUMP_OBJECT_AS_MAP);
         FileSystem::write('example.yaml', $yaml);
 
-        $output->writeln("Complete");
+        // @see https://symfony.com/blog/new-in-symfony-2-8-console-style-guide
+        $this->symfonyStyle->success('Complete');
 
-        return 1;
+        return ShellCode::SUCCESS;
     }
 
 }
