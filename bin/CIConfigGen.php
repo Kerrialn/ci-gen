@@ -3,11 +3,15 @@
 
 require_once  __DIR__ . '/../vendor/autoload.php';
 
-use CIConfigGen\ConfigRefactorCommand;
-use CIConfigGen\GenerateConfigCommand;
+use CIConfigGen\Console\CIConfigGenApplication;
+use CIConfigGen\HttpKernel\CIConfigGenKernel;
 use Symfony\Component\Console\Application;
 
-$application = new Application();
-$application->add(new GenerateConfigCommand());
-$application->add(new ConfigRefactorCommand());
-$application->run();
+$ciConfigGenKernel = new CIConfigGenKernel(mt_rand(1, 10000), 'dev');
+$ciConfigGenKernel->boot();
+
+$container = $ciConfigGenKernel->getContainer();
+
+/** @var CIConfigGenApplication $application */
+$application = $container->get(CIConfigGenApplication::class);
+exit($application->run());
