@@ -34,32 +34,25 @@ final class GenerateConfigCommand extends Command
 
     public function execute(InputInterface $input, OutputInterface $output): int
     {
-        try
-        {
-            $composerJsonFile = __DIR__ . '/../../../composer.json';
+        $composerJsonFile = __DIR__ . '/../../../composer.json';
 
-            $object = Json::decode(FileSystem::read($composerJsonFile), Json::FORCE_ARRAY);
+        $object = Json::decode(FileSystem::read($composerJsonFile), Json::FORCE_ARRAY);
 
-            // @todo modify
+        // @todo modify
 
-            $yaml = Yaml::dump($object, 2, 4, Yaml::DUMP_OBJECT_AS_MAP);
-            FileSystem::write('example.yaml', $yaml);
+        $yaml = Yaml::dump($object, 2, 4, Yaml::DUMP_OBJECT_AS_MAP);
+        FileSystem::write('example.yaml', $yaml);
 
-            $command = $this->getApplication()->find('craft:refactor');
-            $arguments = [
-                'command' => 'craft:refactor'
-            ];
-            $input = new ArrayInput($arguments);
-            $command->run($input, $output);
+        $command = $this->getApplication()->find('craft:refactor');
+        $arguments = [
+            'command' => 'craft:refactor'
+        ];
+        $input = new ArrayInput($arguments);
+        $command->run($input, $output);
 
-            $output->writeln("Complete");
-            return 1;
+        $output->writeln("Complete");
 
-        } catch (Exception $e)
-        {
-            echo 'Exception: ', $e->getMessage(), "\n";
-        }
-
+        return 1;
     }
 
 }
