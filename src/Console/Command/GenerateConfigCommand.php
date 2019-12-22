@@ -6,7 +6,6 @@ use CIConfigGen\Contract\WorkerInterface;
 use Nette\Utils\FileSystem;
 use Nette\Utils\Json;
 use Symfony\Component\Console\Command\Command;
-use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Yaml\Yaml;
@@ -37,20 +36,19 @@ final class GenerateConfigCommand extends Command
     {
         $composerJsonFile = __DIR__ . '/../../../composer.json';
 
-        $object = Json::decode(FileSystem::read($composerJsonFile), Json::FORCE_ARRAY);
+        $composerJsonContent = Json::decode(FileSystem::read($composerJsonFile), Json::FORCE_ARRAY);
 
-        // @todo modify
+        $ciYaml = [];
+        foreach ($this->workers as $worker) {
+            if (! $worker->isMatch($composerJsonContent)) {
+                continue;
+            }
 
+            $ciYaml = $worker->decorate($composerJsonContent, $ciYaml);
+        }
 
-        $yaml = Yaml::dump($object, 2, 4, Yaml::DUMP_OBJECT_AS_MAP);
+        $yaml = Yaml::dump($composerJsonContent, 2, 4, Yaml::DUMP_OBJECT_AS_MAP);
         FileSystem::write('example.yaml', $yaml);
-
-        $command = $this->getApplication()->find('craft:refactor');
-        $arguments = [
-            'command' => 'craft:refactor'
-        ];
-        $input = new ArrayInput($arguments);
-        $command->run($input, $output);
 
         $output->writeln("Complete");
 
