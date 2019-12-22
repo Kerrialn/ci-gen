@@ -14,8 +14,6 @@ Auto generate the configuration yaml file for continuous integration and deploym
 - CI Platforms
     - Travis CI
     - Circle CI
-    - Gitlab CI 
-    - 
- 
+    - Gitlab CI
 
 Run command `bin/CIConfigGen.php craft:generate`
