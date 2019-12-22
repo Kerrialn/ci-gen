@@ -3,6 +3,8 @@
 namespace CIConfigGen\Console\Command;
 
 use CIConfigGen\Contract\WorkerInterface;
+use Nette\Utils\FileSystem;
+use Nette\Utils\Json;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Input\InputInterface;
@@ -36,13 +38,12 @@ final class GenerateConfigCommand extends Command
         {
             $composerJsonFile = __DIR__ . '/../../../composer.json';
 
-            $object = json_decode(file_get_contents($composerJsonFile));
-            $yaml = Yaml::dump($object, 2, 4, Yaml::DUMP_OBJECT_AS_MAP);
+            $object = Json::decode(FileSystem::read($composerJsonFile), Json::FORCE_ARRAY);
 
-            $fp = fopen('example.yaml', 'wb');
-            $output->writeln("Generating yaml file");
-            fwrite($fp, $yaml);
-            fclose($fp);
+            // @todo modify
+
+            $yaml = Yaml::dump($object, 2, 4, Yaml::DUMP_OBJECT_AS_MAP);
+            FileSystem::write('example.yaml', $yaml);
 
             $command = $this->getApplication()->find('craft:refactor');
             $arguments = [
