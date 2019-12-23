@@ -20,13 +20,21 @@
             "CIConfigGen\\": "src"
         }
     },
+    "autoload-dev": {
+        "psr-4": {
+            "CIConfigGen\\Tests\\": "tests"
+        }
+    },
     "require-dev": {
         "phpstan/phpstan": "^0.12.3",
-        "symplify/easy-coding-standard": "^7.2"
+        "symplify/easy-coding-standard": "^7.2",
+        "phpunit/phpunit": "^8.5",
+        "symplify/phpstan-extensions": "^7.1"
     },
     "scripts": {
         "check-cs": "vendor/bin/ecs check src --ansi",
-        "fix-cs": "vendor/bin/ecs check src --ansi --fix"
+        "fix-cs": "vendor/bin/ecs check src --ansi --fix",
+        "phpstan": "vendor/bin/phpstan analyse --ansi --error-format symplify"
     },
     "minimum-stability": "dev",
     "prefer-stable": true

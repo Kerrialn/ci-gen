@@ -4,19 +4,14 @@ declare(strict_types=1);
 
 namespace CIConfigGen\Console;
 
+use CIConfigGen\Console\Command\GenerateConfigCommand;
 use Symfony\Component\Console\Application;
-use Symfony\Component\Console\Command\Command;
 
 final class CIConfigGenApplication extends Application
 {
-    /**
-     * @param Command[] $commands
-     */
-    public function __construct(array $commands)
+    public function __construct(GenerateConfigCommand $generateConfigCommand)
     {
-        foreach ($commands as $command) {
-            $this->add($command);
-        }
+        $this->add($generateConfigCommand);
 
         parent::__construct('CI Config Generator');
     }
