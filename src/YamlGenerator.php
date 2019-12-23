@@ -32,13 +32,13 @@ final class YamlGenerator
 
                 $ciYaml['jobs']['include']['stage'] = 'preparing';
                 $ciYaml['jobs']['include']['name:'] = 'prepare';
-                $ciYaml['jobs']['include']['php'] = $composerJsonContent['require']['php'];
+                $ciYaml['jobs']['include']['php'] = $composerJson['require']['php'];
                 $ciYaml['jobs']['include']['script'] = '- do something';
 
-                if ($worker->isMatch($composerJsonContent, 'require-dev', 'phpstan/phpstan')) {
+                if ($worker->isMatch($composerJson, 'require-dev', 'phpstan/phpstan')) {
                     $ciYaml['jobs']['include']['stage'] = 'testing';
                     $ciYaml['jobs']['include']['name'] = 'phpstan/phpstan';
-                    $ciYaml['jobs']['include']['php'] = $composerJsonContent['require']['php'];
+                    $ciYaml['jobs']['include']['php'] = $composerJson['require']['php'];
                     $ciYaml['jobs']['include']['script'] = '- composer check-cs';
                 }
             } else {

@@ -4,15 +4,16 @@ declare(strict_types=1);
 
 namespace CIConfigGen\Console\Command;
 
+use CIConfigGen\Json\JsonReader;
+use CIConfigGen\Yaml\YamlPrinter;
 use CIConfigGen\YamlGenerator;
-use Nette\Utils\FileSystem;
-use Nette\Utils\Json;
 use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
-use Symfony\Component\Yaml\Yaml;
 use Symplify\PackageBuilder\Console\ShellCode;
+use Symplify\SmartFileSystem\SmartFileInfo;
 
 final class GenerateConfigCommand extends Command
 {
@@ -31,26 +32,49 @@ final class GenerateConfigCommand extends Command
      */
     private $yamlGenerator;
 
+    /**
+     * @var YamlPrinter
+     */
+    private $yamlPrinter;
 
-    public function __construct(SymfonyStyle $symfonyStyle, YamlGenerator $yamlGenerator)
-    {
-        parent::__construct();
+    /**
+     * @var JsonReader
+     */
+    private $jsonReader;
+
+    public function __construct(
+        SymfonyStyle $symfonyStyle,
+        JsonReader $jsonReader,
+        YamlGenerator $yamlGenerator,
+        YamlPrinter $yamlPrinter
+    ) {
         $this->symfonyStyle = $symfonyStyle;
         $this->yamlGenerator = $yamlGenerator;
+        $this->yamlPrinter = $yamlPrinter;
+        $this->jsonReader = $jsonReader;
+
+        parent::__construct();
     }
 
     public function execute(InputInterface $input, OutputInterface $output): int
     {
-        $composerJsonFile = __DIR__ . '/../../../composer.json';
+        $file = $input->getArgument('file');
 
-        $composerJsonContent = Json::decode(FileSystem::read($composerJsonFile), Json::FORCE_ARRAY);
+        // the main application :)
+        // 1. read
+        $composerJsonContent = $this->jsonReader->readFileToJson($file);
 
+        // 2. process
         $ciYaml = $this->yamlGenerator->generateFromComposerJson($composerJsonContent);
 
-        $yaml = Yaml::dump($ciYaml, 100, 4);
-        FileSystem::write('example.yaml', $yaml);
+        // 3. print
+        $outputFile = getcwd() . '/example.yaml';
+        $this->yamlPrinter->printYamlToFile($ciYaml, $outputFile);
 
-        $this->symfonyStyle->success('Complete');
+        $outputSmartFile = new SmartFileInfo($outputFile);
+        $this->symfonyStyle->success(
+            sprintf('File "%s" was successfuly created', $outputSmartFile->getRelativeFilePathFromCwd())
+        );
 
         return ShellCode::SUCCESS;
     }
@@ -59,5 +83,8 @@ final class GenerateConfigCommand extends Command
     {
         $this->setName(self::NAME);
         $this->setDescription('Generate a yml file for continuous delivery & integration platforms');
+
+        $composerJsonFile = __DIR__ . '/../../../composer.json';
+        $this->addArgument('file', InputArgument::OPTIONAL, 'Path to composer.json file', $composerJsonFile);
     }
 }

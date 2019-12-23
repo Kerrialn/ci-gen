@@ -12,7 +12,6 @@ final class CIConfigGenApplication extends Application
     public function __construct(GenerateConfigCommand $generateConfigCommand)
     {
         $this->add($generateConfigCommand);
-        $this->setDefaultCommand(GenerateConfigCommand::NAME);
 
         parent::__construct('CI Config Generator');
     }

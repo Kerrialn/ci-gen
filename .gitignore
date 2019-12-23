@@ -2,3 +2,5 @@
 composer.lock
 
 example.yaml
+
+.phpunit.result.cache
