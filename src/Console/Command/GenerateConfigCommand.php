@@ -58,6 +58,7 @@ final class GenerateConfigCommand extends Command
 
     public function execute(InputInterface $input, OutputInterface $output): int
     {
+        /** @var string $file */
         $file = $input->getArgument('file');
 
         // the main application :)

@@ -22,11 +22,18 @@ jobs:
             name: "Coding Standards"
             script:
                 - composer check-cs
-        -
 
+        -
             stage: test
             php: 7.2
             name: "Tests"
+            script:
+                - vendor/bin/phpunit
+
+        -
+            stage: test
+            php: 7.2
+            name: "Static Anal"
             script:
                 - vendor/bin/phpunit
 

@@ -1,0 +1,16 @@
+includes:
+     - 'vendor/symplify/phpstan-extensions/config/config.neon'
+
+parameters:
+    checkGenericClassInNonGenericObjectType: false
+    reportUnmatchedIgnoredErrors: false
+    level: max
+
+    paths:
+        - src
+        - tests
+
+    ignoreErrors:
+        # mixed
+        - '#type has no value type specified in iterable type#'
+        - '#with no value type specified in iterable#'
