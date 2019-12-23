@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace CIConfigGen\Console\Command;
 
-use CIConfigGen\Contract\WorkerInterface;
+use CIConfigGen\YamlGenerator;
 use Nette\Utils\FileSystem;
 use Nette\Utils\Json;
 use Symfony\Component\Console\Command\Command;
@@ -17,9 +17,9 @@ use Symplify\PackageBuilder\Console\ShellCode;
 final class GenerateConfigCommand extends Command
 {
     /**
-     * @var WorkerInterface[]
+     * @var string
      */
-    private $workers = [];
+    public const NAME = 'craft:generate';
 
     /**
      * @var SymfonyStyle
@@ -27,13 +27,16 @@ final class GenerateConfigCommand extends Command
     private $symfonyStyle;
 
     /**
-     * @param WorkerInterface[] $workers
+     * @var YamlGenerator
      */
-    public function __construct(array $workers, SymfonyStyle $symfonyStyle)
+    private $yamlGenerator;
+
+
+    public function __construct(SymfonyStyle $symfonyStyle, YamlGenerator $yamlGenerator)
     {
         parent::__construct();
-        $this->workers = $workers;
         $this->symfonyStyle = $symfonyStyle;
+        $this->yamlGenerator = $yamlGenerator;
     }
 
     public function execute(InputInterface $input, OutputInterface $output): int
@@ -42,30 +45,9 @@ final class GenerateConfigCommand extends Command
 
         $composerJsonContent = Json::decode(FileSystem::read($composerJsonFile), Json::FORCE_ARRAY);
 
-        $ciYaml = [];
-        foreach ($this->workers as $worker) {
-            if ($worker->isMatch($composerJsonContent, 'require', 'php')) {
-                $ciYaml['language'] = 'php';
-                $ciYaml['install'] = '- composer install';
-                $ciYaml['script'] = 'skip';
+        $ciYaml = $this->yamlGenerator->generateFromComposerJson($composerJsonContent);
 
-                $ciYaml['jobs']['include']['stage'] = 'preparing';
-                $ciYaml['jobs']['include']['name:'] = 'prepare';
-                $ciYaml['jobs']['include']['php'] = $composerJsonContent['require']['php'];
-                $ciYaml['jobs']['include']['script'] = '- do something';
-
-                if ($worker->isMatch($composerJsonContent, 'require-dev', 'phpstan/phpstan')) {
-                    $ciYaml['jobs']['include']['stage'] = 'testing';
-                    $ciYaml['jobs']['include']['name'] = 'phpstan/phpstan';
-                    $ciYaml['jobs']['include']['php'] = $composerJsonContent['require']['php'];
-                    $ciYaml['jobs']['include']['script'] = '- composer check-cs';
-                }
-            } else {
-                $ciYaml['language'] = 'other';
-            }
-        }
-
-        $yaml = Yaml::dump($ciYaml, 2, 4, Yaml::DUMP_OBJECT_AS_MAP);
+        $yaml = Yaml::dump($ciYaml, 100, 4);
         FileSystem::write('example.yaml', $yaml);
 
         $this->symfonyStyle->success('Complete');
@@ -75,7 +57,7 @@ final class GenerateConfigCommand extends Command
 
     protected function configure(): void
     {
-        $this->setName('craft:generate');
+        $this->setName(self::NAME);
         $this->setDescription('Generate a yml file for continuous delivery & integration platforms');
     }
 }
