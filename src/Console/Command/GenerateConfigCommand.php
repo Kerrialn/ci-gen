@@ -22,7 +22,7 @@ final class GenerateConfigCommand extends Command
     /**
      * @var string
      */
-    public const NAME = 'craft:generate';
+    public const NAME = 'gen';
 
     /**
      * @var SymfonyStyle

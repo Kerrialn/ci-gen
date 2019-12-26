@@ -17,4 +17,4 @@ This project is currently in the prototyping stage. If downloaded may not output
 - Gitlab CI
 - Bitbucket CI
 
-Run command `bin/CIConfigGen.php craft:generate`
+Run command `bin/ci gen`
