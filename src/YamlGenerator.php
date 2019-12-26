@@ -4,59 +4,68 @@ declare(strict_types=1);
 
 namespace CIConfigGen;
 
-use CIConfigGen\Contract\WorkerInterface;
+use CIConfigGen\ValueObject\Constants;
+use CIConfigGen\Yaml\BitbucketYamlGenerator;
+use CIConfigGen\Yaml\GithubYamlGenerator;
+use CIConfigGen\Yaml\GitlabYamlGenerator;
 use Symfony\Component\Console\Input\InputArgument;
 
 final class YamlGenerator {
 
     /**
-     * @var WorkerInterface[]
+     * @var GithubYamlGenerator
      */
-    private $workers = [];
+    private $GitHubGenerator;
     /**
-     * @param WorkerInterface[] $workers
-     * @param string $userManager
+     * @var GitlabYamlGenerator
      */
-    public function __construct(array $workers)
+    private $GitlabYamlGenerator;
+    /**
+     * @var BitbucketYamlGenerator
+     */
+    private $BitbucketYamlGenerator;
+
+    /**
+     * @param GithubYamlGenerator $GitHubGenerator
+     * @param GitlabYamlGenerator $GitlabYamlGenerator
+     * @param BitbucketYamlGenerator $bitbucketYamlGenerator
+     */
+    public function __construct(
+        GithubYamlGenerator $GitHubGenerator,
+        GitlabYamlGenerator $GitlabYamlGenerator,
+        BitbucketYamlGenerator $BitbucketYamlGenerator
+    )
     {
-        $this->workers = $workers;
+        $this->GitHubGenerator = $GitHubGenerator;
+        $this->GitlabYamlGenerator = $GitlabYamlGenerator;
+        $this->BitbucketYamlGenerator = $BitbucketYamlGenerator;
     }
 
     public function generateFromComposerJson(array $composerJson, string $ciService): array
     {
-
-        $ciYaml = [];
-        foreach ($this->workers as $worker)
+        if ($ciService == Constants::GITLAB_CI)
         {
+            $ciYaml = $this->GitlabYamlGenerator->Generate($composerJson);
 
-            if ($worker->isMatch($composerJson, 'require', 'php'))
-            {
-                $ciYaml['language'] = 'php';
-                $ciYaml['install'] = '- composer install';
-                $ciYaml['script'] = 'skip';
+        } else if ($ciService == Constants::GITHUB_ACTIONS)
+        {
+            $ciYaml = $this->GitHubGenerator->Generate($composerJson);
 
-                $ciYaml['jobs']['include']['stage'] = 'preparing';
-                $ciYaml['jobs']['include']['name:'] = 'prepare';
-                $ciYaml['jobs']['include']['php'] = $composerJson['require']['php'];
-                $ciYaml['jobs']['include']['script'] = '- do something';
+        } else if ($ciService == Constants::BITBUCKET_CI)
+        {
+            $ciYaml = $this->BitbucketYamlGenerator->Generate($composerJson);
 
-                if ($worker->isMatch($composerJson, 'require-dev', 'phpstan/phpstan'))
-                {
-                    $ciYaml['jobs']['include']['stage'] = 'testing';
-                    $ciYaml['jobs']['include']['name'] = 'phpstan/phpstan';
-                    $ciYaml['jobs']['include']['php'] = $composerJson['require']['php'];
-                    $ciYaml['jobs']['include']['script'] = '- composer check-cs';
-                }
+        } else if ($ciService == Constants::TRAVIS_CI)
+        {
+            $ciYaml = $this->GitHubGenerator->Generate($composerJson);
 
-                $ciYaml['jobs']['include']['stage'] = 'preparing';
-                $ciYaml['jobs']['include']['name:'] = 'prepare';
-                $ciYaml['jobs']['include']['php'] = $composerJson['require']['php'];
-                $ciYaml['jobs']['include']['script'] = '- do something';
+        } else if ($ciService == Constants::CIRCLE_CI)
+        {
+            $ciYaml = $this->GitHubGenerator->Generate($composerJson);
 
-            } else
-            {
-                $ciYaml['language'] = 'other';
-            }
+        } else
+        {
+            $ciYaml = $this->GitHubGenerator->Generate($composerJson);
         }
 
         return $ciYaml;
