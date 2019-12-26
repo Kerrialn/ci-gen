@@ -13,7 +13,7 @@ jobs:
             php: 7.2
             name: Run
             script:
-                - bin/ci gen
+                - bin/ci
 
         -
             stage: test
