@@ -8,11 +8,18 @@ final class FilenameGenerator {
 
     public function generateFilename(string $ciService): string
     {
-        $filename = '';
-
         if ($ciService == 'GitlabCI')
         {
             $filename = ".gitlab-ci.yml";
+
+        } else if ($ciService == 'GithubActions')
+        {
+            mkdir(getcwd() . '.github/workflows');
+            $filename = ".github/workflows/continuous-integration-workflow.yml";
+
+        } else if ($ciService == 'BitbucketCI')
+        {
+            $filename = "bitbucket-pipelines.yml";
 
         } else if ($ciService == 'TravisCI')
         {
@@ -23,13 +30,9 @@ final class FilenameGenerator {
             mkdir(getcwd() . 'circleci');
             $filename = ".circleci/config.yml";
 
-        } else if ($ciService == 'JenkinsCI')
-        {
-            $filename = "jenkins.yml";
-
         } else
         {
-            $filename = "unknown.yml";
+            $filename = "unknown-ci.yml";
         }
 
         return $filename;

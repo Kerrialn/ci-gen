@@ -75,13 +75,32 @@ final class GenerateConfigCommand extends Command {
         $file = $input->getArgument('file');
 
         // 1. read & get user input
+        $ciServices = [];
+        $gitConfig = parse_ini_file('.git/config');
+
+        if (strpos($gitConfig['url'], 'github') !== false)
+        {
+            array_push($ciServices, 'GithubActions', 'TravisCI', 'CircleCI');
+
+        } elseif (strpos($gitConfig['url'], 'gitlab') !== false)
+        {
+            array_push($ciServices, 'GitlabCI');
+
+        } elseif (strpos($gitConfig['url'], 'bitbucket') !== false)
+        {
+            array_push($ciServices, 'BitbucketCI');
+        } else
+        {
+            array_push($ciServices, 'GitlabCI', 'TravisCI', 'CircleCI', 'GithubActions', 'TravisCI');
+        }
 
         $helper = $this->getHelper('question');
         $question = new ChoiceQuestion(
             'Please select a CI service (default: GitlabCI)',
-            ['GitlabCI', 'TravisCI', 'CircleCI', 'JenkinsCI'],
-            0
+            $ciServices,
+            'GitlabCI'
         );
+
         $question->setErrorMessage(' CI service %s is invalid.');
         $ciService = $helper->ask($input, $output, $question);
         $output->writeln('You selected: ' . $ciService);
