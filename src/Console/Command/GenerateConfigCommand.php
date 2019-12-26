@@ -6,6 +6,7 @@ namespace CIConfigGen\Console\Command;
 
 
 use CIConfigGen\Json\JsonReader;
+use CIConfigGen\ValueObject\Constants;
 use CIConfigGen\Yaml\FilenameGenerator;
 use CIConfigGen\Yaml\userInput;
 use CIConfigGen\Yaml\YamlPrinter;
@@ -80,29 +81,25 @@ final class GenerateConfigCommand extends Command {
 
         if (strpos($gitConfig['url'], 'github') !== false)
         {
-            array_push($ciServices, 'GithubActions', 'TravisCI', 'CircleCI');
+            $this->symfonyStyle->note('Github detected');
+            array_push($ciServices, Constants::GITHUB_ACTIONS, Constants::TRAVIS_CI, Constants::CIRCLE_CI);
 
         } elseif (strpos($gitConfig['url'], 'gitlab') !== false)
         {
-            array_push($ciServices, 'GitlabCI');
+
+            $this->symfonyStyle->note('Gitlab detected');
+            array_push($ciServices, Constants::GITLAB_CI);
 
         } elseif (strpos($gitConfig['url'], 'bitbucket') !== false)
         {
-            array_push($ciServices, 'BitbucketCI');
+            $this->symfonyStyle->note('Bitbucket detected');
+            array_push($ciServices, Constants::BITBUCKET_CI);
         } else
         {
-            array_push($ciServices, 'GitlabCI', 'TravisCI', 'CircleCI', 'GithubActions', 'TravisCI');
+            array_push($ciServices, Constants::GITLAB_CI, Constants::TRAVIS_CI, Constants::CIRCLE_CI, Constants::GITHUB_ACTIONS, Constants::TRAVIS_CI);
         }
 
-        $helper = $this->getHelper('question');
-        $question = new ChoiceQuestion(
-            'Please select a CI service (default: GitlabCI)',
-            $ciServices,
-            'GitlabCI'
-        );
-
-        $question->setErrorMessage(' CI service %s is invalid.');
-        $ciService = $helper->ask($input, $output, $question);
+        $ciService = $this->symfonyStyle->choice('Please select a CI service:', $ciServices);
         $output->writeln('You selected: ' . $ciService);
         $composerJsonContent = $this->jsonReader->readFileToJson($file);
 
