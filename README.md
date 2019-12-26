@@ -10,13 +10,11 @@ Auto generate the configuration yaml file for continuous integration and deploym
 This project is currently in the prototyping stage. If downloaded may not output expected result.  
 
 
-#### Compatibility
-
-- Supported languages
-    - PHP  
-- CI Platforms
-    - Travis CI
-    - Circle CI
-    - Gitlab CI
+#### CI Services Compatibility
+- Travis CI
+- Github Actions
+- Circle CI
+- Gitlab CI
+- Bitbucket CI
 
 Run command `bin/CIConfigGen.php craft:generate`
