@@ -7,8 +7,8 @@ namespace CIConfigGen\Yaml;
 use Nette\Utils\FileSystem;
 use Symfony\Component\Yaml\Yaml;
 
-final class YamlPrinter
-{
+final class YamlPrinter {
+
     public function printYamlToFile(array $yaml, string $targetFile): void
     {
         $yamlContent = $this->printYamlToString($yaml);
