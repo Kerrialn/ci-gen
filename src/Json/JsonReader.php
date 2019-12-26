@@ -7,8 +7,8 @@ namespace CIConfigGen\Json;
 use Nette\Utils\FileSystem;
 use Nette\Utils\Json;
 
-final class JsonReader {
-
+final class JsonReader
+{
     public function readFileToJson(string $filePath): array
     {
         $fileContent = FileSystem::read($filePath);

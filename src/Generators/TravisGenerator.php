@@ -5,8 +5,8 @@ namespace CIConfigGen\Generators;
 use CIConfigGen\Contract\GeneratorsInterface;
 use CIConfigGen\ValueObject\Constants;
 
-class TravisGenerator implements GeneratorsInterface {
-
+final class TravisGenerator implements GeneratorsInterface
+{
     public function isMatch(string $ciService): string
     {
         return $ciService === Constants::TRAVIS_CI;
@@ -14,7 +14,7 @@ class TravisGenerator implements GeneratorsInterface {
 
     public function generate(array $composerJson): array
     {
-        return array(
+        return [
             'name' => Constants::TRAVIS_CI,
             'matrix' => [
                 'include' => [
@@ -22,18 +22,13 @@ class TravisGenerator implements GeneratorsInterface {
                     ['env' => 'COMPOSER_FLAGS="--prefer-lowest"'],
                     ['php' => 7.3],
                     ['php' => 7.4],
-                ]
+                ],
             ],
-            'install' => [
-                'composer update --prefer-source $COMPOSER_FLAGS'
+            'install' => ['composer update --prefer-source $COMPOSER_FLAGS'],
+            'script' => ['bin/ecs', 'vendor/bin/phpunit'],
+            'notifications' => [
+                'email' => false,
             ],
-            'script' => [
-                'bin/ecs',
-                'vendor/bin/phpunit'
-            ],
-            'notifications'=>[
-                'email'=>false
-            ]
-        );
+        ];
     }
 }

@@ -4,25 +4,21 @@ declare(strict_types=1);
 
 namespace CIConfigGen\Console\Command;
 
-
 use CIConfigGen\Json\JsonReader;
 use CIConfigGen\ValueObject\Constants;
 use CIConfigGen\Yaml\FilenameGenerator;
-use CIConfigGen\Yaml\userInput;
 use CIConfigGen\Yaml\YamlPrinter;
 use CIConfigGen\YamlGenerator;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Console\Question\ChoiceQuestion;
-use Symfony\Component\Console\Question\Question;
 use Symfony\Component\Console\Style\SymfonyStyle;
 use Symplify\PackageBuilder\Console\ShellCode;
 use Symplify\SmartFileSystem\SmartFileInfo;
 
-final class GenerateConfigCommand extends Command {
-
+final class GenerateConfigCommand extends Command
+{
     /**
      * @var string
      */
@@ -46,7 +42,7 @@ final class GenerateConfigCommand extends Command {
     /**
      * @var FilenameGenerator
      */
-    private $fileNameGenerator;
+    private $filenameGenerator;
 
     /**
      * @var JsonReader
@@ -58,14 +54,13 @@ final class GenerateConfigCommand extends Command {
         JsonReader $jsonReader,
         YamlGenerator $yamlGenerator,
         YamlPrinter $yamlPrinter,
-        FilenameGenerator $fileNameGenerator
-    )
-    {
+        FilenameGenerator $filenameGenerator
+    ) {
         $this->symfonyStyle = $symfonyStyle;
         $this->yamlGenerator = $yamlGenerator;
         $this->yamlPrinter = $yamlPrinter;
         $this->jsonReader = $jsonReader;
-        $this->fileNameGenerator = $fileNameGenerator;
+        $this->filenameGenerator = $filenameGenerator;
 
         parent::__construct();
     }
@@ -79,24 +74,24 @@ final class GenerateConfigCommand extends Command {
         $ciServices = [];
         $gitConfig = parse_ini_file('.git/config');
 
-        if (strpos($gitConfig['url'], 'github') !== false)
-        {
+        if (strpos($gitConfig['url'], 'github') !== false) {
             $this->symfonyStyle->note('Github detected');
             array_push($ciServices, Constants::GITHUB_ACTIONS, Constants::TRAVIS_CI, Constants::CIRCLE_CI);
-
-        } elseif (strpos($gitConfig['url'], 'gitlab') !== false)
-        {
-
+        } elseif (strpos($gitConfig['url'], 'gitlab') !== false) {
             $this->symfonyStyle->note('Gitlab detected');
             array_push($ciServices, Constants::GITLAB_CI);
-
-        } elseif (strpos($gitConfig['url'], 'bitbucket') !== false)
-        {
+        } elseif (strpos($gitConfig['url'], 'bitbucket') !== false) {
             $this->symfonyStyle->note('Bitbucket detected');
             array_push($ciServices, Constants::BITBUCKET_CI);
-        } else
-        {
-            array_push($ciServices, Constants::GITLAB_CI, Constants::TRAVIS_CI, Constants::CIRCLE_CI, Constants::GITHUB_ACTIONS, Constants::TRAVIS_CI);
+        } else {
+            array_push(
+                $ciServices,
+                Constants::GITLAB_CI,
+                Constants::TRAVIS_CI,
+                Constants::CIRCLE_CI,
+                Constants::GITHUB_ACTIONS,
+                Constants::TRAVIS_CI
+            );
         }
 
         $ciService = $this->symfonyStyle->choice('Please select a CI service:', $ciServices);
@@ -107,7 +102,7 @@ final class GenerateConfigCommand extends Command {
         $ciYaml = $this->yamlGenerator->generateFromComposerJson($composerJsonContent, $ciService);
 
         // 3. print
-        $outputFile = $this->fileNameGenerator->generateFilename($ciService);
+        $outputFile = $this->filenameGenerator->generateFilename($ciService);
         $this->yamlPrinter->printYamlToFile($ciYaml, $outputFile);
 
         $outputSmartFile = new SmartFileInfo($outputFile);
@@ -120,7 +115,6 @@ final class GenerateConfigCommand extends Command {
 
     protected function configure(): void
     {
-
         $this->setName(self::NAME);
         $this->setDescription('Generate a yml file for continuous delivery & integration platforms');
 

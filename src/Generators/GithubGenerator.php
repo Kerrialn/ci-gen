@@ -5,8 +5,8 @@ namespace CIConfigGen\Generators;
 use CIConfigGen\Contract\GeneratorsInterface;
 use CIConfigGen\ValueObject\Constants;
 
-class GithubGenerator implements GeneratorsInterface {
-
+final class GithubGenerator implements GeneratorsInterface
+{
     public function isMatch(string $ciService): string
     {
         return $ciService === Constants::GITHUB_ACTIONS;
@@ -14,7 +14,7 @@ class GithubGenerator implements GeneratorsInterface {
 
     public function generate(array $composerJson): array
     {
-        return array(
+        return [
             'name' => Constants::GITHUB_ACTIONS,
             'language' => 'PHP',
             'on' => '[push]',
@@ -25,17 +25,17 @@ class GithubGenerator implements GeneratorsInterface {
                         'uses' => 'actions/checkout@v1',
                         [
                             'name' => 'Validate composer.json and composer.lock',
-                            'php'=>$composerJson['require']['php'],
-                            'run' => 'composer validate'
+                            'php' => $composerJson['require']['php'],
+                            'run' => 'composer validate',
                         ],
                         [
                             'name' => 'composer validate',
-                            'php'=>$composerJson['require']['php'],
-                            'run' => 'composer install --prefer-dist --no-progress --no-suggest'
-                        ]
-                    ]
-                ]
-            ]
-        );
+                            'php' => $composerJson['require']['php'],
+                            'run' => 'composer install --prefer-dist --no-progress --no-suggest',
+                        ],
+                    ],
+                ],
+            ],
+        ];
     }
 }
