@@ -8,6 +8,7 @@ use CIConfigGen\Contract\WorkerInterface;
 
 final class AddPhpVersionWorker implements WorkerInterface
 {
+
     public function isMatch(array $array, string $level, string $expected): bool
     {
         return isset($array[$level][$expected]);

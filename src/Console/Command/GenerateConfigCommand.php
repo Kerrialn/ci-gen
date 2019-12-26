@@ -4,19 +4,24 @@ declare(strict_types=1);
 
 namespace CIConfigGen\Console\Command;
 
+
 use CIConfigGen\Json\JsonReader;
+use CIConfigGen\Yaml\FilenameGenerator;
+use CIConfigGen\Yaml\userInput;
 use CIConfigGen\Yaml\YamlPrinter;
 use CIConfigGen\YamlGenerator;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Console\Question\ChoiceQuestion;
+use Symfony\Component\Console\Question\Question;
 use Symfony\Component\Console\Style\SymfonyStyle;
 use Symplify\PackageBuilder\Console\ShellCode;
 use Symplify\SmartFileSystem\SmartFileInfo;
 
-final class GenerateConfigCommand extends Command
-{
+final class GenerateConfigCommand extends Command {
+
     /**
      * @var string
      */
@@ -38,6 +43,11 @@ final class GenerateConfigCommand extends Command
     private $yamlPrinter;
 
     /**
+     * @var FilenameGenerator
+     */
+    private $fileNameGenerator;
+
+    /**
      * @var JsonReader
      */
     private $jsonReader;
@@ -46,12 +56,15 @@ final class GenerateConfigCommand extends Command
         SymfonyStyle $symfonyStyle,
         JsonReader $jsonReader,
         YamlGenerator $yamlGenerator,
-        YamlPrinter $yamlPrinter
-    ) {
+        YamlPrinter $yamlPrinter,
+        FilenameGenerator $fileNameGenerator
+    )
+    {
         $this->symfonyStyle = $symfonyStyle;
         $this->yamlGenerator = $yamlGenerator;
         $this->yamlPrinter = $yamlPrinter;
         $this->jsonReader = $jsonReader;
+        $this->fileNameGenerator = $fileNameGenerator;
 
         parent::__construct();
     }
@@ -61,15 +74,24 @@ final class GenerateConfigCommand extends Command
         /** @var string $file */
         $file = $input->getArgument('file');
 
-        // the main application :)
-        // 1. read
+        // 1. read & get user input
+
+        $helper = $this->getHelper('question');
+        $question = new ChoiceQuestion(
+            'Please select a CI service (default: GitlabCI)',
+            ['GitlabCI', 'TravisCI', 'CircleCI', 'JenkinsCI'],
+            0
+        );
+        $question->setErrorMessage(' CI service %s is invalid.');
+        $ciService = $helper->ask($input, $output, $question);
+        $output->writeln('You selected: ' . $ciService);
         $composerJsonContent = $this->jsonReader->readFileToJson($file);
 
         // 2. process
-        $ciYaml = $this->yamlGenerator->generateFromComposerJson($composerJsonContent);
+        $ciYaml = $this->yamlGenerator->generateFromComposerJson($composerJsonContent, $ciService);
 
         // 3. print
-        $outputFile = getcwd() . '/example.yaml';
+        $outputFile = $this->fileNameGenerator->generateFilename($ciService);
         $this->yamlPrinter->printYamlToFile($ciYaml, $outputFile);
 
         $outputSmartFile = new SmartFileInfo($outputFile);
@@ -82,6 +104,7 @@ final class GenerateConfigCommand extends Command
 
     protected function configure(): void
     {
+
         $this->setName(self::NAME);
         $this->setDescription('Generate a yml file for continuous delivery & integration platforms');
 
