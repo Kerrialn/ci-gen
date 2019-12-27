@@ -4,7 +4,11 @@
 [![Downloads](https://img.shields.io/packagist/dt/kerrialn/ci-config-generator.svg?style=flat-square)](https://packagist.org/packages/kerrialn/ci-config-generator)
 
 #### Blurb 
-Auto generate the configuration yaml file for continuous integration and deployment services. Never write a CI yaml file manually again!
+Automatically generate the configuration yaml file for continuous integration (CI) services. Never write a CI yaml file manually again!
+
+#### Use cases
+- Setting up a project and want  to use a CI service
+- Switching CI services and don't want the hassle of rewriting your yaml file to be compatible with the new service (not yet implemented) 
 
 #### Run process
 1. Run command `bin/ci gen`
