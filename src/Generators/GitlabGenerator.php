@@ -8,6 +8,21 @@ use CIConfigGen\ValueObject\Constants;
 
 final class GitlabGenerator implements GeneratorsInterface
 {
+
+    /**
+     * @var PHPUnitService
+     */
+    private $PHPUnitService;
+
+    /**
+     * GitlabGenerator constructor.
+     * @param PHPUnitService $PHPUnitService
+     */
+    public function __construct(PHPUnitService $PHPUnitService)
+    {
+        $this->PHPUnitService = $PHPUnitService;
+    }
+
     public function isMatch(string $ciService): string
     {
         return $ciService === Constants::GITLAB_CI;
@@ -23,7 +38,7 @@ final class GitlabGenerator implements GeneratorsInterface
             'job' => [
                 'stage' => 'test',
                 'php' => $composerJson['require']['php'],
-                'script' => (new PHPUnitService())->create(),
+                'script' => $this->PHPUnitService->create(),
             ],
         ];
     }

@@ -8,6 +8,21 @@ use CIConfigGen\ValueObject\Constants;
 
 final class CircleGenerator implements GeneratorsInterface
 {
+
+    /**
+     * @var PHPUnitService
+     */
+    private $PHPUnitService;
+
+    /**
+     * CircleGenerator constructor.
+     * @param PHPUnitService $PHPUnitService
+     */
+    public function __construct(PHPUnitService $PHPUnitService)
+    {
+        $this->PHPUnitService = $PHPUnitService;
+    }
+
     public function isMatch(string $ciService): string
     {
         return $ciService === Constants::CIRCLE_CI;
@@ -23,7 +38,7 @@ final class CircleGenerator implements GeneratorsInterface
                 'build' => [
                     'environment' => [],
                 ],
-                'script' => (new PHPUnitService())->create(),
+                'script' => $this->PHPUnitService->create(),
                 'deploy' => [],
             ],
         ];

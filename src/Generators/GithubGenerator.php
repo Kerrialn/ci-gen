@@ -3,10 +3,26 @@
 namespace CIConfigGen\Generators;
 
 use CIConfigGen\Contract\GeneratorsInterface;
+use CIConfigGen\Services\PHPUnitService;
 use CIConfigGen\ValueObject\Constants;
 
 final class GithubGenerator implements GeneratorsInterface
 {
+
+    /**
+     * @var PHPUnitService
+     */
+    private $PHPUnitService;
+
+    /**
+     * GithubGenerator constructor.
+     * @param PHPUnitService $PHPUnitService
+     */
+    public function __construct(PHPUnitService $PHPUnitService)
+    {
+        $this->PHPUnitService = $PHPUnitService;
+    }
+
     public function isMatch(string $ciService): string
     {
         return $ciService === Constants::GITHUB_ACTIONS;
@@ -26,7 +42,7 @@ final class GithubGenerator implements GeneratorsInterface
                         [
                             'name' => 'test',
                             'php' => $composerJson['require']['php'],
-                            'run' => (new PHPUnitService())->create(),
+                            'run' => $this->PHPUnitService->create(),
                         ],
                     ],
                 ],

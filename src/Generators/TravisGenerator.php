@@ -8,6 +8,21 @@ use CIConfigGen\ValueObject\Constants;
 
 final class TravisGenerator implements GeneratorsInterface
 {
+
+    /**
+     * @var PHPUnitService
+     */
+    private $PHPUnitService;
+
+    /**
+     * TravisGenerator constructor.
+     * @param PHPUnitService $PHPUnitService
+     */
+    public function __construct(PHPUnitService $PHPUnitService)
+    {
+        $this->PHPUnitService = $PHPUnitService;
+    }
+
     public function isMatch(string $ciService): string
     {
         return $ciService === Constants::TRAVIS_CI;
