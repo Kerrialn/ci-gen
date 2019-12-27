@@ -6,8 +6,8 @@ use CIConfigGen\Contract\GeneratorsInterface;
 use CIConfigGen\Services\PHPUnitService;
 use CIConfigGen\ValueObject\Constants;
 
-final class TravisGenerator implements GeneratorsInterface {
-
+final class TravisGenerator implements GeneratorsInterface
+{
     public function isMatch(string $ciService): string
     {
         return $ciService === Constants::TRAVIS_CI;
@@ -26,7 +26,7 @@ final class TravisGenerator implements GeneratorsInterface {
                 ],
             ],
             'install' => ['composer update --prefer-source $COMPOSER_FLAGS'],
-            'script' => (new \CIConfigGen\Services\PHPUnitService)->create(),
+            'script' => (new PHPUnitService())->create(),
             'notifications' => [
                 'email' => false,
             ],

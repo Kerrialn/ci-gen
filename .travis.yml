@@ -18,7 +18,7 @@ jobs:
         -
             stage: test
             php: 7.2
-            name: "Coding Standards"
+            name: v"Coding Standards"
             script:
                 - composer check-cs
 
