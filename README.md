@@ -6,8 +6,10 @@
 #### Blurb 
 Auto generate the configuration yaml file for continuous integration and deployment services. Never write a CI yaml file manually again!
 
-#### Generation
-Currently generates the a basic yaml file based on your composer.json and PHPUnit tests. Example below:
+#### Run process
+1. Run command `bin/ci gen`
+2. Select CI service you want to use (options based on you git config file)
+3. Currently, generates a yaml file based on your composer.json and PHPUnit tests. Example below:
 
 ```yaml
 name: 'Travis CI'
@@ -35,5 +37,3 @@ notifications:
 - Circle CI
 - Gitlab CI
 - Bitbucket CI
-
-Run command `bin/ci gen`
