@@ -1,31 +1,17 @@
-language: php
-
-install:
-    - composer install
-
-# phpunit is run by default, skip it
-script: skip
-
-jobs:
+name: 'Travis CI'
+matrix:
     include:
         -
-            stage: test
             php: 7.2
-            name: Run
-            script:
-                - bin/ci
-
         -
-            stage: test
-            php: 7.2
-            name: v"Coding Standards"
-            script:
-                - composer check-cs
-
-cache:
-    directories:
-        - $HOME/.composer/cache
-
+            env: 'COMPOSER_FLAGS="--prefer-lowest"'
+        -
+            php: 7.3
+        -
+            php: 7.4
+install:
+    - 'composer update --prefer-source $COMPOSER_FLAGS'
+script:
+    - 'vendor/bin/phpunit --testsuite main'
 notifications:
-    email:
-        on_success: never
+    email: false
