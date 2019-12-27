@@ -11,9 +11,9 @@ jobs:
         -
             stage: test
             php: 7.2
-            name: Run bin
+            name: Run
             script:
-                - bin/ci gen
+                - bin/ci
 
         -
             stage: test
