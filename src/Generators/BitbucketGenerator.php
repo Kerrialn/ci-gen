@@ -8,20 +8,17 @@ use CIConfigGen\ValueObject\Constants;
 
 final class BitbucketGenerator implements GeneratorsInterface
 {
-
     /**
      * @var PHPUnitService
      */
-    private $PHPUnitService;
-
+    private $phpUnitService;
 
     /**
      * BitbucketGenerator constructor.
-     * @param PHPUnitService $PHPUnitService
      */
-    public function __construct(PHPUnitService $PHPUnitService)
+    public function __construct(PHPUnitService $phpUnitService)
     {
-        $this->PHPUnitService = $PHPUnitService;
+        $this->phpUnitService = $phpUnitService;
     }
 
     public function isMatch(string $ciService): string
@@ -40,7 +37,7 @@ final class BitbucketGenerator implements GeneratorsInterface
                     'default' => [
                         'name' => 'test',
                         'php' => $composerJson['require']['php'],
-                        'script' => $this->PHPUnitService->create(),
+                        'script' => $this->phpUnitService->create(),
                     ],
                 ],
             ],

@@ -8,19 +8,17 @@ use CIConfigGen\ValueObject\Constants;
 
 final class CircleGenerator implements GeneratorsInterface
 {
-
     /**
      * @var PHPUnitService
      */
-    private $PHPUnitService;
+    private $phpUnitService;
 
     /**
      * CircleGenerator constructor.
-     * @param PHPUnitService $PHPUnitService
      */
-    public function __construct(PHPUnitService $PHPUnitService)
+    public function __construct(PHPUnitService $phpUnitService)
     {
-        $this->PHPUnitService = $PHPUnitService;
+        $this->phpUnitService = $phpUnitService;
     }
 
     public function isMatch(string $ciService): string
@@ -38,7 +36,7 @@ final class CircleGenerator implements GeneratorsInterface
                 'build' => [
                     'environment' => [],
                 ],
-                'script' => $this->PHPUnitService->create(),
+                'script' => $this->phpUnitService->create(),
                 'deploy' => [],
             ],
         ];

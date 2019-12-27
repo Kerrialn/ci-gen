@@ -8,19 +8,17 @@ use CIConfigGen\ValueObject\Constants;
 
 final class GithubGenerator implements GeneratorsInterface
 {
-
     /**
      * @var PHPUnitService
      */
-    private $PHPUnitService;
+    private $phpUnitService;
 
     /**
      * GithubGenerator constructor.
-     * @param PHPUnitService $PHPUnitService
      */
-    public function __construct(PHPUnitService $PHPUnitService)
+    public function __construct(PHPUnitService $phpUnitService)
     {
-        $this->PHPUnitService = $PHPUnitService;
+        $this->phpUnitService = $phpUnitService;
     }
 
     public function isMatch(string $ciService): string
@@ -42,7 +40,7 @@ final class GithubGenerator implements GeneratorsInterface
                         [
                             'name' => 'test',
                             'php' => $composerJson['require']['php'],
-                            'run' => $this->PHPUnitService->create(),
+                            'run' => $this->phpUnitService->create(),
                         ],
                     ],
                 ],

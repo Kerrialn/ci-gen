@@ -8,19 +8,17 @@ use CIConfigGen\ValueObject\Constants;
 
 final class TravisGenerator implements GeneratorsInterface
 {
-
     /**
      * @var PHPUnitService
      */
-    private $PHPUnitService;
+    private $phpUnitService;
 
     /**
      * TravisGenerator constructor.
-     * @param PHPUnitService $PHPUnitService
      */
-    public function __construct(PHPUnitService $PHPUnitService)
+    public function __construct(PHPUnitService $phpUnitService)
     {
-        $this->PHPUnitService = $PHPUnitService;
+        $this->phpUnitService = $phpUnitService;
     }
 
     public function isMatch(string $ciService): string
@@ -41,7 +39,7 @@ final class TravisGenerator implements GeneratorsInterface
                 ],
             ],
             'install' => ['composer update --prefer-source $COMPOSER_FLAGS'],
-            'script' => (new PHPUnitService())->create(),
+            'script' => $this->phpUnitService->create(),
             'notifications' => [
                 'email' => false,
             ],
