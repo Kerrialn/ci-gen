@@ -11,9 +11,9 @@ jobs:
         -
             stage: test
             php: 7.2
-            name: Run bin
+            name: Run ci gen
             script:
-                - bin/CIConfigGen.php
+                - bin/ci
 
         -
             stage: test
