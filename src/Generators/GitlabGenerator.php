@@ -3,6 +3,7 @@
 namespace CIConfigGen\Generators;
 
 use CIConfigGen\Contract\GeneratorsInterface;
+use CIConfigGen\Services\PHPUnitService;
 use CIConfigGen\ValueObject\Constants;
 
 final class GitlabGenerator implements GeneratorsInterface
@@ -20,13 +21,9 @@ final class GitlabGenerator implements GeneratorsInterface
             'stages' => ['test'],
 
             'job' => [
-                'stage' => 'build',
+                'stage' => 'test',
                 'php' => $composerJson['require']['php'],
-                'script' => [
-                    ' - php -v',
-                    '- composer install --prefer-dist --no-ansi --no-interaction --no-progress --no-scripts',
-                    'cp .env.example .env',
-                ],
+                'script' => (new PHPUnitService())->create(),
             ],
         ];
     }

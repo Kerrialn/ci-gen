@@ -24,14 +24,9 @@ final class GithubGenerator implements GeneratorsInterface
                     'steps' => [
                         'uses' => 'actions/checkout@v1',
                         [
-                            'name' => 'Validate composer.json and composer.lock',
+                            'name' => 'test',
                             'php' => $composerJson['require']['php'],
-                            'run' => 'composer validate',
-                        ],
-                        [
-                            'name' => 'composer validate',
-                            'php' => $composerJson['require']['php'],
-                            'run' => 'composer install --prefer-dist --no-progress --no-suggest',
+                            'run' => (new PHPUnitService())->create(),
                         ],
                     ],
                 ],

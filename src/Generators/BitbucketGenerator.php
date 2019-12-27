@@ -3,10 +3,11 @@
 namespace CIConfigGen\Generators;
 
 use CIConfigGen\Contract\GeneratorsInterface;
+use CIConfigGen\Services\PHPUnitService;
 use CIConfigGen\ValueObject\Constants;
 
-final class BitbucketGenerator implements GeneratorsInterface
-{
+final class BitbucketGenerator implements GeneratorsInterface {
+
     public function isMatch(string $ciService): string
     {
         return $ciService === Constants::BITBUCKET_CI;
@@ -21,9 +22,9 @@ final class BitbucketGenerator implements GeneratorsInterface
             'pipelines' => [
                 'step' => [
                     'default' => [
-                        'name' => 'Build and test',
+                        'name' => 'test',
                         'php' => $composerJson['require']['php'],
-                        'script' => ['- composer install'],
+                        'script' => (new PHPUnitService())->create(),
                     ],
                 ],
             ],

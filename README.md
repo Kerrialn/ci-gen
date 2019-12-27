@@ -6,10 +6,6 @@
 #### Blurb 
 Auto generate the configuration yaml file for continuous integration and deployment services. Never write a CI yaml file manually again!
 
-#### Project status 
-This project is currently in the prototyping stage. If downloaded may not output expected result.  
-
-
 #### CI Services Compatibility
 - Travis CI
 - Github Actions

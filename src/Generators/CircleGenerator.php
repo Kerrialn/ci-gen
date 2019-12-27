@@ -3,6 +3,7 @@
 namespace CIConfigGen\Generators;
 
 use CIConfigGen\Contract\GeneratorsInterface;
+use CIConfigGen\Services\PHPUnitService;
 use CIConfigGen\ValueObject\Constants;
 
 final class CircleGenerator implements GeneratorsInterface
@@ -22,7 +23,7 @@ final class CircleGenerator implements GeneratorsInterface
                 'build' => [
                     'environment' => [],
                 ],
-                'test' => [],
+                'script' => (new PHPUnitService())->create(),
                 'deploy' => [],
             ],
         ];
