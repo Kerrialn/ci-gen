@@ -6,8 +6,8 @@ use CIConfigGen\Contract\GeneratorsInterface;
 use CIConfigGen\Services\PHPUnitService;
 use CIConfigGen\ValueObject\Constants;
 
-final class BitbucketGenerator implements GeneratorsInterface {
-
+final class BitbucketGenerator implements GeneratorsInterface
+{
     public function isMatch(string $ciService): string
     {
         return $ciService === Constants::BITBUCKET_CI;
