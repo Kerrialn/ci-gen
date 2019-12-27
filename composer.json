@@ -13,7 +13,10 @@
         "symfony/config": "^5.0",
         "symplify/package-builder": "^7.2",
         "symplify/autowire-array-parameter": "^7.2",
-        "nette/utils": "^3.0"
+        "nette/utils": "^3.0",
+        "symfony/dom-crawler": "^5.0",
+        "ext-simplexml": "*",
+        "ext-json": "*"
     },
     "autoload": {
         "psr-4": {

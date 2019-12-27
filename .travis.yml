@@ -1,0 +1,31 @@
+language: php
+
+install:
+    - composer install
+
+# phpunit is run by default, skip it
+script: skip
+
+jobs:
+    include:
+        -
+            stage: test
+            php: 7.2
+            name: Run bin
+            script:
+                - bin/CIConfigGen.php
+
+        -
+            stage: test
+            php: 7.2
+            name: "Coding Standards"
+            script:
+                - composer check-cs
+
+cache:
+    directories:
+        - $HOME/.composer/cache
+
+notifications:
+    email:
+        on_success: never
