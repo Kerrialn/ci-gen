@@ -1,7 +1,7 @@
 # CI Gen
 
 [![Build Status](https://img.shields.io/travis/kerrialn/ci-config-generator/master.svg?style=flat-square)](https://travis-ci.org/kerrialn/ci-config-generator)
-[![Downloads](https://img.shields.io/packagist/dt/kerrialn/ci-config-generator.svg?style=flat-square)](https://packagist.org/packages/kerrialn/ci-config-generator)
+[![Downloads](https://img.shields.io/packagist/dt/kerrialn/ci-gen.svg?style=flat-square)](https://packagist.org/packages/kerrialn/ci-config-generator)
 
 #### Project status
 Please note: This project is in the prototyping phase and may not output as expected.
