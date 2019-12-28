@@ -1,5 +1,5 @@
 {
-    "name": "kerrialn/ci-config-generator",
+    "name": "kerrialn/ci-gen",
     "license": "MIT",
     "require": {
         "php": "^7.2",
