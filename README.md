@@ -6,7 +6,6 @@
 #### Project status
 Please note: This project is in the prototyping phase and may not output as expected.
 
-
 #### Blurb 
 Automatically generate the configuration yaml file for continuous integration (CI) services. Never write a CI yaml file manually again!
 
