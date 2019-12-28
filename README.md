@@ -11,7 +11,7 @@ Automatically generate the configuration yaml file for continuous integration (C
 - Switching CI services and don't want the hassle of rewriting your yaml file to be compatible with the new service (not yet implemented) 
 
 #### Run process
-1. Install: `composer require kerrialn/ci-config-generator`
+1. Install: `composer require kerrialn/ci-gen`
 1. Run: `bin/ci gen`
 2. Select CI service you want to use (options based on you git config file)
 3. Currently, generates a yaml file based on your composer.json and PHPUnit tests. Example below:
