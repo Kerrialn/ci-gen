@@ -33,11 +33,10 @@ final class CircleGenerator implements GeneratorsInterface
             'language' => 'PHP',
             'on' => '[push]',
             'jobs' => [
-                'build' => [
-                    'environment' => [],
+                'test' => [
+                    'name' => 'PhpUnit',
+                    'script' => $this->phpUnitService->create(),
                 ],
-                'script' => $this->phpUnitService->create(),
-                'deploy' => [],
             ],
         ];
     }

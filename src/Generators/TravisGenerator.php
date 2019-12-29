@@ -33,13 +33,15 @@ final class TravisGenerator implements GeneratorsInterface
             'matrix' => [
                 'include' => [
                     ['php' => 7.2],
-                    ['env' => 'COMPOSER_FLAGS="--prefer-lowest"'],
                     ['php' => 7.3],
-                    ['php' => 7.4],
+                    ['env' => 'COMPOSER_FLAGS="--prefer-lowest"'],
                 ],
             ],
             'install' => ['composer update --prefer-source $COMPOSER_FLAGS'],
-            'script' => $this->phpUnitService->create(),
+            'test' => [
+                'name' => 'PhpUnit',
+                'script' => $this->phpUnitService->create(),
+            ],
             'notifications' => [
                 'email' => false,
             ],
