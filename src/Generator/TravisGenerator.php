@@ -4,11 +4,10 @@ declare(strict_types=1);
 
 namespace CIConfigGen\Generator;
 
+use CIConfigGen\Composer\VersionResolver;
 use CIConfigGen\Contract\GeneratorInterface;
 use CIConfigGen\Services\PHPUnitService;
 use CIConfigGen\ValueObject\Constants;
-use Nette\Utils\Strings;
-use PharIo\Version\Version;
 
 final class TravisGenerator implements GeneratorInterface
 {
@@ -17,9 +16,15 @@ final class TravisGenerator implements GeneratorInterface
      */
     private $phpUnitService;
 
-    public function __construct(PHPUnitService $phpUnitService)
+    /**
+     * @var VersionResolver
+     */
+    private $versionResolver;
+
+    public function __construct(PHPUnitService $phpUnitService, VersionResolver $versionResolver)
     {
         $this->phpUnitService = $phpUnitService;
+        $this->versionResolver = $versionResolver;
     }
 
     public function isMatch(string $ciService): bool
@@ -29,7 +34,7 @@ final class TravisGenerator implements GeneratorInterface
 
     public function generate(array $composerJson): array
     {
-        $phpVersions = $this->detectPhpVersionsFromComposerJson($composerJson);
+        $phpVersions = $this->versionResolver->resolvePhpVersions($composerJson);
 
         $yaml['language'] = 'php';
 
@@ -55,29 +60,5 @@ final class TravisGenerator implements GeneratorInterface
     public function getFilename(): string
     {
         return '.travis.yml';
-    }
-
-    /**
-     * @return Version[]
-     */
-    private function detectPhpVersionsFromComposerJson(array $composerJson): array
-    {
-        $minimalPhpVersion = $composerJson['require']['php'];
-
-        $matches = Strings::match($minimalPhpVersion, '#(?<version>\d\.\d)#');
-        $currentPhpVersion = new Version($matches['version']);
-
-        $php74Version = new Version('7.4');
-
-        $phpVersions = [];
-        $phpVersions[] = $currentPhpVersion;
-
-        while ($php74Version->isGreaterThan($currentPhpVersion)) {
-            $nextVersion = $currentPhpVersion->getMajor()->getValue() . '.' . ($currentPhpVersion->getMinor()->getValue() + 1);
-            $currentPhpVersion = new Version($nextVersion);
-            $phpVersions[] = $currentPhpVersion;
-        }
-
-        return $phpVersions;
     }
 }
