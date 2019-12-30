@@ -1,3 +1,4 @@
+language: php
 install:
     - 'composer update --prefer-source $COMPOSER_FLAGS'
 test:
