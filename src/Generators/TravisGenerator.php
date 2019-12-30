@@ -30,17 +30,15 @@ final class TravisGenerator implements GeneratorsInterface
     {
         return [
             'name' => Constants::TRAVIS_CI,
-            'matrix' => [
-                'include' => [
-                    ['php' => 7.2],
-                    ['php' => 7.3],
-                    ['env' => 'COMPOSER_FLAGS="--prefer-lowest"'],
-                ],
-            ],
+            'php' => $composerJson['require']['php'],
             'install' => ['composer update --prefer-source $COMPOSER_FLAGS'],
             'test' => [
                 'name' => 'PhpUnit',
+                'php' => $composerJson['require']['php'],
                 'script' => $this->phpUnitService->create(),
+            ],
+            'cache'=>[
+                'directories'=> ['$HOME/.composer/cache']
             ],
             'notifications' => [
                 'email' => false,
