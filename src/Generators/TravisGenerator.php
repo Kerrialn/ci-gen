@@ -31,15 +31,15 @@ final class TravisGenerator implements GeneratorsInterface
         return [
             'name' => Constants::TRAVIS_CI,
             'language' => 'php',
-            'php'=> $composerJson['require']['php'],
+            'php' => $composerJson['require']['php'],
             'install' => ['composer update --prefer-source $COMPOSER_FLAGS'],
             'test' => [
                 'name' => 'PhpUnit',
                 'php' => $composerJson['require']['php'],
                 'script' => $this->phpUnitService->create(),
             ],
-            'cache'=>[
-                'directories'=> ['$HOME/.composer/cache']
+            'cache' => [
+                'directories' => ['$HOME/.composer/cache'],
             ],
             'notifications' => [
                 'email' => false,

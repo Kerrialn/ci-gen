@@ -1,8 +1,6 @@
 <?php
 
-
 namespace CIConfigGen\Console\Command;
-
 
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
@@ -10,8 +8,8 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
-final class MigrateCommand extends Command {
-
+final class MigrateCommand extends Command
+{
     /**
      * @var string
      */
@@ -22,10 +20,6 @@ final class MigrateCommand extends Command {
      */
     private $symfonyStyle;
 
-    /**
-     *
-     * @param SymfonyStyle $symfonyStyle
-     */
     public function __construct(SymfonyStyle $symfonyStyle)
     {
         $this->symfonyStyle = $symfonyStyle;
@@ -34,7 +28,7 @@ final class MigrateCommand extends Command {
 
     public function execute(InputInterface $input, OutputInterface $output): int
     {
-
+        $this->symfonyStyle->ask('da fuck is wrong with you?');
     }
 
     protected function configure(): void
@@ -44,6 +38,5 @@ final class MigrateCommand extends Command {
 
         $yamlFile = null;
         $this->addArgument('file', InputArgument::OPTIONAL, 'Path to existing CI yaml file', $yamlFile);
-
     }
 }

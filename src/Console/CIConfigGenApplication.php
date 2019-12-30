@@ -9,9 +9,9 @@ use Symfony\Component\Console\Application;
 
 final class CIConfigGenApplication extends Application
 {
-    public function __construct(GenerateCommand $generateConfigCommand)
+    public function __construct(GenerateCommand $generateCommand)
     {
-        $this->add($generateConfigCommand);
+        $this->add($generateCommand);
 
         parent::__construct('CI Config Generator');
     }
