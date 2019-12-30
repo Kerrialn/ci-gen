@@ -1,5 +1,3 @@
-name: 'Travis CI'
-php: ^7.2
 install:
     - 'composer update --prefer-source $COMPOSER_FLAGS'
 test:
