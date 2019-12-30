@@ -30,7 +30,7 @@ final class TravisGenerator implements GeneratorsInterface
     {
         return [
             'name' => Constants::TRAVIS_CI,
-            'php' => $composerJson['require']['php'],
+            'language' => 'php',
             'install' => ['composer update --prefer-source $COMPOSER_FLAGS'],
             'test' => [
                 'name' => 'PhpUnit',
