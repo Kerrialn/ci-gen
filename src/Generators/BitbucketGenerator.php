@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace CIConfigGen\Generators;
 
-use CIConfigGen\Contract\GeneratorsInterface;
+use CIConfigGen\Contract\GeneratorInterface;
 use CIConfigGen\Services\PHPUnitService;
 use CIConfigGen\ValueObject\Constants;
 
-final class BitbucketGenerator implements GeneratorsInterface
+final class BitbucketGenerator implements GeneratorInterface
 {
     /**
      * @var PHPUnitService
@@ -41,5 +41,10 @@ final class BitbucketGenerator implements GeneratorsInterface
                 ],
             ],
         ];
+    }
+
+    public function getFilename(): string
+    {
+        return 'bitbucket-pipelines.yml';
     }
 }

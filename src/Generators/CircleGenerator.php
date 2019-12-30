@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace CIConfigGen\Generators;
 
-use CIConfigGen\Contract\GeneratorsInterface;
+use CIConfigGen\Contract\GeneratorInterface;
 use CIConfigGen\Services\PHPUnitService;
 use CIConfigGen\ValueObject\Constants;
 
-final class CircleGenerator implements GeneratorsInterface
+final class CircleGenerator implements GeneratorInterface
 {
     /**
      * @var PHPUnitService
@@ -38,5 +38,10 @@ final class CircleGenerator implements GeneratorsInterface
                 ],
             ],
         ];
+    }
+
+    public function getFilename(): string
+    {
+        return '.circleci/config.yml';
     }
 }

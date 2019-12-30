@@ -4,17 +4,17 @@ declare(strict_types=1);
 
 namespace CIConfigGen;
 
-use CIConfigGen\Contract\GeneratorsInterface;
+use CIConfigGen\Contract\GeneratorInterface;
 
 final class YamlGenerator
 {
     /**
-     * @var GeneratorsInterface[]
+     * @var GeneratorInterface[]
      */
     private $generators = [];
 
     /**
-     * @param GeneratorsInterface[] $generators
+     * @param GeneratorInterface[] $generators
      */
     public function __construct(array $generators)
     {

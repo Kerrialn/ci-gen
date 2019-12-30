@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace CIConfigGen\Generators;
 
-use CIConfigGen\Contract\GeneratorsInterface;
+use CIConfigGen\Contract\GeneratorInterface;
 use CIConfigGen\Services\PHPUnitService;
 use CIConfigGen\ValueObject\Constants;
 
-final class GitlabGenerator implements GeneratorsInterface
+final class GitlabGenerator implements GeneratorInterface
 {
     /**
      * @var PHPUnitService
@@ -38,5 +38,10 @@ final class GitlabGenerator implements GeneratorsInterface
                 'script' => $this->phpUnitService->create(),
             ],
         ];
+    }
+
+    public function getFilename(): string
+    {
+        return '.gitlab-ci.yml';
     }
 }

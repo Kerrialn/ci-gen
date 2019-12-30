@@ -4,13 +4,13 @@ declare(strict_types=1);
 
 namespace CIConfigGen\Generators;
 
-use CIConfigGen\Contract\GeneratorsInterface;
+use CIConfigGen\Contract\GeneratorInterface;
 use CIConfigGen\Services\PHPUnitService;
 use CIConfigGen\ValueObject\Constants;
 use Nette\Utils\Strings;
 use PharIo\Version\Version;
 
-final class TravisGenerator implements GeneratorsInterface
+final class TravisGenerator implements GeneratorInterface
 {
     /**
      * @var PHPUnitService
@@ -50,6 +50,11 @@ final class TravisGenerator implements GeneratorsInterface
         $yaml['notifications']['email'] = false;
 
         return $yaml;
+    }
+
+    public function getFilename(): string
+    {
+        return '.travis.yml';
     }
 
     /**

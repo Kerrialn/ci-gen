@@ -3,6 +3,11 @@ language: php
 install:
     - composer install
 
+php:
+    - 7.2
+    - 7.3
+    - 7.4
+
 jobs:
     include:
         -
@@ -21,7 +26,6 @@ jobs:
 
         -
             stage: test
-            php: 7.2
             name: "PHPUnit"
             script:
                 - vendor/bin/phpunit

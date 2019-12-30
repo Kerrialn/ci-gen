@@ -9,6 +9,7 @@ use CIConfigGen\ValueObject\Constants;
 use CIConfigGen\Yaml\FilenameGenerator;
 use CIConfigGen\Yaml\YamlPrinter;
 use CIConfigGen\YamlGenerator;
+use Nette\Utils\Strings;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -74,15 +75,15 @@ final class GenerateCommand extends Command
         $ciServices = [];
         $gitConfig = parse_ini_file('.git/config');
 
-        if (strpos($gitConfig['url'], 'github') !== false) {
+        if (Strings::contains($gitConfig['url'], 'github')) {
             $this->symfonyStyle->note('Github detected');
             $ciServices[] = Constants::GITHUB_ACTIONS;
             $ciServices[] = Constants::TRAVIS_CI;
             $ciServices[] = Constants::CIRCLE_CI;
-        } elseif (strpos($gitConfig['url'], 'gitlab') !== false) {
+        } elseif (Strings::contains($gitConfig['url'], 'gitlab')) {
             $this->symfonyStyle->note('Gitlab detected');
             $ciServices[] = Constants::GITLAB_CI;
-        } elseif (strpos($gitConfig['url'], 'bitbucket') !== false) {
+        } elseif (Strings::contains($gitConfig['url'], 'bitbucket')) {
             $this->symfonyStyle->note('Bitbucket detected');
             $ciServices[] = Constants::BITBUCKET_CI;
         } else {
@@ -106,7 +107,7 @@ final class GenerateCommand extends Command
 
         $outputSmartFile = new SmartFileInfo($outputFile);
         $this->symfonyStyle->success(
-            sprintf('File "%s" was successfuly created', $outputSmartFile->getRelativeFilePathFromCwd())
+            sprintf('File "%s" was successfully created', $outputSmartFile->getRelativeFilePathFromCwd())
         );
 
         return ShellCode::SUCCESS;
