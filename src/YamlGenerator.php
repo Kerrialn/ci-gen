@@ -8,10 +8,12 @@ use CIConfigGen\Contract\GeneratorsInterface;
 
 final class YamlGenerator
 {
+    /**
+     * @var GeneratorsInterface[]
+     */
     private $generators = [];
 
     /**
-     * YamlGenerator constructor.
      * @param GeneratorsInterface[] $generators
      */
     public function __construct(array $generators)

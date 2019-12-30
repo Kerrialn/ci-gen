@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace CIConfigGen\Generators;
 
 use CIConfigGen\Contract\GeneratorsInterface;
@@ -13,9 +15,6 @@ final class GitlabGenerator implements GeneratorsInterface
      */
     private $phpUnitService;
 
-    /**
-     * GitlabGenerator constructor.
-     */
     public function __construct(PHPUnitService $phpUnitService)
     {
         $this->phpUnitService = $phpUnitService;

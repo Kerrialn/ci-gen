@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace CIConfigGen\Generators;
 
 use CIConfigGen\Contract\GeneratorsInterface;

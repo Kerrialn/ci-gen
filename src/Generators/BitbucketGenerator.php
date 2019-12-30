@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace CIConfigGen\Generators;
 
 use CIConfigGen\Contract\GeneratorsInterface;
@@ -13,9 +15,6 @@ final class BitbucketGenerator implements GeneratorsInterface
      */
     private $phpUnitService;
 
-    /**
-     * BitbucketGenerator constructor.
-     */
     public function __construct(PHPUnitService $phpUnitService)
     {
         $this->phpUnitService = $phpUnitService;

@@ -1,6 +1,8 @@
 language: php
+
 install:
     - 'composer install'
+
 jobs:
     include:
         -
@@ -13,8 +15,10 @@ jobs:
             php: '7.4'
             script:
                 - 'vendor/bin/phpunit --testsuite main'
+
 cache:
     directories:
         - $HOME/.composer/cache
+
 notifications:
     email: false
