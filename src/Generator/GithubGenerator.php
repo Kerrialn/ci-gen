@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace CIConfigGen\Generators;
+namespace CIConfigGen\Generator;
 
 use CIConfigGen\Contract\GeneratorInterface;
 use CIConfigGen\Services\PHPUnitService;
 use CIConfigGen\ValueObject\Constants;
 
-final class BitbucketGenerator implements GeneratorInterface
+final class GithubGenerator implements GeneratorInterface
 {
     /**
      * @var PHPUnitService
@@ -22,21 +22,24 @@ final class BitbucketGenerator implements GeneratorInterface
 
     public function isMatch(string $ciService): bool
     {
-        return $ciService === Constants::BITBUCKET_CI;
+        return $ciService === Constants::GITHUB_ACTIONS;
     }
 
     public function generate(array $composerJson): array
     {
         return [
-            'name' => Constants::BITBUCKET_CI,
+            'name' => Constants::GITHUB_ACTIONS,
             'language' => 'PHP',
             'on' => '[push]',
-            'pipelines' => [
-                'step' => [
-                    'default' => [
-                        'name' => 'test',
-                        'php' => $composerJson['require']['php'],
-                        'script' => $this->phpUnitService->create(),
+            'jobs' => [
+                'build' => [
+                    'steps' => [
+                        'uses' => 'actions/checkout@v1',
+                        [
+                            'name' => 'test',
+                            'php' => $composerJson['require']['php'],
+                            'run' => $this->phpUnitService->create(),
+                        ],
                     ],
                 ],
             ],
@@ -45,6 +48,6 @@ final class BitbucketGenerator implements GeneratorInterface
 
     public function getFilename(): string
     {
-        return 'bitbucket-pipelines.yml';
+        return '.github/workflows/continuous-integration-workflow.yml';
     }
 }

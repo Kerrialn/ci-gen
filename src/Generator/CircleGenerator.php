@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace CIConfigGen\Generators;
+namespace CIConfigGen\Generator;
 
 use CIConfigGen\Contract\GeneratorInterface;
 use CIConfigGen\Services\PHPUnitService;
 use CIConfigGen\ValueObject\Constants;
 
-final class GithubGenerator implements GeneratorInterface
+final class CircleGenerator implements GeneratorInterface
 {
     /**
      * @var PHPUnitService
@@ -22,25 +22,19 @@ final class GithubGenerator implements GeneratorInterface
 
     public function isMatch(string $ciService): bool
     {
-        return $ciService === Constants::GITHUB_ACTIONS;
+        return $ciService === Constants::CIRCLE_CI;
     }
 
     public function generate(array $composerJson): array
     {
         return [
-            'name' => Constants::GITHUB_ACTIONS,
+            'name' => Constants::CIRCLE_CI,
             'language' => 'PHP',
             'on' => '[push]',
             'jobs' => [
-                'build' => [
-                    'steps' => [
-                        'uses' => 'actions/checkout@v1',
-                        [
-                            'name' => 'test',
-                            'php' => $composerJson['require']['php'],
-                            'run' => $this->phpUnitService->create(),
-                        ],
-                    ],
+                'test' => [
+                    'name' => 'PhpUnit',
+                    'script' => $this->phpUnitService->create(),
                 ],
             ],
         ];
@@ -48,6 +42,6 @@ final class GithubGenerator implements GeneratorInterface
 
     public function getFilename(): string
     {
-        return '.github/workflows/continuous-integration-workflow.yml';
+        return '.circleci/config.yml';
     }
 }

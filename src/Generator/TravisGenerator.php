@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace CIConfigGen\Generators;
+namespace CIConfigGen\Generator;
 
 use CIConfigGen\Contract\GeneratorInterface;
 use CIConfigGen\Services\PHPUnitService;

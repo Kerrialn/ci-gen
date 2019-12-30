@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace CIConfigGen\Console\Command;
 
 use Symfony\Component\Console\Command\Command;
@@ -7,6 +9,7 @@ use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
+use Symplify\PackageBuilder\Console\ShellCode;
 
 final class MigrateCommand extends Command
 {
@@ -29,6 +32,8 @@ final class MigrateCommand extends Command
     public function execute(InputInterface $input, OutputInterface $output): int
     {
         $this->symfonyStyle->ask('da fuck is wrong with you?');
+
+        return ShellCode::SUCCESS;
     }
 
     protected function configure(): void

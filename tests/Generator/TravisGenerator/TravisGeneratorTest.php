@@ -1,6 +1,8 @@
-<?php declare(strict_types=1);
+<?php
 
-namespace CIConfigGen\Tests\Generators\TravisGenerator;
+declare(strict_types=1);
+
+namespace CIConfigGen\Tests\Generator\TravisGenerator;
 
 use CIConfigGen\HttpKernel\CIConfigGenKernel;
 use CIConfigGen\Json\JsonReader;

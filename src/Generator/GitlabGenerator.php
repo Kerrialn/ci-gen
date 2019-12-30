@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace CIConfigGen\Generators;
+namespace CIConfigGen\Generator;
 
 use CIConfigGen\Contract\GeneratorInterface;
 use CIConfigGen\Services\PHPUnitService;
 use CIConfigGen\ValueObject\Constants;
 
-final class CircleGenerator implements GeneratorInterface
+final class GitlabGenerator implements GeneratorInterface
 {
     /**
      * @var PHPUnitService
@@ -22,26 +22,26 @@ final class CircleGenerator implements GeneratorInterface
 
     public function isMatch(string $ciService): bool
     {
-        return $ciService === Constants::CIRCLE_CI;
+        return $ciService === Constants::GITLAB_CI;
     }
 
     public function generate(array $composerJson): array
     {
         return [
-            'name' => Constants::CIRCLE_CI,
+            'name' => Constants::GITLAB_CI,
             'language' => 'PHP',
-            'on' => '[push]',
-            'jobs' => [
-                'test' => [
-                    'name' => 'PhpUnit',
-                    'script' => $this->phpUnitService->create(),
-                ],
+            'stages' => ['test'],
+
+            'job' => [
+                'stage' => 'test',
+                'php' => $composerJson['require']['php'],
+                'script' => $this->phpUnitService->create(),
             ],
         ];
     }
 
     public function getFilename(): string
     {
-        return '.circleci/config.yml';
+        return '.gitlab-ci.yml';
     }
 }
