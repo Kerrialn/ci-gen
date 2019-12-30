@@ -1,9 +1,0 @@
-language: php
-install: '- composer install'
-script: skip
-jobs:
-    include:
-        stage: preparing
-        'name:': prepare
-        php: ^7.3
-        script: '- do something'
