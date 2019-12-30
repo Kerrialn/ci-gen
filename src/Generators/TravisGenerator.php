@@ -29,6 +29,7 @@ final class TravisGenerator implements GeneratorsInterface
     public function generate(array $composerJson): array
     {
         return [
+            'name' => Constants::TRAVIS_CI,
             'language' => 'php',
             'php'=> $composerJson['require']['php'],
             'install' => ['composer update --prefer-source $COMPOSER_FLAGS'],
