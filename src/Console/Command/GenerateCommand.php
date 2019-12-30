@@ -76,22 +76,21 @@ final class GenerateCommand extends Command
 
         if (strpos($gitConfig['url'], 'github') !== false) {
             $this->symfonyStyle->note('Github detected');
-            array_push($ciServices, Constants::GITHUB_ACTIONS, Constants::TRAVIS_CI, Constants::CIRCLE_CI);
+            $ciServices[] = Constants::GITHUB_ACTIONS;
+            $ciServices[] = Constants::TRAVIS_CI;
+            $ciServices[] = Constants::CIRCLE_CI;
         } elseif (strpos($gitConfig['url'], 'gitlab') !== false) {
             $this->symfonyStyle->note('Gitlab detected');
-            array_push($ciServices, Constants::GITLAB_CI);
+            $ciServices[] = Constants::GITLAB_CI;
         } elseif (strpos($gitConfig['url'], 'bitbucket') !== false) {
             $this->symfonyStyle->note('Bitbucket detected');
-            array_push($ciServices, Constants::BITBUCKET_CI);
+            $ciServices[] = Constants::BITBUCKET_CI;
         } else {
-            array_push(
-                $ciServices,
-                Constants::GITLAB_CI,
-                Constants::TRAVIS_CI,
-                Constants::CIRCLE_CI,
-                Constants::GITHUB_ACTIONS,
-                Constants::TRAVIS_CI
-            );
+            $ciServices[] = Constants::GITLAB_CI;
+            $ciServices[] = Constants::TRAVIS_CI;
+            $ciServices[] = Constants::CIRCLE_CI;
+            $ciServices[] = Constants::GITHUB_ACTIONS;
+            $ciServices[] = Constants::TRAVIS_CI;
         }
 
         $ciService = $this->symfonyStyle->choice('Please select a CI service:', $ciServices);
