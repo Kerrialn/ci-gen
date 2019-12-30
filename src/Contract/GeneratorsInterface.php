@@ -6,7 +6,7 @@ namespace CIConfigGen\Contract;
 
 interface GeneratorsInterface
 {
-    public function isMatch(string $ciService): string;
+    public function isMatch(string $ciService): bool;
 
     public function generate(array $composerJson): array;
 }

@@ -22,9 +22,13 @@ final class YamlGenerator
     public function generateFromComposerJson(array $composerJson, string $ciService): array
     {
         foreach ($this->generators as $generator) {
-            if ($generator->isMatch($ciService)) {
-                return $generator->generate($composerJson);
+            if (! $generator->isMatch($ciService)) {
+                continue;
             }
+
+            return $generator->generate($composerJson);
         }
+
+        return [];
     }
 }

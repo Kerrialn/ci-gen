@@ -13,15 +13,12 @@ final class GithubGenerator implements GeneratorsInterface
      */
     private $phpUnitService;
 
-    /**
-     * GithubGenerator constructor.
-     */
     public function __construct(PHPUnitService $phpUnitService)
     {
         $this->phpUnitService = $phpUnitService;
     }
 
-    public function isMatch(string $ciService): string
+    public function isMatch(string $ciService): bool
     {
         return $ciService === Constants::GITHUB_ACTIONS;
     }

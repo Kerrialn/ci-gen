@@ -2,20 +2,28 @@
 
 namespace CIConfigGen\Services;
 
-class PHPUnitService
+use Nette\Utils\Json;
+
+final class PHPUnitService
 {
     public function create(): array
     {
-        $xml = simplexml_load_file('phpUnit.xml');
-        $json = json_encode($xml);
-        $array = json_decode($json, true);
+        $phpunitXml = 'phpunit.xml';
+        if (! file_exists($phpunitXml)) {
+            return [];
+        }
+
+        $xml = simplexml_load_file($phpunitXml);
+        $json = Json::encode($xml, Json::PRETTY);
+        $array = Json::decode($json, Json::FORCE_ARRAY);
 
         $tests = [];
 
-        if ($array['testsuite'] && file_exists('phpUnit.xml')) {
-            array_push($tests, 'vendor/bin/phpunit --testsuite main');
+        if ($array['testsuite']) {
+            $testsuiteName = $array['testsuite']['@attributes']['name'];
+            $tests[] = sprintf('vendor/bin/phpunit --testsuite %s', $testsuiteName);
         } else {
-            array_push($tests, 'skip');
+            $tests[] = 'skip';
         }
 
         return $tests;

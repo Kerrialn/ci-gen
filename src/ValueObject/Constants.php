@@ -2,11 +2,7 @@
 
 namespace CIConfigGen\ValueObject;
 
-/**
- * Class Constants
- * @package CIConfigGen\ValueObject
- */
-class Constants
+final class Constants
 {
     /**
      * @var string

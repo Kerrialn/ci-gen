@@ -21,7 +21,7 @@ final class GitlabGenerator implements GeneratorsInterface
         $this->phpUnitService = $phpUnitService;
     }
 
-    public function isMatch(string $ciService): string
+    public function isMatch(string $ciService): bool
     {
         return $ciService === Constants::GITLAB_CI;
     }

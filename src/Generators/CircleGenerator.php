@@ -21,7 +21,7 @@ final class CircleGenerator implements GeneratorsInterface
         $this->phpUnitService = $phpUnitService;
     }
 
-    public function isMatch(string $ciService): string
+    public function isMatch(string $ciService): bool
     {
         return $ciService === Constants::CIRCLE_CI;
     }

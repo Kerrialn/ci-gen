@@ -1,15 +1,34 @@
-name: 'Travis CI'
 language: php
-php: ^7.2
+
 install:
-    - 'composer update --prefer-source $COMPOSER_FLAGS'
-test:
-    name: PhpUnit
-    php: ^7.2
-    script:
-        - 'vendor/bin/phpunit --testsuite main'
+    - composer install
+
+jobs:
+    include:
+        -
+            stage: test
+            php: 7.2
+            name: Run ci gen
+            script:
+                - bin/ci
+
+        -
+            stage: test
+            php: 7.2
+            name: "Coding Standards"
+            script:
+                - composer check-cs
+
+        -
+            stage: test
+            php: 7.2
+            name: "PHPUnit"
+            script:
+                - vendor/bin/phpunit
+
 cache:
     directories:
         - $HOME/.composer/cache
+
 notifications:
     email: false
