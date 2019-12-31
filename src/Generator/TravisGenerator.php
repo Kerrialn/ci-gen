@@ -7,7 +7,7 @@ namespace CIConfigGen\Generator;
 use CIConfigGen\Composer\VersionResolver;
 use CIConfigGen\Contract\GeneratorInterface;
 use CIConfigGen\ScriptFactory\PHPUnitScriptFactory;
-use CIConfigGen\ValueObject\Constants;
+use CIConfigGen\ValueObject\CiService;
 
 final class TravisGenerator implements GeneratorInterface
 {
@@ -29,7 +29,7 @@ final class TravisGenerator implements GeneratorInterface
 
     public function isMatch(string $ciService): bool
     {
-        return $ciService === Constants::TRAVIS_CI;
+        return $ciService === CiService::TRAVIS_CI;
     }
 
     public function generate(array $composerJson): array

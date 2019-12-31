@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace CIConfigGen\Console\Command;
 
 use CIConfigGen\Json\JsonReader;
-use CIConfigGen\ValueObject\Constants;
+use CIConfigGen\ValueObject\CiService;
 use CIConfigGen\Yaml\FilenameGenerator;
 use CIConfigGen\Yaml\YamlPrinter;
 use CIConfigGen\YamlGenerator;
@@ -77,21 +77,21 @@ final class GenerateCommand extends Command
 
         if (Strings::contains($gitConfig['url'], 'github')) {
             $this->symfonyStyle->note('Github detected');
-            $ciServices[] = Constants::GITHUB_ACTIONS;
-            $ciServices[] = Constants::TRAVIS_CI;
-            $ciServices[] = Constants::CIRCLE_CI;
+            $ciServices[] = CiService::GITHUB_ACTIONS;
+            $ciServices[] = CiService::TRAVIS_CI;
+            $ciServices[] = CiService::CIRCLE_CI;
         } elseif (Strings::contains($gitConfig['url'], 'gitlab')) {
             $this->symfonyStyle->note('Gitlab detected');
-            $ciServices[] = Constants::GITLAB_CI;
+            $ciServices[] = CiService::GITLAB_CI;
         } elseif (Strings::contains($gitConfig['url'], 'bitbucket')) {
             $this->symfonyStyle->note('Bitbucket detected');
-            $ciServices[] = Constants::BITBUCKET_CI;
+            $ciServices[] = CiService::BITBUCKET_CI;
         } else {
-            $ciServices[] = Constants::GITLAB_CI;
-            $ciServices[] = Constants::TRAVIS_CI;
-            $ciServices[] = Constants::CIRCLE_CI;
-            $ciServices[] = Constants::GITHUB_ACTIONS;
-            $ciServices[] = Constants::TRAVIS_CI;
+            $ciServices[] = CiService::GITLAB_CI;
+            $ciServices[] = CiService::TRAVIS_CI;
+            $ciServices[] = CiService::CIRCLE_CI;
+            $ciServices[] = CiService::GITHUB_ACTIONS;
+            $ciServices[] = CiService::TRAVIS_CI;
         }
 
         $ciService = $this->symfonyStyle->choice('Please select a CI service:', $ciServices);

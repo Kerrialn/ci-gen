@@ -6,7 +6,7 @@ namespace CIConfigGen\Tests\Generator\TravisGenerator;
 
 use CIConfigGen\HttpKernel\CIConfigGenKernel;
 use CIConfigGen\Json\JsonReader;
-use CIConfigGen\ValueObject\Constants;
+use CIConfigGen\ValueObject\CiService;
 use CIConfigGen\Yaml\YamlPrinter;
 use CIConfigGen\YamlGenerator;
 use Iterator;
@@ -46,7 +46,7 @@ final class TravisGeneratorTest extends AbstractKernelTestCase
     {
         $json = $this->jsonReader->readFileToJson($jsonFile);
 
-        $yaml = $this->yamlGenerator->generateFromComposerJson($json, Constants::TRAVIS_CI);
+        $yaml = $this->yamlGenerator->generateFromComposerJson($json, CiService::TRAVIS_CI);
         $yamlContent = $this->yamlPrinter->printYamlToString($yaml);
 
         $this->assertStringEqualsFile($expectedYamlFile, $yamlContent);

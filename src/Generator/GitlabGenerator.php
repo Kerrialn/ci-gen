@@ -6,7 +6,7 @@ namespace CIConfigGen\Generator;
 
 use CIConfigGen\Contract\GeneratorInterface;
 use CIConfigGen\ScriptFactory\PHPUnitScriptFactory;
-use CIConfigGen\ValueObject\Constants;
+use CIConfigGen\ValueObject\CiService;
 
 final class GitlabGenerator implements GeneratorInterface
 {
@@ -22,13 +22,13 @@ final class GitlabGenerator implements GeneratorInterface
 
     public function isMatch(string $ciService): bool
     {
-        return $ciService === Constants::GITLAB_CI;
+        return $ciService === CiService::GITLAB_CI;
     }
 
     public function generate(array $composerJson): array
     {
         return [
-            'name' => Constants::GITLAB_CI,
+            'name' => CiService::GITLAB_CI,
             'language' => 'PHP',
             'stages' => ['test'],
 

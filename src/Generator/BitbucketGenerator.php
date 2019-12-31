@@ -6,7 +6,7 @@ namespace CIConfigGen\Generator;
 
 use CIConfigGen\Contract\GeneratorInterface;
 use CIConfigGen\ScriptFactory\PHPUnitScriptFactory;
-use CIConfigGen\ValueObject\Constants;
+use CIConfigGen\ValueObject\CiService;
 
 final class BitbucketGenerator implements GeneratorInterface
 {
@@ -22,13 +22,13 @@ final class BitbucketGenerator implements GeneratorInterface
 
     public function isMatch(string $ciService): bool
     {
-        return $ciService === Constants::BITBUCKET_CI;
+        return $ciService === CiService::BITBUCKET_CI;
     }
 
     public function generate(array $composerJson): array
     {
         return [
-            'name' => Constants::BITBUCKET_CI,
+            'name' => CiService::BITBUCKET_CI,
             'language' => 'PHP',
             'on' => '[push]',
             'pipelines' => [

@@ -6,7 +6,7 @@ namespace CIConfigGen\Generator;
 
 use CIConfigGen\Contract\GeneratorInterface;
 use CIConfigGen\ScriptFactory\PHPUnitScriptFactory;
-use CIConfigGen\ValueObject\Constants;
+use CIConfigGen\ValueObject\CiService;
 
 final class GithubGenerator implements GeneratorInterface
 {
@@ -22,13 +22,13 @@ final class GithubGenerator implements GeneratorInterface
 
     public function isMatch(string $ciService): bool
     {
-        return $ciService === Constants::GITHUB_ACTIONS;
+        return $ciService === CiService::GITHUB_ACTIONS;
     }
 
     public function generate(array $composerJson): array
     {
         return [
-            'name' => Constants::GITHUB_ACTIONS,
+            'name' => CiService::GITHUB_ACTIONS,
             'language' => 'PHP',
             'on' => '[push]',
             'jobs' => [
