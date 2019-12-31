@@ -4,10 +4,20 @@ declare(strict_types=1);
 
 namespace CIConfigGen\ScriptFactory;
 
-use Nette\Utils\Json;
+use CIConfigGen\Xml\XmlReader;
 
 final class PHPUnitScriptFactory
 {
+    /**
+     * @var XmlReader
+     */
+    private $xmlReader;
+
+    public function __construct(XmlReader $xmlReader)
+    {
+        $this->xmlReader = $xmlReader;
+    }
+
     public function create(): array
     {
         $phpunitXml = 'phpunit.xml';
@@ -15,9 +25,7 @@ final class PHPUnitScriptFactory
             return [];
         }
 
-        $xml = simplexml_load_file($phpunitXml);
-        $json = Json::encode($xml, Json::PRETTY);
-        $array = Json::decode($json, Json::FORCE_ARRAY);
+        $array = $this->xmlReader->readXmlToArray($phpunitXml);
 
         $tests = [];
 
