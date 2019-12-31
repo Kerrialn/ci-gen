@@ -6,11 +6,9 @@ namespace CIConfigGen\Console\Command;
 
 use CIConfigGen\Detector\DetectCIFromGitConfig;
 use CIConfigGen\Json\JsonReader;
-use CIConfigGen\ValueObject\CiService;
 use CIConfigGen\Yaml\FilenameGenerator;
 use CIConfigGen\Yaml\YamlPrinter;
 use CIConfigGen\YamlGenerator;
-use Nette\Utils\Strings;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -25,6 +23,8 @@ final class GenerateCommand extends Command
      * @var string
      */
     public const NAME = 'gen';
+
+    private $detectCIFromGitConfig;
 
     /**
      * @var SymfonyStyle
@@ -50,10 +50,6 @@ final class GenerateCommand extends Command
      * @var JsonReader
      */
     private $jsonReader;
-
-
-    private $detectCIFromGitConfig;
-
 
     public function __construct(
         SymfonyStyle $symfonyStyle,

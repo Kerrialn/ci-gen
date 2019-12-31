@@ -7,8 +7,8 @@ namespace CIConfigGen\Console;
 use CIConfigGen\Console\Command\GenerateCommand;
 use Symfony\Component\Console\Application;
 
-final class CIConfigGenApplication extends Application {
-
+final class CIConfigGenApplication extends Application
+{
     public function __construct(GenerateCommand $generateCommand)
     {
         $this->add($generateCommand);

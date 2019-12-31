@@ -7,8 +7,8 @@ namespace CIConfigGen\Yaml;
 use CIConfigGen\Contract\GeneratorInterface;
 use CIConfigGen\Exception\ShouldNotHappenException;
 
-final class FilenameGenerator {
-
+final class FilenameGenerator
+{
     /**
      * @var GeneratorInterface[]
      */
@@ -24,10 +24,8 @@ final class FilenameGenerator {
 
     public function generateFilename(string $ciService): string
     {
-        foreach ($this->generators as $generator)
-        {
-            if (!$generator->isMatch($ciService))
-            {
+        foreach ($this->generators as $generator) {
+            if (! $generator->isMatch($ciService)) {
                 continue;
             }
 
@@ -36,5 +34,4 @@ final class FilenameGenerator {
 
         throw new ShouldNotHappenException();
     }
-
 }

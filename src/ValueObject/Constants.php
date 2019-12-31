@@ -1,13 +1,15 @@
 <?php
 
+declare(strict_types=1);
+
 namespace CIConfigGen\ValueObject;
 
 /**
  * Class Constants
  * @package CIConfigGen\ValueObject
  */
-class Constants {
-
+class Constants
+{
     /**
      * @var array
      */
@@ -16,7 +18,7 @@ class Constants {
         self::TRAVIS_CI => '.travis.yml',
         self::GITHUB_ACTIONS => '.github/workflows/continuous-integration-workflow.yml',
         self::GITLAB_CI => '.gitlab-ci.yml',
-        self::BITBUCKET_CI => 'bitbucket-pipelines.yml'
+        self::BITBUCKET_CI => 'bitbucket-pipelines.yml',
     ];
 
     /**
