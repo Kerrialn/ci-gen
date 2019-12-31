@@ -12,11 +12,11 @@ class Constants {
      * @var array
      */
     public const CI_SERVICES = [
-        '.circleci/config.yml',
-        '.travis.yml',
-        '.github/workflows/continuous-integration-workflow.yml',
-        '.gitlab-ci.yml',
-        'bitbucket-pipelines.yml'
+        self::CIRCLE_CI => '.circleci/config.yml',
+        self::TRAVIS_CI => '.travis.yml',
+        self::GITHUB_ACTIONS => '.github/workflows/continuous-integration-workflow.yml',
+        self::GITLAB_CI => '.gitlab-ci.yml',
+        self::BITBUCKET_CI => 'bitbucket-pipelines.yml'
     ];
 
     /**

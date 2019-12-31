@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace CIConfigGen\Console\Command;
 
+use CIConfigGen\Detector\DetectCIFromGitConfig;
 use CIConfigGen\Json\JsonReader;
 use CIConfigGen\ValueObject\CiService;
 use CIConfigGen\Yaml\FilenameGenerator;
@@ -50,18 +51,24 @@ final class GenerateCommand extends Command
      */
     private $jsonReader;
 
+
+    private $detectCIFromGitConfig;
+
+
     public function __construct(
         SymfonyStyle $symfonyStyle,
         JsonReader $jsonReader,
         YamlGenerator $yamlGenerator,
         YamlPrinter $yamlPrinter,
-        FilenameGenerator $filenameGenerator
+        FilenameGenerator $filenameGenerator,
+        DetectCIFromGitConfig $detectCIFromGitConfig
     ) {
         $this->symfonyStyle = $symfonyStyle;
         $this->yamlGenerator = $yamlGenerator;
         $this->yamlPrinter = $yamlPrinter;
         $this->jsonReader = $jsonReader;
         $this->filenameGenerator = $filenameGenerator;
+        $this->detectCIFromGitConfig = $detectCIFromGitConfig;
 
         parent::__construct();
     }
@@ -70,30 +77,10 @@ final class GenerateCommand extends Command
     {
         /** @var string $file */
         $file = $input->getArgument('file');
-
-        // 1. read & get user input
-        $ciServices = [];
         $gitConfig = parse_ini_file('.git/config');
 
-        if (Strings::contains($gitConfig['url'], 'github')) {
-            $this->symfonyStyle->note('Github detected');
-            $ciServices[] = CiService::GITHUB_ACTIONS;
-            $ciServices[] = CiService::TRAVIS_CI;
-            $ciServices[] = CiService::CIRCLE_CI;
-        } elseif (Strings::contains($gitConfig['url'], 'gitlab')) {
-            $this->symfonyStyle->note('Gitlab detected');
-            $ciServices[] = CiService::GITLAB_CI;
-        } elseif (Strings::contains($gitConfig['url'], 'bitbucket')) {
-            $this->symfonyStyle->note('Bitbucket detected');
-            $ciServices[] = CiService::BITBUCKET_CI;
-        } else {
-            $ciServices[] = CiService::GITLAB_CI;
-            $ciServices[] = CiService::TRAVIS_CI;
-            $ciServices[] = CiService::CIRCLE_CI;
-            $ciServices[] = CiService::GITHUB_ACTIONS;
-            $ciServices[] = CiService::TRAVIS_CI;
-        }
-
+        // 1. read & get user input
+        $ciServices = $this->detectCIFromGitConfig->detect($gitConfig);
         $ciService = $this->symfonyStyle->choice('Please select a CI service:', $ciServices);
         $output->writeln('You selected: ' . $ciService);
         $composerJsonContent = $this->jsonReader->readFileToJson($file);
