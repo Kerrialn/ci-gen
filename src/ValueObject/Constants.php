@@ -8,6 +8,14 @@ namespace CIConfigGen\ValueObject;
  */
 class Constants
 {
+    public const CI_SERVICES = [
+        '.circleci/config.yml',
+        '.travis.yml',
+        '.github/workflows/continuous-integration-workflow.yml',
+        '.gitlab-ci.yml',
+        'bitbucket-pipelines.yml'
+    ];
+
     /**
      * @var string
      */

@@ -2,11 +2,14 @@
 
 namespace CIConfigGen\Console\Command;
 
+use CIConfigGen\CIDetector;
+use CIConfigGen\ValueObject\Constants;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
+use Symplify\PackageBuilder\Console\ShellCode;
 
 final class MigrateCommand extends Command
 {
@@ -19,24 +22,34 @@ final class MigrateCommand extends Command
      * @var SymfonyStyle
      */
     private $symfonyStyle;
+    /**
+     * @var CIDetector
+     */
+    private $CIDetector;
 
-    public function __construct(SymfonyStyle $symfonyStyle)
+    public function __construct(SymfonyStyle $symfonyStyle, CIDetector $CIDetector)
     {
         $this->symfonyStyle = $symfonyStyle;
+        $this->CIDetector = $CIDetector;
         parent::__construct();
     }
 
     public function execute(InputInterface $input, OutputInterface $output): int
     {
+        /** @var string $file */
+        $file = $input->getArgument('file');
+
         $this->symfonyStyle->ask('da fuck is wrong with you?');
+
+        return ShellCode::SUCCESS;
+
     }
 
     protected function configure(): void
     {
         $this->setName(self::NAME);
-        $this->setDescription('Migrates an existing CI service to a different service');
-
-        $yamlFile = null;
+        $this->setDescription('Migrate an existing CI service to alternative');
+        $yamlFile = $this->CIDetector->run();
         $this->addArgument('file', InputArgument::OPTIONAL, 'Path to existing CI yaml file', $yamlFile);
     }
 }
