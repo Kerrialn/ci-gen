@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace CIConfigGen\Services;
+namespace CIConfigGen\ScriptFactory;
 
 use Nette\Utils\Json;
 
-final class PHPUnitService
+final class PHPUnitScriptFactory
 {
     public function create(): array
     {

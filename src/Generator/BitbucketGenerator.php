@@ -5,19 +5,19 @@ declare(strict_types=1);
 namespace CIConfigGen\Generator;
 
 use CIConfigGen\Contract\GeneratorInterface;
-use CIConfigGen\Services\PHPUnitService;
+use CIConfigGen\ScriptFactory\PHPUnitScriptFactory;
 use CIConfigGen\ValueObject\Constants;
 
 final class BitbucketGenerator implements GeneratorInterface
 {
     /**
-     * @var PHPUnitService
+     * @var PHPUnitScriptFactory
      */
-    private $phpUnitService;
+    private $phpUnitScriptFactory;
 
-    public function __construct(PHPUnitService $phpUnitService)
+    public function __construct(PHPUnitScriptFactory $phpUnitScriptFactory)
     {
-        $this->phpUnitService = $phpUnitService;
+        $this->phpUnitScriptFactory = $phpUnitScriptFactory;
     }
 
     public function isMatch(string $ciService): bool
@@ -36,7 +36,7 @@ final class BitbucketGenerator implements GeneratorInterface
                     'default' => [
                         'name' => 'test',
                         'php' => $composerJson['require']['php'],
-                        'script' => $this->phpUnitService->create(),
+                        'script' => $this->phpUnitScriptFactory->create(),
                     ],
                 ],
             ],

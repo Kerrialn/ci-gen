@@ -6,24 +6,24 @@ namespace CIConfigGen\Generator;
 
 use CIConfigGen\Composer\VersionResolver;
 use CIConfigGen\Contract\GeneratorInterface;
-use CIConfigGen\Services\PHPUnitService;
+use CIConfigGen\ScriptFactory\PHPUnitScriptFactory;
 use CIConfigGen\ValueObject\Constants;
 
 final class TravisGenerator implements GeneratorInterface
 {
     /**
-     * @var PHPUnitService
+     * @var PHPUnitScriptFactory
      */
-    private $phpUnitService;
+    private $phpUnitScriptFactory;
 
     /**
      * @var VersionResolver
      */
     private $versionResolver;
 
-    public function __construct(PHPUnitService $phpUnitService, VersionResolver $versionResolver)
+    public function __construct(PHPUnitScriptFactory $phpUnitScriptFactory, VersionResolver $versionResolver)
     {
-        $this->phpUnitService = $phpUnitService;
+        $this->phpUnitScriptFactory = $phpUnitScriptFactory;
         $this->versionResolver = $versionResolver;
     }
 
@@ -40,7 +40,7 @@ final class TravisGenerator implements GeneratorInterface
 
         $yaml['install'][] = 'composer install';
 
-        $phpunitJob = $this->phpUnitService->create();
+        $phpunitJob = $this->phpUnitScriptFactory->create();
         if ($phpunitJob) {
             foreach ($phpVersions as $phpVersion) {
                 $yaml['jobs']['include'][] = [
