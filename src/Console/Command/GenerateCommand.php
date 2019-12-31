@@ -5,10 +5,11 @@ declare(strict_types=1);
 namespace CIConfigGen\Console\Command;
 
 use CIConfigGen\Json\JsonReader;
-use CIConfigGen\ValueObject\Constants;
+use CIConfigGen\ValueObject\CiService;
 use CIConfigGen\Yaml\FilenameGenerator;
 use CIConfigGen\Yaml\YamlPrinter;
 use CIConfigGen\YamlGenerator;
+use Nette\Utils\Strings;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -74,24 +75,23 @@ final class GenerateCommand extends Command
         $ciServices = [];
         $gitConfig = parse_ini_file('.git/config');
 
-        if (strpos($gitConfig['url'], 'github') !== false) {
+        if (Strings::contains($gitConfig['url'], 'github')) {
             $this->symfonyStyle->note('Github detected');
-            array_push($ciServices, Constants::GITHUB_ACTIONS, Constants::TRAVIS_CI, Constants::CIRCLE_CI);
-        } elseif (strpos($gitConfig['url'], 'gitlab') !== false) {
+            $ciServices[] = CiService::GITHUB_ACTIONS;
+            $ciServices[] = CiService::TRAVIS_CI;
+            $ciServices[] = CiService::CIRCLE_CI;
+        } elseif (Strings::contains($gitConfig['url'], 'gitlab')) {
             $this->symfonyStyle->note('Gitlab detected');
-            array_push($ciServices, Constants::GITLAB_CI);
-        } elseif (strpos($gitConfig['url'], 'bitbucket') !== false) {
+            $ciServices[] = CiService::GITLAB_CI;
+        } elseif (Strings::contains($gitConfig['url'], 'bitbucket')) {
             $this->symfonyStyle->note('Bitbucket detected');
-            array_push($ciServices, Constants::BITBUCKET_CI);
+            $ciServices[] = CiService::BITBUCKET_CI;
         } else {
-            array_push(
-                $ciServices,
-                Constants::GITLAB_CI,
-                Constants::TRAVIS_CI,
-                Constants::CIRCLE_CI,
-                Constants::GITHUB_ACTIONS,
-                Constants::TRAVIS_CI
-            );
+            $ciServices[] = CiService::GITLAB_CI;
+            $ciServices[] = CiService::TRAVIS_CI;
+            $ciServices[] = CiService::CIRCLE_CI;
+            $ciServices[] = CiService::GITHUB_ACTIONS;
+            $ciServices[] = CiService::TRAVIS_CI;
         }
 
         $ciService = $this->symfonyStyle->choice('Please select a CI service:', $ciServices);
@@ -107,7 +107,7 @@ final class GenerateCommand extends Command
 
         $outputSmartFile = new SmartFileInfo($outputFile);
         $this->symfonyStyle->success(
-            sprintf('File "%s" was successfuly created', $outputSmartFile->getRelativeFilePathFromCwd())
+            sprintf('File "%s" was successfully created', $outputSmartFile->getRelativeFilePathFromCwd())
         );
 
         return ShellCode::SUCCESS;

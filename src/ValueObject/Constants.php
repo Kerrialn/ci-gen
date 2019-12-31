@@ -6,8 +6,11 @@ namespace CIConfigGen\ValueObject;
  * Class Constants
  * @package CIConfigGen\ValueObject
  */
-class Constants
-{
+class Constants {
+
+    /**
+     * @var array
+     */
     public const CI_SERVICES = [
         '.circleci/config.yml',
         '.travis.yml',

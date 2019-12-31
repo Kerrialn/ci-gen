@@ -4,15 +4,17 @@ declare(strict_types=1);
 
 namespace CIConfigGen;
 
-use CIConfigGen\Contract\GeneratorsInterface;
+use CIConfigGen\Contract\GeneratorInterface;
 
 final class YamlGenerator
 {
+    /**
+     * @var GeneratorInterface[]
+     */
     private $generators = [];
 
     /**
-     * YamlGenerator constructor.
-     * @param GeneratorsInterface[] $generators
+     * @param GeneratorInterface[] $generators
      */
     public function __construct(array $generators)
     {
@@ -22,9 +24,13 @@ final class YamlGenerator
     public function generateFromComposerJson(array $composerJson, string $ciService): array
     {
         foreach ($this->generators as $generator) {
-            if ($generator->isMatch($ciService)) {
-                return $generator->generate($composerJson);
+            if (! $generator->isMatch($ciService)) {
+                continue;
             }
+
+            return $generator->generate($composerJson);
         }
+
+        return [];
     }
 }

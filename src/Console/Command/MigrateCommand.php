@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace CIConfigGen\Console\Command;
 
 use CIConfigGen\CIDetector;
@@ -42,14 +44,5 @@ final class MigrateCommand extends Command
         $this->symfonyStyle->ask('da fuck is wrong with you?');
 
         return ShellCode::SUCCESS;
-
-    }
-
-    protected function configure(): void
-    {
-        $this->setName(self::NAME);
-        $this->setDescription('Migrate an existing CI service to alternative');
-        $yamlFile = $this->CIDetector->run();
-        $this->addArgument('file', InputArgument::OPTIONAL, 'Path to existing CI yaml file', $yamlFile);
     }
 }
