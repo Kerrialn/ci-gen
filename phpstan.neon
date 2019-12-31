@@ -14,3 +14,5 @@ parameters:
         # mixed
         - '#type has no value type specified in iterable type#'
         - '#with no value type specified in iterable#'
+        - '#Cannot access offset (.*?) on array\|false#'
+        - '#Offset (.*?) does not exist on array\|null#'

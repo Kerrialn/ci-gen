@@ -4,28 +4,34 @@ declare(strict_types=1);
 
 namespace CIConfigGen\Yaml;
 
-use CIConfigGen\ValueObject\Constants;
+use CIConfigGen\Contract\GeneratorInterface;
+use CIConfigGen\Exception\ShouldNotHappenException;
 
 final class FilenameGenerator
 {
+    /**
+     * @var GeneratorInterface[]
+     */
+    private $generators = [];
+
+    /**
+     * @param GeneratorInterface[] $generators
+     */
+    public function __construct(array $generators)
+    {
+        $this->generators = $generators;
+    }
+
     public function generateFilename(string $ciService): string
     {
-        if ($ciService === Constants::GITLAB_CI) {
-            $filename = Constants::GITLAB_CI_FILE_PATH;
-        } elseif ($ciService === Constants::GITHUB_ACTIONS) {
-            mkdir(getcwd() . '.github/workflows');
-            $filename = Constants::GITHUB_ACTIONS_FILE_PATH;
-        } elseif ($ciService === Constants::BITBUCKET_CI) {
-            $filename = Constants::BITBUCKET_CI_FILE_PATH;
-        } elseif ($ciService === Constants::TRAVIS_CI) {
-            $filename = Constants::TRAVIS_CI_FILE_PATH;
-        } elseif ($ciService === Constants::CIRCLE_CI) {
-            mkdir(getcwd() . 'circleci');
-            $filename = Constants::CIRCLE_CI_FILE_PATH;
-        } else {
-            $filename = 'unknown-ci.yml';
+        foreach ($this->generators as $generator) {
+            if (! $generator->isMatch($ciService)) {
+                continue;
+            }
+
+            return $generator->getFilename();
         }
 
-        return $filename;
+        throw new ShouldNotHappenException();
     }
 }
