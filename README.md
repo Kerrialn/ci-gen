@@ -44,4 +44,3 @@ notifications:
 - Github Actions
 - Circle CI
 - Gitlab CI
-- Bitbucket CI
