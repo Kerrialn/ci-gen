@@ -1,4 +1,6 @@
+<p align="center">
 <img src="https://github.com/Kerrialn/ci-gen/blob/master/resources/CI-Gen-logo-v2.png" height=250 width=250>
+</p>
 
 # CI Gen
 
