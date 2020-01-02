@@ -6,6 +6,7 @@ namespace CIConfigGen\Generator;
 
 use CIConfigGen\Composer\VersionResolver;
 use CIConfigGen\Contract\GeneratorInterface;
+use CIConfigGen\ScriptFactory\ECSFactory;
 use CIConfigGen\ScriptFactory\PHPUnitScriptFactory;
 use CIConfigGen\ValueObject\CiService;
 
@@ -21,10 +22,19 @@ final class TravisGenerator implements GeneratorInterface
      */
     private $versionResolver;
 
-    public function __construct(PHPUnitScriptFactory $phpUnitScriptFactory, VersionResolver $versionResolver)
-    {
+    /**
+     * @var ECSFactory
+     */
+    private $ecsFactory;
+
+    public function __construct(
+        PHPUnitScriptFactory $phpUnitScriptFactory,
+        VersionResolver $versionResolver,
+        ECSFactory $ecsFactory
+    ) {
         $this->phpUnitScriptFactory = $phpUnitScriptFactory;
         $this->versionResolver = $versionResolver;
+        $this->ecsFactory = $ecsFactory;
     }
 
     public function isMatch(string $ciService): bool
@@ -51,13 +61,14 @@ final class TravisGenerator implements GeneratorInterface
             }
         }
 
-        if ($composerJson['require-dev']['symplify/easy-coding-standard']) {
+        $ecsJob = $this->ecsFactory->create($composerJson);
+        if ($ecsJob) {
             foreach ($phpVersions as $phpVersion) {
                 $yaml['jobs']['include'][] = [
+                    'stage' => 'test',
                     'name' => 'ECS',
                     'php' => $phpVersion->getVersionString(),
-                    'script' =>
-                        [$composerJson['scripts']['check-cs'], $composerJson['scripts']['fix-cs']],
+                    'script' => $ecsJob,
                 ];
             }
         }
