@@ -67,7 +67,7 @@ final class TravisGenerator implements GeneratorInterface
                 $yaml['jobs']['include'][] = [
                     'stage' => 'test',
                     'name' => 'ECS',
-                    'php' => $phpVersion->getVersionString(),
+                    'php' => $phpVersion->getMajor(),
                     'script' => $ecsJob,
                 ];
             }
