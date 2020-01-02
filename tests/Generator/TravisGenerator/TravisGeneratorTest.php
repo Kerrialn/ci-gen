@@ -32,10 +32,8 @@ final class TravisGeneratorTest extends AbstractKernelTestCase
     protected function setUp(): void
     {
         $this->bootKernel(CIConfigGenKernel::class);
-
         $this->jsonReader = self::$container->get(JsonReader::class);
         $this->yamlPrinter = self::$container->get(YamlPrinter::class);
-
         $this->yamlGenerator = self::$container->get(YamlGenerator::class);
     }
 
