@@ -6,11 +6,12 @@ namespace CIConfigGen\Generator;
 
 use CIConfigGen\Composer\VersionResolver;
 use CIConfigGen\Contract\GeneratorInterface;
+use CIConfigGen\ScriptFactory\ECSFactory;
 use CIConfigGen\ScriptFactory\PHPUnitScriptFactory;
 use CIConfigGen\ValueObject\CiService;
 
-final class TravisGenerator implements GeneratorInterface
-{
+final class TravisGenerator implements GeneratorInterface {
+
     /**
      * @var PHPUnitScriptFactory
      */
@@ -41,13 +42,34 @@ final class TravisGenerator implements GeneratorInterface
         $yaml['install'][] = 'composer install';
 
         $phpunitJob = $this->phpUnitScriptFactory->create();
-        if ($phpunitJob) {
-            foreach ($phpVersions as $phpVersion) {
+        if ($phpunitJob)
+        {
+            foreach ($phpVersions as $phpVersion)
+            {
                 $yaml['jobs']['include'][] = [
                     'stage' => 'test',
                     'php' => $phpVersion->getVersionString(),
                     'script' => $phpunitJob,
                 ];
+            }
+        }
+        if ($composerJson['require-dev']['symplify/easy-coding-standard'])
+        {
+            if ($composerJson['scripts']['check-cs'])
+            {
+                foreach ($phpVersions as $phpVersion)
+                {
+                    $yaml['jobs']['include'][] = [
+                        'name' => 'ECS',
+                        'php' => $phpVersion->getVersionString(),
+                        'script' =>
+                            [
+                                $composerJson['scripts']['check-cs'],
+                                $composerJson['scripts']['fix-cs']
+                            ],
+
+                    ];
+                }
             }
         }
 
