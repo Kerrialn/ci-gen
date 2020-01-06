@@ -12,8 +12,8 @@ use CIConfigGen\YamlGenerator;
 use Iterator;
 use Symplify\PackageBuilder\Tests\AbstractKernelTestCase;
 
-final class TravisGeneratorTest extends AbstractKernelTestCase
-{
+final class TravisGeneratorTest extends AbstractKernelTestCase {
+
     /**
      * @var YamlGenerator
      */
@@ -54,4 +54,5 @@ final class TravisGeneratorTest extends AbstractKernelTestCase
     {
         yield [__DIR__ . '/Fixture/first.json', __DIR__ . '/Fixture/expected_first.yaml'];
     }
+
 }
