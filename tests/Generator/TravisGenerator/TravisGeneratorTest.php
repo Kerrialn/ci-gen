@@ -52,6 +52,6 @@ final class TravisGeneratorTest extends AbstractKernelTestCase
 
     public function provideData(): Iterator
     {
-        yield [__DIR__ . '/Fixture/first.json', __DIR__ . '/Fixture/expected_first.yaml'];
+        yield [__DIR__ . '/Fixture/source.json', __DIR__ . '/Fixture/expected.yaml'];
     }
 }
