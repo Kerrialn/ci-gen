@@ -34,6 +34,11 @@ final class VersionResolver
         return $phpVersions;
     }
 
+    public function getMinimalVersion(array $composerJson): string
+    {
+        return preg_replace('#[^\pL\pN./-]+#', '', $composerJson['require']['php']);
+    }
+
     private function getNextMinorVersion(Version $version): string
     {
         return $version->getMajor()->getValue() . '.' . ($version->getMinor()->getValue() + 1);

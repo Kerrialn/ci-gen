@@ -63,14 +63,12 @@ final class TravisGenerator implements GeneratorInterface
 
         $ecsJob = $this->ecsFactory->create($composerJson);
         if ($ecsJob) {
-            foreach ($phpVersions as $phpVersion) {
-                $yaml['jobs']['include'][] = [
-                    'stage' => 'test',
-                    'name' => 'ECS',
-                    'php' => $phpVersion->getMajor(),
-                    'script' => $ecsJob,
-                ];
-            }
+            $yaml['jobs']['include'][] = [
+                'stage' => 'test',
+                'name' => 'ECS',
+                'php' => $this->versionResolver->getMinimalVersion($composerJson),
+                'script' => $ecsJob,
+            ];
         }
 
         $yaml['cache']['directories'] = ['$HOME/.composer/cache'];
