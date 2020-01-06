@@ -10,17 +10,22 @@ use CIConfigGen\ScriptFactory\ECSFactory;
 use CIConfigGen\ScriptFactory\PHPUnitScriptFactory;
 use CIConfigGen\ValueObject\CiService;
 
-final class GitlabGenerator implements GeneratorInterface {
+final class GitlabGenerator implements GeneratorInterface
+{
+    private $ecsFactory;
+
+    private $versionResolver;
 
     /**
      * @var PHPUnitScriptFactory
      */
     private $phpUnitScriptFactory;
-    private $versionResolver;
-    private $ecsFactory;
 
-    public function __construct(PHPUnitScriptFactory $phpUnitScriptFactory, VersionResolver $versionResolver, ECSFactory $ecsFactory)
-    {
+    public function __construct(
+        PHPUnitScriptFactory $phpUnitScriptFactory,
+        VersionResolver $versionResolver,
+        ECSFactory $ecsFactory
+    ) {
         $this->phpUnitScriptFactory = $phpUnitScriptFactory;
         $this->versionResolver = $versionResolver;
         $this->ecsFactory = $ecsFactory;
@@ -35,41 +40,34 @@ final class GitlabGenerator implements GeneratorInterface {
     {
         $yaml = [];
 
-        $phpVersions = $this->versionResolver->resolvePhpVersions($composerJson);
         $phpunitJob = $this->phpUnitScriptFactory->create();
         $ecsJob = $this->ecsFactory->create($composerJson);
 
-        if ($composerJson)
-        {
+        if ($composerJson) {
             $yaml['stages'][] = 'install';
         }
-        if ($phpunitJob || $ecsJob)
-        {
+        if ($phpunitJob || $ecsJob) {
             $yaml['stages'][] = 'test';
         }
-        if ($this->versionResolver->getMinimalVersion($composerJson))
-        {
+        if ($this->versionResolver->getMinimalVersion($composerJson)) {
             $yaml['stages'][] = 'build';
         }
 
-        if ($composerJson)
-        {
+        if ($composerJson) {
             $yaml['install'] = [
                 'stage' => 'install',
                 'script' => ['composer verify', 'composer install'],
             ];
         }
 
-        if ($phpunitJob)
-        {
+        if ($phpunitJob) {
             $yaml['phpunit_jobs'] = [
                 'stage' => 'test',
                 'script' => $phpunitJob,
             ];
         }
 
-        if ($ecsJob)
-        {
+        if ($ecsJob) {
             $yaml['ecs_jobs'] = [
                 'stage' => 'test',
                 'script' => $ecsJob,
