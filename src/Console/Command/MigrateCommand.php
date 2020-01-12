@@ -1,16 +1,16 @@
 <?php
 
+declare(strict_types=1);
 
 namespace CIConfigGen\Console\Command;
 
-
-use CIConfigGen\Detector\DetectCIFromGitConfig;
 use CIConfigGen\Detector\DetectExistingCI;
 use CIConfigGen\Json\JsonReader;
+use CIConfigGen\Migrator\MigrationIntermediaryObject;
 use CIConfigGen\ValueObject\Constants;
 use CIConfigGen\Yaml\FilenameGenerator;
 use CIConfigGen\Yaml\YamlPrinter;
-use CIConfigGen\Yaml\YamlToJson;
+use CIConfigGen\Yaml\YamlToArray;
 use CIConfigGen\YamlGenerator;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
@@ -26,6 +26,8 @@ final class MigrateCommand extends Command {
      * @var string
      */
     public const NAME = 'migrate';
+
+    private $yamlToArray;
 
     private $detectExistingCi;
 
@@ -53,9 +55,7 @@ final class MigrateCommand extends Command {
      * @var JsonReader
      */
     private $jsonReader;
-
-
-    private $yamlToJson;
+    private $migrationIntermediaryObject;
 
     public function __construct(
         SymfonyStyle $symfonyStyle,
@@ -63,8 +63,9 @@ final class MigrateCommand extends Command {
         YamlGenerator $yamlGenerator,
         YamlPrinter $yamlPrinter,
         FilenameGenerator $filenameGenerator,
-        DetectExistingCI $detectExistingCi,
-        YamlToJson $yamlToJson
+        DetectExistingCI $detectExistingCI,
+        YamlToArray $yamlToArray,
+        MigrationIntermediaryObject $migrationIntermediaryObject
     )
     {
         $this->symfonyStyle = $symfonyStyle;
@@ -72,15 +73,15 @@ final class MigrateCommand extends Command {
         $this->yamlPrinter = $yamlPrinter;
         $this->jsonReader = $jsonReader;
         $this->filenameGenerator = $filenameGenerator;
-        $this->detectExistingCi = $detectExistingCi;
-        $this->yamlToJson = $yamlToJson;
+        $this->detectExistingCi = $detectExistingCI;
+        $this->yamlToArray = $yamlToArray;
+        $this->migrationIntermediaryObject = $migrationIntermediaryObject;
         parent::__construct();
     }
 
     public function execute(InputInterface $input, OutputInterface $output): int
     {
         // 1. Find CI Yaml file
-
         /** @var string $file [] */
         $ciService = $input->getArgument('file');
         $ciServiceName = key($ciService);
@@ -90,23 +91,32 @@ final class MigrateCommand extends Command {
         // 2. Choose alternative CI service
         $ciServices = Constants::CI_SERVICES;
         unset($ciServices[$ciServiceName]);
-        $answer = $this->symfonyStyle->choice('Which CI service would you like to migrate to?', array_keys($ciServices));
+        $answer = $this->symfonyStyle->choice(
+            'Which CI service would you like to migrate to?',
+            array_keys($ciServices)
+        );
 
-        // 3. Migrate to selected service
-        $json = $this->yamlToJson->convert($ciServiceFile);
-        $ciYaml = $this->yamlGenerator->migrateFromJson($json, $answer);
+        // 3. Convert to object as an intermediary
+        $array = $this->yamlToArray->convert($ciServiceFile);
+        $intermediary = $this->migrationIntermediaryObject->convert($array)->toArray();
+
+        // 4. Migrate to selected service
+        $ciYaml = $this->yamlGenerator->migrateFromObject($intermediary, $answer);
         $outputFile = $this->filenameGenerator->generateFilename($answer);
         $this->yamlPrinter->printYamlToFile($ciYaml, $outputFile);
 
+        $inputSmartFile = new SmartFileInfo($ciServiceFile);
         $outputSmartFile = new SmartFileInfo($outputFile);
         $this->symfonyStyle->success(
-            sprintf('File "%s" was successfully created', $outputSmartFile->getRelativeFilePathFromCwd())
+            sprintf(
+                'File "%s" was successfully created from "%s"',
+                $outputSmartFile->getRelativeFilePathFromCwd(),
+                $inputSmartFile->getRelativeFilePathFromCwd()
+            )
         );
 
         return ShellCode::SUCCESS;
-
     }
-
 
     protected function configure(): void
     {
@@ -116,5 +126,4 @@ final class MigrateCommand extends Command {
         $ciService = $this->detectExistingCi->detect();
         $this->addArgument('file', InputArgument::OPTIONAL, 'CI yaml file', $ciService);
     }
-
 }

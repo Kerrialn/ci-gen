@@ -7,7 +7,7 @@ namespace CIConfigGen\Migrator;
 use CIConfigGen\Contract\MigrateInterface;
 use CIConfigGen\ValueObject\CiService;
 
-final class GitlabMigrator implements MigrateInterface
+final class GitlabMigration implements MigrateInterface
 {
     public function isMatch(string $ciService): bool
     {

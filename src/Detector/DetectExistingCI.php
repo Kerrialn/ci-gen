@@ -1,14 +1,14 @@
 <?php
 
+declare(strict_types=1);
 
 namespace CIConfigGen\Detector;
-
 
 use CIConfigGen\ValueObject\Constants;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
-class DetectExistingCI {
-
+class DetectExistingCI
+{
     /**
      * @var SymfonyStyle
      */
@@ -21,10 +21,12 @@ class DetectExistingCI {
 
     public function detect(): array
     {
-        foreach(Constants::CI_SERVICES as $key => $value){
-            if(file_exists($value)){
-                return array($key => $value);
+        $array = [];
+        foreach (Constants::CI_SERVICES as $key => $value) {
+            if (file_exists($value)) {
+                $array = [$key => $value];
             }
         }
+        return $array;
     }
 }

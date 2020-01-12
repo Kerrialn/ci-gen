@@ -9,12 +9,12 @@ use CIConfigGen\Contract\MigrateInterface;
 
 final class YamlGenerator
 {
+    private $migrators = [];
+
     /**
      * @var GeneratorInterface[]
      */
     private $generators = [];
-
-    private $migrators = [];
 
     /**
      * @param GeneratorInterface[] $generators
@@ -39,15 +39,14 @@ final class YamlGenerator
         return [];
     }
 
-
-    public function migrateFromJson(array $json, string $ciService): array
+    public function migrateFromObject(array $array, string $ciService): array
     {
         foreach ($this->migrators as $migrate) {
             if (! $migrate->isMatch($ciService)) {
                 continue;
             }
 
-            return $migrate->migrate($json, $ciService);
+            return $migrate->migrate($array, $ciService);
         }
 
         return [];

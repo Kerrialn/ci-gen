@@ -6,7 +6,7 @@ namespace CIConfigGen\Migrator;
 
 use CIConfigGen\ValueObject\CiService;
 
-class GithubMigrator {
+class GithubMigration {
 
     public function isMatch(string $ciService): bool
     {
@@ -18,11 +18,11 @@ class GithubMigrator {
         // 1. push to array with 'Github' pattern
         $output = [];
 
-        if ($MigrationIntermediaryObject['jobs']['include'])
+        if ($MigrationIntermediaryObject->jobs)
         {
             $output['stages'] = [];
 
-            foreach ($MigrationIntermediaryObject['jobs']['include'] as $include)
+            foreach ($MigrationIntermediaryObject->jobs as $include)
             {
                 if (!in_array($include['stage'], $output['stages'], true))
                 {
@@ -31,17 +31,9 @@ class GithubMigrator {
             }
         }
 
-        if ($MigrationIntermediaryObject['language'])
+        if ($MigrationIntermediaryObject->language)
         {
             $output['language'] = $MigrationIntermediaryObject['language'];
-        }
-
-        if ($MigrationIntermediaryObject['install'])
-        {
-            $output['install'] = [
-                'stage' => 'install',
-                'script' => $MigrationIntermediaryObject['install'],
-            ];
         }
 
         return $output;
