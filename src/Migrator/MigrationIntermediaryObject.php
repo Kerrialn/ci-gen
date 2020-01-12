@@ -4,6 +4,6 @@
 namespace CIConfigGen\Migrator;
 
 
-class TravisMigrator {
+class MigrationIntermediaryObject {
 
 }

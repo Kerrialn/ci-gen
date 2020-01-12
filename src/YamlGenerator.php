@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace CIConfigGen;
 
 use CIConfigGen\Contract\GeneratorInterface;
+use CIConfigGen\Contract\MigrateInterface;
 
 final class YamlGenerator
 {
@@ -13,12 +14,16 @@ final class YamlGenerator
      */
     private $generators = [];
 
+    private $migrators = [];
+
     /**
      * @param GeneratorInterface[] $generators
+     * @param MigrateInterface[] $migrators
      */
-    public function __construct(array $generators)
+    public function __construct(array $generators, array $migrators)
     {
         $this->generators = $generators;
+        $this->migrators = $migrators;
     }
 
     public function generateFromComposerJson(array $composerJson, string $ciService): array
@@ -29,6 +34,20 @@ final class YamlGenerator
             }
 
             return $generator->generate($composerJson);
+        }
+
+        return [];
+    }
+
+
+    public function migrateFromJson(array $json, string $ciService): array
+    {
+        foreach ($this->migrators as $migrate) {
+            if (! $migrate->isMatch($ciService)) {
+                continue;
+            }
+
+            return $migrate->migrate($json, $ciService);
         }
 
         return [];
