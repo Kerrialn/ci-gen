@@ -24,10 +24,19 @@ final class GitlabMigration implements MigrateInterface {
         {
             $output['stages'][] = 'build';
 
+            if (strpos($MigrationIntermediaryArray['install'][0], 'php') !== false && strpos($MigrationIntermediaryArray['install'][0], 'composer.phar') !== false && strpos($MigrationIntermediaryArray['install'][0], 'install') !== false)
+            {
+                $install = $MigrationIntermediaryArray['install'];
+            } else
+            {
+                $install = 'php composer.phar install';
+            }
+
             $output['composer'] = [
                 'stage' => 'build',
-                'script' => $MigrationIntermediaryArray['install'],
+                'script' => $install
             ];
+
 
         }
 

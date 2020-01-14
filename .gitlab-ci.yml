@@ -1,0 +1,36 @@
+stages:
+    - build
+    - test
+
+composer:
+    stage: build
+    script: 'php composer.phar install'
+
+test_0:
+    stage: test
+    image: 'php:7.2'
+    script:
+        - 'vendor/bin/phpunit --testsuite main'
+
+test_1:
+    stage: test
+    image: 'php:7.3'
+    script:
+        - 'vendor/bin/phpunit --testsuite main'
+
+test_2:
+    stage: test
+    image: 'php:7.4'
+    script:
+        - 'vendor/bin/phpunit --testsuite main'
+
+ECS:
+    stage: test
+    image: 'php:7.2'
+    script:
+        - 'composer check-cs src'
+        - 'composer check-cs src -- --fix'
+
+cache:
+    paths:
+        - $HOME/.composer/cache
