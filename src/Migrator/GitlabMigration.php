@@ -22,7 +22,28 @@ final class GitlabMigration implements MigrateInterface {
 
         if ($MigrationIntermediaryArray['install'])
         {
-            $output['before_script'] = $MigrationIntermediaryArray['install'];
+            if (strpos($MigrationIntermediaryArray['install'][0], 'php') !== false && strpos($MigrationIntermediaryArray['install'][0], 'composer.phar') !== false && strpos($MigrationIntermediaryArray['install'][0], 'install') !== false)
+            {
+                $install = [
+                    'apt-get update',
+                    'apt-get install zip unzip',
+                    'php -r "copy("https://getcomposer.org/installer", "composer-setup.php);"',
+                    'php composer-setup.php',
+                    'php -r "unlink(\'composer-setup.php\');"',
+                    'php composer.phar install',
+                ];
+            } else
+            {
+                $install = [
+                    'apt-get update',
+                    'apt-get install zip unzip',
+                    'php -r "copy("https://getcomposer.org/installer", "composer-setup.php);"',
+                    'php composer-setup.php',
+                    'php -r "unlink(\'composer-setup.php\');"',
+                    'php composer.phar install',
+                ];
+            }
+            $output['before_script'] = $install;
         }
 
         if ($MigrationIntermediaryArray['jobs'])
