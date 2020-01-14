@@ -20,8 +20,8 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 use Symplify\PackageBuilder\Console\ShellCode;
 use Symplify\SmartFileSystem\SmartFileInfo;
 
-final class MigrateCommand extends Command {
-
+final class MigrateCommand extends Command
+{
     /**
      * @var string
      */
@@ -30,6 +30,8 @@ final class MigrateCommand extends Command {
     private $yamlToArray;
 
     private $detectExistingCi;
+
+    private $migrationIntermediaryObject;
 
     /**
      * @var SymfonyStyle
@@ -55,7 +57,6 @@ final class MigrateCommand extends Command {
      * @var JsonReader
      */
     private $jsonReader;
-    private $migrationIntermediaryObject;
 
     public function __construct(
         SymfonyStyle $symfonyStyle,
@@ -66,8 +67,7 @@ final class MigrateCommand extends Command {
         DetectExistingCI $detectExistingCI,
         YamlToArray $yamlToArray,
         MigrationIntermediaryObject $migrationIntermediaryObject
-    )
-    {
+    ) {
         $this->symfonyStyle = $symfonyStyle;
         $this->yamlGenerator = $yamlGenerator;
         $this->yamlPrinter = $yamlPrinter;
@@ -97,12 +97,16 @@ final class MigrateCommand extends Command {
         );
 
         // 3. Convert to object as an intermediary
-        $array = $this->yamlToArray->convert($ciServiceFile);
-        $intermediary = $this->migrationIntermediaryObject->convert($array)->toArray();
+        $currentYaml = $this->yamlToArray->convert($ciServiceFile);
+        $intermediary = $this->migrationIntermediaryObject->convert($currentYaml)->toArray();
+
+        var_dump($intermediary);
 
         // 4. Migrate to selected service
         $ciYaml = $this->yamlGenerator->migrateFromObject($intermediary, $answer);
+
         $outputFile = $this->filenameGenerator->generateFilename($answer);
+
         $this->yamlPrinter->printYamlToFile($ciYaml, $outputFile);
 
         $inputSmartFile = new SmartFileInfo($ciServiceFile);

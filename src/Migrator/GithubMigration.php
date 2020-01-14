@@ -6,37 +6,20 @@ namespace CIConfigGen\Migrator;
 
 use CIConfigGen\ValueObject\CiService;
 
-class GithubMigration {
-
+class GithubMigration
+{
     public function isMatch(string $ciService): bool
     {
-        return $ciService === CiService::GITLAB_CI;
+        return $ciService === CiService::GITHUB_ACTIONS;
     }
 
-    public function migrate(MigrationIntermediaryObject $MigrationIntermediaryObject, string $destination): array
+    public function migrate(array $MigrationIntermediaryArray, string $destination): array
     {
         // 1. push to array with 'Github' pattern
         $output = [];
 
-        if ($MigrationIntermediaryObject->jobs)
-        {
-            $output['stages'] = [];
-
-            foreach ($MigrationIntermediaryObject->jobs as $include)
-            {
-                if (!in_array($include['stage'], $output['stages'], true))
-                {
-                    $output['stages'][] = $include['stage'];
-                }
-            }
-        }
-
-        if ($MigrationIntermediaryObject->language)
-        {
-            $output['language'] = $MigrationIntermediaryObject['language'];
-        }
+        $output['jobs'] = $MigrationIntermediaryArray['jobs'];
 
         return $output;
     }
-
 }

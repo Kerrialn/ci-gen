@@ -39,14 +39,14 @@ final class YamlGenerator
         return [];
     }
 
-    public function migrateFromObject(array $array, string $ciService): array
+    public function migrateFromObject(array $intermediaryArray, string $ciService): array
     {
         foreach ($this->migrators as $migrate) {
             if (! $migrate->isMatch($ciService)) {
                 continue;
             }
 
-            return $migrate->migrate($array, $ciService);
+            return $migrate->migrate($intermediaryArray, $ciService);
         }
 
         return [];

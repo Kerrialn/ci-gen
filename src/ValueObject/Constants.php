@@ -8,8 +8,8 @@ namespace CIConfigGen\ValueObject;
  * Class Constants
  * @package CIConfigGen\ValueObject
  */
-class Constants {
-
+class Constants
+{
     /**
      * @var array
      */

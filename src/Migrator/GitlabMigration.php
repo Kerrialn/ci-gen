@@ -14,30 +14,33 @@ final class GitlabMigration implements MigrateInterface
         return $ciService === CiService::GITLAB_CI;
     }
 
-    public function migrate(MigrationIntermediaryObject $MigrationIntermediaryObject, string $destination): array
+    public function migrate(array $MigrationIntermediaryArray, string $destination): array
     {
         // 1. push to array with 'Gitlab' pattern
         $output = [];
 
-        if ($MigrationIntermediaryObject['jobs']['include']) {
-            $output['stages'] = [];
+        if ($MigrationIntermediaryArray['jobs']) {
+            foreach ($MigrationIntermediaryArray['jobs'] as $job) {
+                $output['stages'] = [];
 
-            foreach ($MigrationIntermediaryObject['jobs']['include'] as $include) {
-                if (! in_array($include['stage'], $output['stages'], true)) {
-                    $output['stages'][] = $include['stage'];
+                if (! in_array($job['stage'], $output['stages'], true)) {
+                    $output['stages'][] = $job['stage'];
+                }
+            }
+
+            foreach ($MigrationIntermediaryArray['jobs'] as $key => $job) {
+                if (! in_array($job['name'], $output, true)) {
+                    $output[$job['name'] ? $job['name'] : ($job['stage'].'_'.$key) ] = [
+                        'stage' => $job['stage'],
+                        'image' => 'php:'.$job['php'] ?? null,
+                        'script' => $job['script'],
+                    ];
                 }
             }
         }
 
-        if ($MigrationIntermediaryObject['language']) {
-            $output['language'] = $MigrationIntermediaryObject['language'];
-        }
-
-        if ($MigrationIntermediaryObject['install']) {
-            $output['install'] = [
-                'stage' => 'install',
-                'script' => $MigrationIntermediaryObject['install'],
-            ];
+        if($MigrationIntermediaryArray['cache']['directories']){
+                $output['cache']['paths'] = $MigrationIntermediaryArray['cache']['directories'];
         }
 
         return $output;

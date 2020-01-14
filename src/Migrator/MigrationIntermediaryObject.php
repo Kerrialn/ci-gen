@@ -1,100 +1,94 @@
 <?php
 
+declare(strict_types=1);
 
 namespace CIConfigGen\Migrator;
 
-
-class MigrationIntermediaryObject {
-
+class MigrationIntermediaryObject
+{
     public $name;
+
     public $language;
+
     public $on;
+
     public $image;
+
     public $services;
+
     public $stages;
+
     public $jobs;
+
     public $types;
+
     public $before_script;
+
     public $after_script;
+
     public $variables;
+
     public $cache;
 
-
-    final function convert(array $array): MigrationIntermediaryObject
+    final public function convert(array $array): self
     {
-        $object = new MigrationIntermediaryObject();
+        $object = new self();
 
-        if ($array['name'])
-        {
+        if ($array['name']) {
             $object->name = $array['name'];
         }
 
-        if ($array['language'])
-        {
+        if ($array['language']) {
             $object->language = $array['language'];
         }
-        if ($array['on'])
-        {
+        if ($array['on']) {
             $object->on = $array['on'];
         }
-        if ($array['image'])
-        {
+        if ($array['image']) {
             $object->image = $array['image'];
         }
-        if ($array['services'])
-        {
+        if ($array['services']) {
             $object->services = $array['services'];
         }
-        if ($array['stages'])
-        {
+        if ($array['stages']) {
             $object->stages = $array['stages'];
         }
 
-        if ($array['jobs'])
-        {
-            if ($array['jobs']['include'])
-            {
+        if ($array['jobs']) {
+            if ($array['jobs']['include']) {
                 $object->jobs = $array['jobs']['include'];
-
             }
 
-            if ($array['jobs']['build'])
-            {
-                if ($array['job']['build']['steps'])
-                {
+            if ($array['jobs']['build']) {
+                if ($array['job']['build']['steps']) {
                     $object->jobs = $array['jobs']['build']['steps'];
                 }
             }
 
-            if ($array['jobs'] && !$array['jobs']['include'])
-            {
+            if ($array['jobs'] && ! $array['jobs']['include']) {
                 $object->jobs = $array['jobs'];
             }
         }
 
-        if ($array['before_script'])
-        {
+        if ($array['before_script']) {
             $object->before_script = $array['before_script'];
         }
-        if ($array['after_script'])
-        {
+        if ($array['after_script']) {
             $object->after_script = $array['after_script'];
         }
-        if ($array['variables'])
-        {
+        if ($array['variables']) {
             $object->variables = $array['variables'];
         }
-        if ($array['cache'])
-        {
+
+        if ($array['cache']) {
             $object->cache = $array['cache'];
         }
 
         return $object;
     }
 
-    final function toArray()
+    final public function toArray()
     {
         return (array) $this;
     }
-
 }
