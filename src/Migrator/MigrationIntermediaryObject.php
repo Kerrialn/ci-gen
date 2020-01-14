@@ -8,6 +8,8 @@ class MigrationIntermediaryObject
 {
     public $name;
 
+    public $install;
+
     public $language;
 
     public $on;
@@ -33,6 +35,10 @@ class MigrationIntermediaryObject
     final public function convert(array $array): self
     {
         $object = new self();
+
+        if($array['install']){
+            $object->install = $array['install'];
+        }
 
         if ($array['name']) {
             $object->name = $array['name'];

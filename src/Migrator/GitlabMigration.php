@@ -7,8 +7,8 @@ namespace CIConfigGen\Migrator;
 use CIConfigGen\Contract\MigrateInterface;
 use CIConfigGen\ValueObject\CiService;
 
-final class GitlabMigration implements MigrateInterface
-{
+final class GitlabMigration implements MigrateInterface {
+
     public function isMatch(string $ciService): bool
     {
         return $ciService === CiService::GITLAB_CI;
@@ -18,29 +18,46 @@ final class GitlabMigration implements MigrateInterface
     {
         // 1. push to array with 'Gitlab' pattern
         $output = [];
+        $output['stages'] = [];
 
-        if ($MigrationIntermediaryArray['jobs']) {
-            foreach ($MigrationIntermediaryArray['jobs'] as $job) {
-                $output['stages'] = [];
+        if ($MigrationIntermediaryArray['install'])
+        {
+            $output['stages'][] = 'build';
 
-                if (! in_array($job['stage'], $output['stages'], true)) {
+            $output['composer'] = [
+                'stage' => 'build',
+                'script' => $MigrationIntermediaryArray['install'],
+            ];
+
+        }
+
+        if ($MigrationIntermediaryArray['jobs'])
+        {
+            foreach ($MigrationIntermediaryArray['jobs'] as $job)
+            {
+
+                if (!in_array($job['stage'], $output['stages'], true))
+                {
                     $output['stages'][] = $job['stage'];
                 }
             }
 
-            foreach ($MigrationIntermediaryArray['jobs'] as $key => $job) {
-                if (! in_array($job['name'], $output, true)) {
-                    $output[$job['name'] ? $job['name'] : ($job['stage'].'_'.$key) ] = [
+            foreach ($MigrationIntermediaryArray['jobs'] as $key => $job)
+            {
+                if (!in_array($job['name'], $output, true))
+                {
+                    $output[$job['name'] ? $job['name'] : ($job['stage'] . '_' . $key)] = [
                         'stage' => $job['stage'],
-                        'image' => 'php:'.$job['php'] ?? null,
+                        'image' => 'php:' . $job['php'] ?? null,
                         'script' => $job['script'],
                     ];
                 }
             }
         }
 
-        if($MigrationIntermediaryArray['cache']['directories']){
-                $output['cache']['paths'] = $MigrationIntermediaryArray['cache']['directories'];
+        if ($MigrationIntermediaryArray['cache']['directories'])
+        {
+            $output['cache']['paths'] = $MigrationIntermediaryArray['cache']['directories'];
         }
 
         return $output;
