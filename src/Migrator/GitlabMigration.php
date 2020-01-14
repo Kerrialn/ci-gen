@@ -22,7 +22,7 @@ final class GitlabMigration implements MigrateInterface {
 
         if ($MigrationIntermediaryArray['install'])
         {
-            $output['before_script'][] = $MigrationIntermediaryArray['install'];
+            $output['before_script'] = $MigrationIntermediaryArray['install'];
         }
 
         if ($MigrationIntermediaryArray['jobs'])
