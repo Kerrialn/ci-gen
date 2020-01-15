@@ -1,4 +1,5 @@
 name: 'Github Actions Yaml'
+'on': '[push]'
 
 jobs:
     build:
