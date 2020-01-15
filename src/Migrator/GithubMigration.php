@@ -20,11 +20,7 @@ class GithubMigration implements MigrateInterface {
         $output = [];
 
         $output['name'] = $tempArray['name'] ? $tempArray['name'] : 'Github Actions Yaml';
-
-        if ($tempArray['on'])
-        {
-            $output['on'] = '[push]';
-        }
+        $output['on'] = '[push]';
 
         if ($tempArray['install'])
         {
