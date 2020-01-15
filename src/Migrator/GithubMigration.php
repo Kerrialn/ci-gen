@@ -33,10 +33,8 @@ class GithubMigration implements MigrateInterface {
 
         if ($tempArray['install'])
         {
-            $output['jobs']['build']['steps'][] = ['name' => 'Checkout Repository'];
-            $output['jobs']['build']['steps'][] = ['uses' => 'actions/checkout@v1'];
-            $output['jobs']['build']['steps'][] = ['name' => 'Run composer install'];
-            $output['jobs']['build']['steps'][] = ['run' => 'composer install --prefer-dist'];
+            $output['jobs']['build']['steps'][] = ['name' => 'Checkout Repository', 'uses' => 'actions/checkout@v1'];
+            $output['jobs']['build']['steps'][] = ['name' => 'Run composer install', 'run' => 'composer install --prefer-dist'];
         }
 
         return $output;
