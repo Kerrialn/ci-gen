@@ -24,23 +24,43 @@ Automatically generate the configuration yaml file for continuous integration (C
 3. Currently, generates a yaml file based on your composer.json and PHPUnit tests. Example below:
 
 ```yaml
-name: 'Travis CI'
-matrix:
+language: php
+
+install:
+    - 'composer install'
+
+jobs:
     include:
         -
-            php: 7.2
+            stage: test
+            php: '7.2'
+            script:
+                - 'vendor/bin/phpunit --testsuite main'
         -
-            env: 'COMPOSER_FLAGS="--prefer-lowest"'
+            stage: test
+            php: '7.3'
+            script:
+                - 'vendor/bin/phpunit --testsuite main'
         -
-            php: 7.3
+            stage: test
+            php: '7.4'
+            script:
+                - 'vendor/bin/phpunit --testsuite main'
         -
-            php: 7.4
-install:
-    - 'composer update --prefer-source $COMPOSER_FLAGS'
-script:
-    - 'vendor/bin/phpunit --testsuite main'
+            stage: test
+            name: ECS
+            php: '7.2'
+            script:
+                - 'composer check-cs src'
+                - 'composer check-cs src -- --fix'
+
+cache:
+    directories:
+        - $HOME/.composer/cache
+
 notifications:
     email: false
+
 ```
 
 #### CI Services Compatibility
