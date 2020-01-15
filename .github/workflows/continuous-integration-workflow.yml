@@ -11,3 +11,22 @@ jobs:
             -
                 name: 'Run composer install'
                 run: 'composer install --prefer-dist'
+    test:
+        steps:
+            -
+                name: 'test 0'
+                run:
+                    - 'vendor/bin/phpunit --testsuite main'
+            -
+                name: 'test 1'
+                run:
+                    - 'vendor/bin/phpunit --testsuite main'
+            -
+                name: 'test 2'
+                run:
+                    - 'vendor/bin/phpunit --testsuite main'
+            -
+                name: ECS
+                run:
+                    - 'composer check-cs src'
+                    - 'composer check-cs src -- --fix'
