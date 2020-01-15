@@ -7,7 +7,7 @@ namespace CIConfigGen\Migrator;
 use CIConfigGen\Contract\MigrateInterface;
 use CIConfigGen\ValueObject\CiService;
 
-class GithubMigration implements MigrateInterface{
+class GithubMigration implements MigrateInterface {
 
     public function isMatch(string $ciService): bool
     {
@@ -21,18 +21,22 @@ class GithubMigration implements MigrateInterface{
 
         $output['name'] = $tempArray['name'] ? $tempArray['name'] : 'Github Actions Yaml';
 
-
-        if($tempArray['on']){
-            $output['on']['pull_request'] = null;
-            $output['on']['push']['branches'][] = 'master';
+        if ($tempArray['on'])
+        {
+            $output['on'] = '[push]';
         }
 
         if ($tempArray['install'])
         {
             $output['jobs']['build']['runs-on'] = 'ubuntu-latest';
-            $output['jobs']['build']['steps'][] = ['uses' => 'shivammathur/setup-php@v1'];
-            $output['jobs']['build']['steps'][] = ['run' => 'composer install --no-progress'];
-            $output['jobs']['build']['steps'][] = ['run' => 'composer check-docs'];
+        }
+
+        if ($tempArray['install'])
+        {
+            $output['jobs']['build']['steps'][] = ['name' => 'Checkout Repository'];
+            $output['jobs']['build']['steps'][] = ['uses' => 'actions/checkout@v1'];
+            $output['jobs']['build']['steps'][] = ['name' => 'Run composer install'];
+            $output['jobs']['build']['steps'][] = ['run' => 'composer install --prefer-dist'];
         }
 
         return $output;
