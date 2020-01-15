@@ -30,9 +30,7 @@ class GithubMigration implements MigrateInterface{
         if ($tempArray['install'])
         {
             $output['jobs']['build']['runs-on'] = 'ubuntu-latest';
-            $output['jobs']['build']['steps'][] = ['uses' => 'actions/checkout@v2'];
             $output['jobs']['build']['steps'][] = ['uses' => 'shivammathur/setup-php@v1'];
-            $output['jobs']['build']['steps'][] = ['with' => ['php-version'=> 7.2, 'coverage'=>'none']];
             $output['jobs']['build']['steps'][] = ['run' => 'composer install --no-progress'];
             $output['jobs']['build']['steps'][] = ['run' => 'composer check-docs'];
         }
