@@ -22,16 +22,19 @@ class GithubMigration implements MigrateInterface{
         $output['name'] = $tempArray['name'] ? $tempArray['name'] : 'Github Actions Yaml';
 
 
+        if($tempArray['on']){
+            $output['on']['pull_request'] = null;
+            $output['on']['push']['branches'][] = 'master';
+        }
+
         if ($tempArray['install'])
         {
             $output['jobs']['build']['runs-on'] = 'ubuntu-latest';
-            $output['jobs']['build']['steps'] = [
-                'name' => 'Run composer',
-                'with' => [
-                    'action' => 'update',
-                    'options' => '-o',
-                ],
-            ];
+            $output['jobs']['build']['steps'][] = ['uses' => 'actions/checkout@v2'];
+            $output['jobs']['build']['steps'][] = ['uses' => 'shivammathur/setup-php@v1'];
+            $output['jobs']['build']['steps'][] = ['with' => ['php-version'=> 7.2, 'coverage'=>'none']];
+            $output['jobs']['build']['steps'][] = ['run' => 'composer install --no-progress'];
+            $output['jobs']['build']['steps'][] = ['run' => 'composer check-docs'];
         }
 
         return $output;

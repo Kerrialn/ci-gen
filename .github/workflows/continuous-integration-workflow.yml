@@ -4,7 +4,15 @@ jobs:
     build:
         runs-on: ubuntu-latest
         steps:
-            name: 'Run composer'
-            with:
-                action: update
-                options: '-o'
+            -
+                uses: actions/checkout@v2
+            -
+                uses: shivammathur/setup-php@v1
+            -
+                with:
+                    php-version: 7.2
+                    coverage: none
+            -
+                run: 'composer install --no-progress'
+            -
+                run: 'composer check-docs'
