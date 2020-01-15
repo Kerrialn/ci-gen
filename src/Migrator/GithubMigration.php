@@ -39,7 +39,7 @@ class GithubMigration implements MigrateInterface {
             {
                 if (!in_array($job['name'], $output['jobs'], true))
                 {
-                    $output['jobs']['build']['steps'][] = ['name' => $job['name'] ? $job['name'] : 'test '.$key, 'run' => $job['script']];
+                    $output['jobs']['build']['steps'][] = ['name' => $job['name'] ? $job['name'] : 'test-'.$key, 'run' => 'bin/phpunit'];
                 }
             }
         }
