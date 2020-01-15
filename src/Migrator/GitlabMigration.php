@@ -14,27 +14,23 @@ final class GitlabMigration implements MigrateInterface {
         return $ciService === CiService::GITLAB_CI;
     }
 
-    public function migrate(array $MigrationIntermediaryArray, string $destination): array
+    public function migrate(array $tempArray, string $destination): array
     {
         // 1. push to array with 'Gitlab' pattern
         $output = [];
         $output['stages'] = [];
 
-        if ($MigrationIntermediaryArray['install'])
+        if ($tempArray['install'])
         {
-            $output['before_script'] = $install = [
-                'apt-get update',
-                'apt-get install zip unzip',
-                'php -r copy("https://getcomposer.org/installer", "composer-setup.php");',
-                'php composer-setup.php',
-                'php -r "unlink(\'composer-setup.php\');"',
-                'php composer.phar install',
-            ];;
+            if (strpos($tempArray['install'], 'composer') !== false)
+            {
+                $output['before_script'] = 'nothing';
+            }
         }
 
-        if ($MigrationIntermediaryArray['jobs'])
+        if ($tempArray['jobs'])
         {
-            foreach ($MigrationIntermediaryArray['jobs'] as $job)
+            foreach ($tempArray['jobs'] as $job)
             {
 
                 if (!in_array($job['stage'], $output['stages'], true))
@@ -43,7 +39,7 @@ final class GitlabMigration implements MigrateInterface {
                 }
             }
 
-            foreach ($MigrationIntermediaryArray['jobs'] as $key => $job)
+            foreach ($tempArray['jobs'] as $key => $job)
             {
                 if (!in_array($job['name'], $output, true))
                 {
@@ -56,9 +52,9 @@ final class GitlabMigration implements MigrateInterface {
             }
         }
 
-        if ($MigrationIntermediaryArray['cache']['directories'])
+        if ($tempArray['cache']['directories'])
         {
-            $output['cache']['paths'] = $MigrationIntermediaryArray['cache']['directories'];
+            $output['cache']['paths'] = $tempArray['cache']['directories'];
         }
 
         return $output;

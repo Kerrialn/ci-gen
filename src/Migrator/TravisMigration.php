@@ -14,7 +14,7 @@ final class TravisMigration implements MigrateInterface
         return $ciService === CiService::TRAVIS_CI;
     }
 
-    public function migrate(array $MigrationIntermediaryArray, string $destination): array
+    public function migrate(array $tempArray, string $destination): array
     {
 
         // 1. push to array with 'Travis' pattern

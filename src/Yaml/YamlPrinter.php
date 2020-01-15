@@ -13,7 +13,6 @@ final class YamlPrinter
     public function printYamlToFile(array $yaml, string $targetFile): void
     {
         $yamlContent = $this->printYamlToString($yaml);
-
         FileSystem::write($targetFile, $yamlContent);
     }
 

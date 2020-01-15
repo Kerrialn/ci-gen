@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace CIConfigGen\Migrator;
 
-class MigrationIntermediaryObject
+class tempObject
 {
     public $name;
 
@@ -24,9 +24,9 @@ class MigrationIntermediaryObject
 
     public $types;
 
-    public $before_script;
+    public $before;
 
-    public $after_script;
+    public $after;
 
     public $variables;
 
@@ -77,10 +77,10 @@ class MigrationIntermediaryObject
         }
 
         if ($array['before_script']) {
-            $object->before_script = $array['before_script'];
+            $object->before = $array['before_script'];
         }
         if ($array['after_script']) {
-            $object->after_script = $array['after_script'];
+            $object->after = $array['after_script'];
         }
         if ($array['variables']) {
             $object->variables = $array['variables'];

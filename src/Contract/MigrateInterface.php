@@ -8,5 +8,5 @@ interface MigrateInterface
 {
     public function isMatch(string $ciService): bool;
 
-    public function migrate(array $MigrationIntermediaryArray, string $destination): array;
+    public function migrate(array $tempArray, string $destination): array;
 }

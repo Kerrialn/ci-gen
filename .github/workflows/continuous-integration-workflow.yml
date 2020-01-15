@@ -1,0 +1,10 @@
+name: 'Github Actions Yaml'
+
+jobs:
+    build:
+        runs-on: ubuntu-latest
+        steps:
+            name: 'Run composer'
+            with:
+                action: update
+                options: '-o'

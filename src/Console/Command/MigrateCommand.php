@@ -6,7 +6,7 @@ namespace CIConfigGen\Console\Command;
 
 use CIConfigGen\Detector\DetectExistingCI;
 use CIConfigGen\Json\JsonReader;
-use CIConfigGen\Migrator\MigrationIntermediaryObject;
+use CIConfigGen\Migrator\tempObject;
 use CIConfigGen\ValueObject\Constants;
 use CIConfigGen\Yaml\FilenameGenerator;
 use CIConfigGen\Yaml\YamlPrinter;
@@ -66,7 +66,7 @@ final class MigrateCommand extends Command
         FilenameGenerator $filenameGenerator,
         DetectExistingCI $detectExistingCI,
         YamlToArray $yamlToArray,
-        MigrationIntermediaryObject $migrationIntermediaryObject
+        tempObject $migrationIntermediaryObject
     ) {
         $this->symfonyStyle = $symfonyStyle;
         $this->yamlGenerator = $yamlGenerator;
@@ -99,8 +99,6 @@ final class MigrateCommand extends Command
         // 3. Convert to object as an intermediary
         $currentYaml = $this->yamlToArray->convert($ciServiceFile);
         $intermediary = $this->migrationIntermediaryObject->convert($currentYaml)->toArray();
-
-        var_dump($intermediary);
 
         // 4. Migrate to selected service
         $ciYaml = $this->yamlGenerator->migrateFromObject($intermediary, $answer);
