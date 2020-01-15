@@ -11,8 +11,6 @@ jobs:
             -
                 name: 'Run composer install'
                 run: 'composer install --prefer-dist'
-    test:
-        steps:
             -
                 name: 'test 0'
                 run:
