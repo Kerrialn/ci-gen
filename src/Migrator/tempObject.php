@@ -36,7 +36,7 @@ class tempObject
     {
         $object = new self();
 
-        if($array['install']){
+        if ($array['install']) {
             $object->install = $array['install'];
         }
 
@@ -61,19 +61,7 @@ class tempObject
         }
 
         if ($array['jobs']) {
-            if ($array['jobs']['include']) {
-                $object->jobs = $array['jobs']['include'];
-            }
-
-            if ($array['jobs']['build']) {
-                if ($array['job']['build']['steps']) {
-                    $object->jobs = $array['jobs']['build']['steps'];
-                }
-            }
-
-            if ($array['jobs'] && ! $array['jobs']['include']) {
-                $object->jobs = $array['jobs'];
-            }
+            $this->convertJobs($array, $object);
         }
 
         if ($array['before_script']) {
@@ -96,5 +84,22 @@ class tempObject
     final public function toArray()
     {
         return (array) $this;
+    }
+
+    public function convertJobs(array $array, self $object): void
+    {
+        if ($array['jobs']['include']) {
+            $object->jobs = $array['jobs']['include'];
+        }
+
+        if ($array['jobs']['build']) {
+            if ($array['job']['build']['steps']) {
+                $object->jobs = $array['jobs']['build']['steps'];
+            }
+        }
+
+        if ($array['jobs'] && ! $array['jobs']['include']) {
+            $object->jobs = $array['jobs'];
+        }
     }
 }

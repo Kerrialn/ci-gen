@@ -6,3 +6,5 @@ parameters:
         - 'symplify'
         - 'common'
         - 'clean-code'
+    skip:
+        Symplify\CodingStandard\Sniffs\CleanCode\CognitiveComplexitySniff : null

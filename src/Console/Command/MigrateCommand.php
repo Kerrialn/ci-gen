@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace CIConfigGen\Console\Command;
 
 use CIConfigGen\Detector\DetectExistingCI;
-use CIConfigGen\Json\JsonReader;
 use CIConfigGen\Migrator\tempObject;
 use CIConfigGen\ValueObject\Constants;
 use CIConfigGen\Yaml\FilenameGenerator;
@@ -53,29 +52,22 @@ final class MigrateCommand extends Command
      */
     private $filenameGenerator;
 
-    /**
-     * @var JsonReader
-     */
-    private $jsonReader;
-
     public function __construct(
         SymfonyStyle $symfonyStyle,
-        JsonReader $jsonReader,
         YamlGenerator $yamlGenerator,
         YamlPrinter $yamlPrinter,
         FilenameGenerator $filenameGenerator,
         DetectExistingCI $detectExistingCI,
         YamlToArray $yamlToArray,
-        tempObject $migrationIntermediaryObject
+        tempObject $tempObject
     ) {
         $this->symfonyStyle = $symfonyStyle;
         $this->yamlGenerator = $yamlGenerator;
         $this->yamlPrinter = $yamlPrinter;
-        $this->jsonReader = $jsonReader;
         $this->filenameGenerator = $filenameGenerator;
         $this->detectExistingCi = $detectExistingCI;
         $this->yamlToArray = $yamlToArray;
-        $this->migrationIntermediaryObject = $migrationIntermediaryObject;
+        $this->migrationIntermediaryObject = $tempObject;
         parent::__construct();
     }
 
