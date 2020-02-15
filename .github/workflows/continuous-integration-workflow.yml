@@ -10,4 +10,5 @@ jobs:
             0:
                 name: test
                 php: ^7.2
-                run: 'vendor/bin/phpunit main'
+                run:
+                    - 'vendor/bin/phpunit main'
