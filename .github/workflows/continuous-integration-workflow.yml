@@ -1,7 +1,7 @@
 name: 'Github Actions'
 
 language: PHP
-'on': '[push]'
+'on': push
 
 jobs:
     build:

@@ -30,7 +30,7 @@ final class GithubGenerator implements GeneratorInterface
         return [
             'name' => CiService::GITHUB_ACTIONS,
             'language' => 'PHP',
-            'on' => '[push]',
+            'on' => 'push',
             'jobs' => [
                 'build' => [
                     'steps' => [
