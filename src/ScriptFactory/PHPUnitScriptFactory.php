@@ -6,7 +6,7 @@ namespace CIConfigGen\ScriptFactory;
 
 use CIConfigGen\Xml\XmlReader;
 
-final class PHPUnitScriptFactory
+final class  PHPUnitScriptFactory
 {
     /**
      * @var XmlReader
@@ -31,7 +31,7 @@ final class PHPUnitScriptFactory
 
         if ($array['testsuite']) {
             $testsuiteName = $array['testsuite']['@attributes']['name'];
-            $tests[] = sprintf('vendor/bin/phpunit --testsuite %s', $testsuiteName);
+            $tests[] = sprintf('vendor/bin/phpunit %s', $testsuiteName);
         } else {
             $tests[] = 'skip';
         }
