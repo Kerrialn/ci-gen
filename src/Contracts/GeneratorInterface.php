@@ -6,9 +6,11 @@ namespace App\Contracts;
 
 use App\Intermediary\IntermediaryGenerateObject;
 
-interface GeneratorInterface
-{
+interface GeneratorInterface {
+
     public function getName(): string;
+
+    public function getPath(): string;
 
     public function isMatch(string $ciService): bool;
 

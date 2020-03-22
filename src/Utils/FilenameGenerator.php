@@ -29,7 +29,7 @@ final class FilenameGenerator
                 continue;
             }
 
-            return $generator->getFilename();
+            return $generator->getPath();
         }
 
         throw new \RuntimeException('Could not generate file name');

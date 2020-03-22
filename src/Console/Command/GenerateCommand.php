@@ -72,8 +72,8 @@ final class GenerateCommand extends Command
         $fileName = $this->filenameGenerator->generateFilename($ciService);
         $fileContent = $this->generatorSelector->generateFromComposerJson($ciService);
         $this->yamlPrinter->printYamlToFile($fileContent, $fileName);
-        $outputSmartFile = new SmartFileInfo($fileName);
 
+        $outputSmartFile = new SmartFileInfo($fileName);
         $this->symfonyStyle->success(
             sprintf('File "%s" was successfully created', $outputSmartFile->getRelativeFilePathFromCwd())
         );
