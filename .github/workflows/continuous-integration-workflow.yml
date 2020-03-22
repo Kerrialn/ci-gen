@@ -1,8 +1,8 @@
 name: 'Github Actions'
 
 php: '7.4'
-'on':
-    pull_request: ''
+on:
+    pull_request:
     push:
         branches: master
 

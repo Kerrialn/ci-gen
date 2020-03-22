@@ -25,7 +25,7 @@ final class GithubActionsGenerator implements GeneratorInterface {
         $output = [
             'name' => $intermediaryObject->getService(),
             'php' => $intermediaryObject->getPhpVersion(),
-            'on' => ['pull_request' => '', 'push' => ['branches' => "master"]],
+            'on' => [ "pull_request" => [] , 'push' => ['branches' => "master"]],
             'steps' => []
         ];
 
