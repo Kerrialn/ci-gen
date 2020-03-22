@@ -13,7 +13,7 @@ class GithubActionsGenerator implements GeneratorInterface
     /**
      * @var string
      */
-    public const SERVICE_NAME = 'Github Actions';
+    private const SERVICE_NAME = 'Github Actions';
 
     public function isMatch(string $service_name): bool
     {
@@ -30,4 +30,8 @@ class GithubActionsGenerator implements GeneratorInterface
 
     }
 
+    public function getName(): string
+    {
+        return self::SERVICE_NAME;
+    }
 }
