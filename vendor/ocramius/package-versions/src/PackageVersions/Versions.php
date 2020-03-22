@@ -59,8 +59,8 @@ final class Versions
   'symfony/var-dumper' => 'v5.0.5@3a37aeb1132d1035536d3d6aa9cb06c2ff9355e9',
   'symfony/var-exporter' => 'v5.0.5@30779a25c736b4290449eaedefe4196c1d060378',
   'symfony/yaml' => 'v5.0.5@a4b613d7e44f62941adff5a802cff70adee57d3f',
-  'symplify/autowire-array-parameter' => 'v7.2.8@70fcb846f1250d448413534ecb5d96960262c85b',
-  'symplify/package-builder' => 'v7.2.8@a8b4198e9989413b1441e08c4310f13d883753b5',
+  'symplify/autowire-array-parameter' => 'v7.2.8@630195cc1da486c0705bb6caab8b56b5545fbf6c',
+  'symplify/package-builder' => 'v7.2.8@04c3f6fe67fd88913d26948a4d153239ad53323c',
   'symplify/smart-file-system' => 'v7.2.8@3cd37f43d1dec3f6f4fb18ee60f6dd99c44e30a2',
   'composer/ca-bundle' => '1.2.6@47fe531de31fca4a1b997f87308e7d7804348f7e',
   'composer/composer' => '1.10.1@b912a45da3e2b22f5cb5a23e441b697a295ba011',
@@ -130,7 +130,7 @@ final class Versions
   'theseer/tokenizer' => '1.1.3@11336f6f84e16a720dae9d8e6ed5019efa85a0f9',
   'tracy/tracy' => 'v2.7.3@344c77293038173f49678d9a95c27da6cbdbccd0',
   'webmozart/assert' => '1.7.0@aed98a490f9a8f78468232db345ab9cf606cf598',
-  '__root__' => 'No version set (parsed as 1.0.0)@',
+  '__root__' => 'dev-master@e68c903a1def7f68ab35281cbdbfcc88606de307',
 );
 
     private function __construct()

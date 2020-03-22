@@ -11,7 +11,7 @@ use Symplify\MonorepoBuilder\ComposerJsonObject\ValueObject\ComposerJson;
 
 class YamlGenerator {
 
-    private const COMPOSER_JSON_PATH = __DIR__ . '../../composer.json';
+    private const COMPOSER_JSON_PATH = __DIR__ . '/../../composer.json';
     private array $generators = [];
     private ComposerJsonFactory $composerJsonFactory;
 
@@ -27,18 +27,23 @@ class YamlGenerator {
 
     public function loadComposerJson(): ComposerJson
     {
-        $this->composerJsonFactory->createFromFilePath(self::COMPOSER_JSON_PATH);
+        return $this->composerJsonFactory->createFromFilePath(self::COMPOSER_JSON_PATH);
     }
 
     public function generateFromComposerJson(string $ciService): array
     {
-        foreach ($this->generators as $generator)
-        {
-            if (!$generator->isMatch($ciService))
-            {
+        foreach ($this->generators as $generator) {
+            if (!$generator->isMatch($ciService)) {
                 continue;
             }
+
+            $composerJson = $this->loadComposerJson();
+            dump($composerJson);
+            die;
+
             return $generator->generate();
         }
+
+        return [];
     }
 }

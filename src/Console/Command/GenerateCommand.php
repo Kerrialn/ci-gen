@@ -2,6 +2,7 @@
 
 namespace App\Console\Command;
 
+use App\Generators\GithubActionsGenerator;
 use App\Generators\YamlGenerator;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
@@ -12,7 +13,7 @@ use Symplify\PackageBuilder\Console\ShellCode;
 final class GenerateCommand extends Command {
 
     private const NAME = 'generate';
-    private const CI_SERVICES = ['Github Actions'];
+    private const CI_SERVICES = [GithubActionsGenerator::SERVICE_NAME];
     private SymfonyStyle $symfonyStyle;
     private YamlGenerator $yamlGenerator;
 
