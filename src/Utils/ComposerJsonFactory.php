@@ -12,7 +12,7 @@ final class ComposerJsonFactory {
 
     private JsonFileManager $jsonFileManager;
 
-    public function construct(JsonFileManager $jsonFileManager)
+    public function __construct(JsonFileManager $jsonFileManager)
     {
         $this->jsonFileManager = $jsonFileManager;
     }

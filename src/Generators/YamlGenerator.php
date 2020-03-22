@@ -27,18 +27,20 @@ class YamlGenerator {
 
     public function loadComposerJson(): ComposerJson
     {
-        $this->composerJsonFactory->createFromFilePath(self::COMPOSER_JSON_PATH);
+        return $this->composerJsonFactory->createFromFilePath(self::COMPOSER_JSON_PATH);
     }
 
     public function generateFromComposerJson(string $ciService): array
     {
-        foreach ($this->generators as $generator)
-        {
-            if (!$generator->isMatch($ciService))
-            {
+        foreach ($this->generators as $generator) {
+            if (!$generator->isMatch($ciService)) {
                 continue;
             }
-            return $generator->generate();
+
+            $composerJson = $this->loadComposerJson();
+            return $generator->generate($composerJson);
         }
+
+        return [];
     }
 }
