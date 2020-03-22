@@ -1,0 +1,32 @@
+parameters:
+	earlyTerminatingMethodCalls:
+		PHPUnit\Framework\TestCase:
+			- fail
+			- markTestIncomplete
+			- markTestSkipped
+	stubFiles:
+		- stubs/MockBuilder.stub
+		- stubs/MockObject.stub
+		- stubs/TestCase.stub
+
+services:
+	-
+		class: PHPStan\PhpDoc\PHPUnit\MockObjectTypeNodeResolverExtension
+		tags:
+			- phpstan.phpDoc.typeNodeResolverExtension
+	-
+		class: PHPStan\Type\PHPUnit\Assert\AssertFunctionTypeSpecifyingExtension
+		tags:
+			- phpstan.typeSpecifier.functionTypeSpecifyingExtension
+	-
+		class: PHPStan\Type\PHPUnit\Assert\AssertMethodTypeSpecifyingExtension
+		tags:
+			- phpstan.typeSpecifier.methodTypeSpecifyingExtension
+	-
+		class: PHPStan\Type\PHPUnit\Assert\AssertStaticMethodTypeSpecifyingExtension
+		tags:
+			- phpstan.typeSpecifier.staticMethodTypeSpecifyingExtension
+	-
+		class: PHPStan\Type\PHPUnit\MockBuilderDynamicReturnTypeExtension
+		tags:
+			- phpstan.broker.dynamicMethodReturnTypeExtension

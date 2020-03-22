@@ -1,0 +1,15 @@
+#!/usr/bin/env php
+<?php
+require_once  __DIR__ . '/../vendor/autoload.php';
+
+use App\Console\ApplicationConsole;
+use App\HttpKernel\ApplicationKernel;
+
+$ApplicationKernel = new ApplicationKernel(mt_rand(1, 10000), 'dev');
+$ApplicationKernel->boot();
+
+$container = $ApplicationKernel->getContainer();
+
+/** @var ApplicationConsole $application */
+$application = $container->get(ApplicationConsole::class);
+exit($application->run());

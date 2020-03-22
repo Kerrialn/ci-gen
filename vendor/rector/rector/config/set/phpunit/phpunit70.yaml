@@ -1,0 +1,10 @@
+imports:
+    - { resource: 'phpunit-exception.yaml' }
+
+services:
+    Rector\Renaming\Rector\Annotation\RenameAnnotationRector:
+        $classToAnnotationMap:
+            PHPUnit\Framework\TestCase:
+                scenario: 'test'
+
+    Rector\PHPUnit\Rector\Class_\RemoveDataProviderTestPrefixRector: null

@@ -1,0 +1,4 @@
+services:
+    Rector\Symfony\Rector\BinaryOp\ResponseStatusCodeRector: null
+    Rector\Symfony\Rector\Class_\MakeCommandLazyRector: null
+    Rector\SymfonyCodeQuality\Rector\Class_\EventListenerToEventSubscriberRector: null

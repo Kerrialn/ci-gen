@@ -1,0 +1,58 @@
+{
+	"name": "nette/application",
+	"description": "🏆 Nette Application: a full-stack component-based MVC kernel for PHP that helps you write powerful and modern web applications. Write less, have cleaner code and your work will bring you joy.",
+	"keywords": ["nette", "mvc", "framework", "component-based", "routing", "seo", "mvp", "presenter", "control", "forms"],
+	"homepage": "https://nette.org",
+	"license": ["BSD-3-Clause", "GPL-2.0-only", "GPL-3.0-only"],
+	"authors": [
+		{
+			"name": "David Grudl",
+			"homepage": "https://davidgrudl.com"
+		},
+		{
+			"name": "Nette Community",
+			"homepage": "https://nette.org/contributors"
+		}
+	],
+	"require": {
+		"php": ">=7.1",
+		"nette/component-model": "^3.0",
+		"nette/http": "^3.0.2",
+		"nette/routing": "~3.0.0",
+		"nette/utils": "^3.1"
+	},
+	"suggest": {
+		"nette/forms": "Allows to use Nette\\Application\\UI\\Form",
+		"latte/latte": "Allows using Latte in templates"
+	},
+	"require-dev": {
+		"nette/tester": "^2.3.1",
+		"nette/di": "^v3.0",
+		"nette/forms": "^3.0",
+		"nette/robot-loader": "^3.2",
+		"nette/security": "^3.0",
+		"latte/latte": "^2.6",
+		"tracy/tracy": "^2.6",
+		"mockery/mockery": "^1.0",
+		"phpstan/phpstan-nette": "^0.12"
+	},
+	"conflict": {
+		"nette/di": "<3.0-stable",
+		"nette/forms": "<3.0",
+		"latte/latte": "<2.6",
+		"tracy/tracy": "<2.5"
+	},
+	"autoload": {
+		"classmap": ["src/"]
+	},
+	"minimum-stability": "dev",
+	"scripts": {
+		"phpstan": "phpstan analyse --level 5 --configuration tests/phpstan.neon src",
+		"tester": "tester tests -s"
+	},
+	"extra": {
+		"branch-alias": {
+			"dev-master": "3.0-dev"
+		}
+	}
+}

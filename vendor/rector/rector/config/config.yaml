@@ -1,0 +1,34 @@
+imports:
+    - { resource: '../packages/**/config/config.yaml' }
+    - { resource: '../rules/**/config/config.yaml' }
+    - { resource: 'services.yaml' }
+    # only in local repository
+    # ignore errors, because utils are not part of composer package nor rector.phar
+    - { resource: '../utils/**/config/config.yaml', ignore_errors: true }
+
+parameters:
+    # processed paths
+    paths: []
+    exclude_paths: []
+    exclude_rectors: []
+    autoload_paths: []
+    rector_recipe: []
+
+    # this helps to separate opened 3rd party code vs private code approach (e.g. use of public constants)
+    project_type: "proprietary" # or "open-source"
+
+    # lower for performance; higher to prevent bugs with fluent interfaces like https://github.com/rectorphp/rector/issues/1646, or https://github.com/rectorphp/rector/issues/2444
+    nested_chain_method_call_limit: 30
+
+    # importing FQN names
+    auto_import_names: false
+    # e.g. import \DateTime
+    import_short_classes: true
+    # e.g. /** @var \Some\ClassHere */
+    import_doc_blocks: true
+
+    # what PHP version is used for features, composer.json version, then local PHP version is used by default
+    php_version_features: null
+
+    file_extensions:
+        - 'php'

@@ -1,0 +1,102 @@
+<?php declare(strict_types=1);
+
+namespace OndraM\CiDetector;
+
+use OndraM\CiDetector\Ci\CiInterface;
+use OndraM\CiDetector\Exception\CiNotDetectedException;
+
+/**
+ * Unified way to get environment variables from current continuous integration server
+ */
+class CiDetector
+{
+    public const CI_APPVEYOR = 'AppVeyor';
+    public const CI_BAMBOO = 'Bamboo';
+    public const CI_BUDDY = 'Buddy';
+    public const CI_CIRCLE = 'CircleCI';
+    public const CI_CODESHIP = 'Codeship';
+    public const CI_CONTINUOUSPHP = 'continuousphp';
+    public const CI_DRONE = 'drone';
+    public const CI_GITHUB_ACTIONS = 'GitHub Actions';
+    public const CI_GITLAB = 'GitLab';
+    public const CI_JENKINS = 'Jenkins';
+    public const CI_TEAMCITY = 'TeamCity';
+    public const CI_TRAVIS = 'Travis CI';
+
+    /** @var Env */
+    private $environment;
+
+    public function __construct()
+    {
+        $this->environment = new Env();
+    }
+
+    public static function fromEnvironment(Env $environment): self
+    {
+        $detector = new self();
+
+        $detector->environment = $environment;
+
+        return $detector;
+    }
+
+    /**
+     * Is current environment an recognized CI server?
+     */
+    public function isCiDetected(): bool
+    {
+        $ciServer = $this->detectCurrentCiServer();
+
+        return ($ciServer !== null);
+    }
+
+    /**
+     * Detect current CI server and return instance of its settings
+     *
+     * @throws CiNotDetectedException
+     */
+    public function detect(): CiInterface
+    {
+        $ciServer = $this->detectCurrentCiServer();
+
+        if ($ciServer === null) {
+            throw new CiNotDetectedException('No CI server detected in current environment');
+        }
+
+        return $ciServer;
+    }
+
+    /**
+     * @return string[]
+     */
+    protected function getCiServers(): array
+    {
+        return [
+            Ci\AppVeyor::class,
+            Ci\Bamboo::class,
+            Ci\Buddy::class,
+            Ci\Circle::class,
+            Ci\Codeship::class,
+            Ci\Continuousphp::class,
+            Ci\Drone::class,
+            Ci\GitHubActions::class,
+            Ci\GitLab::class,
+            Ci\Jenkins::class,
+            Ci\TeamCity::class,
+            Ci\Travis::class,
+        ];
+    }
+
+    protected function detectCurrentCiServer(): ?CiInterface
+    {
+        $ciServers = $this->getCiServers();
+
+        foreach ($ciServers as $ciClass) {
+            if (call_user_func([$ciClass, 'isDetected'], $this->environment)) {
+                return new $ciClass($this->environment);
+            }
+        }
+
+        return null;
+    }
+}

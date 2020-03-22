@@ -1,0 +1,8 @@
+services:
+    -
+        class: Rector\NodeTypeResolver\PHPStan\TypeExtension\StaticContainerGetDynamicMethodReturnTypeExtension
+        tags: [phpstan.broker.dynamicMethodReturnTypeExtension]
+
+    -
+        class: Rector\NodeTypeResolver\PHPStan\TypeExtension\KernelGetContainerAfterBootReturnTypeExtension
+        tags: [phpstan.broker.dynamicMethodReturnTypeExtension]

@@ -1,0 +1,3 @@
+services:
+    # add uuid id property
+    Rector\Doctrine\Rector\Class_\AddUuidToEntityWhereMissingRector: null

@@ -1,0 +1,3 @@
+imports:
+    # underscore naming to namespaced classes changes
+    - { resource: 'twig-underscore-to-namespace.yaml' }

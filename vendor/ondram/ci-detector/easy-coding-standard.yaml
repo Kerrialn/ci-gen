@@ -1,0 +1,9 @@
+imports:
+    - { resource: 'vendor/lmc/coding-standard/easy-coding-standard.yaml' }
+
+services:
+    PhpCsFixer\Fixer\Phpdoc\PhpdocLineSpanFixer:
+        property: single
+
+    PhpCsFixer\Fixer\PhpUnit\PhpUnitTestAnnotationFixer:
+        style: annotation
