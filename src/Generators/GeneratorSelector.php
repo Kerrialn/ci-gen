@@ -3,15 +3,14 @@
 
 namespace App\Generators;
 
-
 use App\Contracts\GeneratorInterface;
-use App\Intermediary\IntermediaryObject;
+use App\Intermediary\IntermediaryGenerateObject;
 use App\Utils\ComposerJsonFactory;
 use Symplify\MonorepoBuilder\ComposerJsonObject\ValueObject\ComposerJson;
 
-class YamlGenerator {
-
-    private const COMPOSER_JSON_PATH = __DIR__ . '../../composer.json';
+final class GeneratorSelector
+{
+    private const COMPOSER_JSON_PATH = __DIR__ . '/../../composer.json';
     private array $generators = [];
     private ComposerJsonFactory $composerJsonFactory;
 
@@ -27,18 +26,25 @@ class YamlGenerator {
 
     public function loadComposerJson(): ComposerJson
     {
-        $this->composerJsonFactory->createFromFilePath(self::COMPOSER_JSON_PATH);
+        return $this->composerJsonFactory->createFromFilePath(self::COMPOSER_JSON_PATH);
     }
 
     public function generateFromComposerJson(string $ciService): array
     {
-        foreach ($this->generators as $generator)
-        {
-            if (!$generator->isMatch($ciService))
-            {
+        foreach ($this->generators as $generator) {
+            if (!$generator->isMatch($ciService)) {
                 continue;
             }
-            return $generator->generate($this->loadComposerJson());
+
+            $intermediaryObject = new IntermediaryGenerateObject(
+                $generator->getName(),
+                $this->loadComposerJson(),
+            );
+
+            return $generator->generate($intermediaryObject);
         }
+
+        return [];
     }
+
 }

@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Utils;
@@ -7,11 +8,11 @@ use Symplify\MonorepoBuilder\ComposerJsonObject\ValueObject\ComposerJson;
 use Symplify\MonorepoBuilder\FileSystem\JsonFileManager;
 use Symplify\SmartFileSystem\SmartFileInfo;
 
-final class ComposerJsonFactory {
-
+final class ComposerJsonFactory
+{
     private JsonFileManager $jsonFileManager;
 
-    public function construct(JsonFileManager $jsonFileManager)
+    public function __construct(JsonFileManager $jsonFileManager)
     {
         $this->jsonFileManager = $jsonFileManager;
     }
@@ -70,7 +71,4 @@ final class ComposerJsonFactory {
 
         return $composerJson;
     }
-
-
 }
-

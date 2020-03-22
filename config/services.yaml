@@ -7,7 +7,14 @@ services:
         resource: "../src"
         exclude:
             - "../src/HttpKernel/ApplicationKernel.php"
+            - "../src/Intermediary/IntermediaryGenerateObject.php"
 
     Symplify\PackageBuilder\Console\Style\SymfonyStyleFactory: null
     Symfony\Component\Console\Style\SymfonyStyle:
         factory: ['@Symplify\PackageBuilder\Console\Style\SymfonyStyleFactory', 'create']
+
+    Symplify\MonorepoBuilder\FileSystem\JsonFileManager:
+        arguments:
+            $inlineSections: []
+
+    Symfony\Component\Filesystem\Filesystem: null

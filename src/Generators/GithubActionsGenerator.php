@@ -3,28 +3,62 @@
 
 namespace App\Generators;
 
-
 use App\Contracts\GeneratorInterface;
-use App\Intermediary\IntermediaryObject;
-use Symplify\MonorepoBuilder\ComposerJsonObject\ValueObject\ComposerJson;
+use App\Intermediary\IntermediaryGenerateObject;
 
-class GithubActionsGenerator implements GeneratorInterface {
+final class GithubActionsGenerator implements GeneratorInterface {
 
-    private const SERVICE_NAME = 'GithubActions';
+    /**
+     * @var string
+     */
+    private const SERVICE_NAME = 'Github Actions';
+    private const SERVICE_FILE_PATH = '.github/workflows/continuous-integration-workflow.yml';
+    private const SERVICE_FILENAME = 'continuous-integration-workflow.yml';
 
     public function isMatch(string $service_name): bool
     {
         return $service_name === self::SERVICE_NAME;
     }
 
-    public function generate(ComposerJson $composerJson): array
+    public function generate(IntermediaryGenerateObject $intermediaryObject): array
     {
-       $intermediaryObject = new IntermediaryObject();
+        $output = [
+            'name' => $intermediaryObject->getService(),
+            'php' => $intermediaryObject->getPhpVersion(),
+            'on' => ['pull_request' => '', 'push' => ['branches' => "master"]],
+            'steps' => []
+        ];
 
-        return [
-           'name' => $intermediaryObject->getName()
-       ];
+        if ($intermediaryObject->has("phpunit/phpunit"))
+        {
+            $output['steps']['PhpUnit'] = 'PHP Unit detected';
+        }
 
+        if ($intermediaryObject->hasEasyCodingStandards())
+        {
+            $output['steps']['easy-coding-standards'] = 'Easy Coding Standards detected';
+        }
+
+        if ($intermediaryObject->hasPhpStan())
+        {
+            $output['steps']['php-stan'] = 'PHP Stan detected';
+        }
+
+        return $output;
     }
 
+    public function getName(): string
+    {
+        return self::SERVICE_NAME;
+    }
+
+    public function getFilename(): string
+    {
+        return self::SERVICE_FILENAME;
+    }
+
+    public function getPath(): string
+    {
+        return self::SERVICE_FILE_PATH;
+    }
 }

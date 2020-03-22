@@ -7,8 +7,8 @@ namespace App\Console;
 use App\Console\Command\GenerateCommand;
 use Symfony\Component\Console\Application;
 
-final class ApplicationConsole extends Application {
-
+final class ApplicationConsole extends Application
+{
     public function __construct(GenerateCommand $generateCommand)
     {
         $this->add($generateCommand);

@@ -1,14 +1,16 @@
 <?php
+
 declare(strict_types=1);
 
 namespace App\Contracts;
 
-use Symplify\MonorepoBuilder\ComposerJsonObject\ValueObject\ComposerJson;
+use App\Intermediary\IntermediaryGenerateObject;
 
-interface GeneratorInterface {
+interface GeneratorInterface
+{
+    public function getName(): string;
 
     public function isMatch(string $ciService): bool;
 
-    public function generate(ComposerJson $composerJson): array;
-
+    public function generate(IntermediaryGenerateObject $intermediaryObject): array;
 }
