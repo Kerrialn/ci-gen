@@ -3,7 +3,6 @@ declare(strict_types=1);
 
 namespace App\Utils;
 
-
 use Symplify\MonorepoBuilder\ComposerJsonObject\ValueObject\ComposerJson;
 use Symplify\MonorepoBuilder\FileSystem\JsonFileManager;
 use Symplify\SmartFileSystem\SmartFileInfo;

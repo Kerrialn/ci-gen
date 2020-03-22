@@ -38,7 +38,7 @@ class YamlGenerator {
             {
                 continue;
             }
-            return $generator->generate();
+            return $generator->generate($this->loadComposerJson());
         }
     }
 }

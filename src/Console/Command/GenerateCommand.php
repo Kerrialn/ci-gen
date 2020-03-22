@@ -28,8 +28,6 @@ final class GenerateCommand extends Command {
         $ciService = $this->symfonyStyle->choice('Please select a CI service:', self::CI_SERVICES);
         $output = $this->yamlGenerator->generateFromComposerJson($ciService);
 
-        var_dump($output);
-
         $this->symfonyStyle->success('Generated');
         return ShellCode::SUCCESS;
     }
