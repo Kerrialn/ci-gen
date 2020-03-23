@@ -1,3 +1,5 @@
+image: 'php:latest'
+
 stages:
     - test
 

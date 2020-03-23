@@ -23,6 +23,7 @@ final class GitlabGenerator implements GeneratorInterface {
     public function generate(IntermediaryGenerateObject $intermediaryObject): array
     {
         $output = [
+            'image' => 'php:latest',
             'stages' => [
                 'test'
             ],
