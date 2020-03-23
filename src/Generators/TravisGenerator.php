@@ -6,8 +6,8 @@ namespace App\Generators;
 use App\Contracts\GeneratorInterface;
 use App\Intermediary\IntermediaryGenerateObject;
 
-final class TravisGenerator implements GeneratorInterface {
-
+final class TravisGenerator implements GeneratorInterface
+{
     /**
      * @var string
      */
@@ -29,8 +29,7 @@ final class TravisGenerator implements GeneratorInterface {
 
         $output['install'][] = 'composer install';
 
-        if ($intermediaryObject->hasPhpUnitTests())
-        {
+        if ($intermediaryObject->hasPhpUnitTests()) {
             $output['jobs']['include'][] = [
                 'name' => 'Php Unit',
                 'stage' => 'test',
@@ -39,23 +38,21 @@ final class TravisGenerator implements GeneratorInterface {
             ];
         }
 
-        if ($intermediaryObject->hasEasyCodingStandards())
-        {
+        if ($intermediaryObject->hasEasyCodingStandards()) {
             $output['jobs']['include'][] = [
                 'name' => 'Easy Coding Standards',
                 'stage' => 'test',
                 'php' => $intermediaryObject->getPhpVersion(),
-                'script' => ['composer check-cs src','composer check-cs src -- --fix']
+                'script' => ['composer check-cs src', 'composer check-cs src -- --fix'],
             ];
         }
 
-        if ($intermediaryObject->hasPhpStan())
-        {
+        if ($intermediaryObject->hasPhpStan()) {
             $output['jobs']['include'][] = [
                 'name' => 'Php Stan',
                 'stage' => 'test',
                 'php' => $intermediaryObject->getPhpVersion(),
-                'script' => 'vendor/bin/phpstan analyse --ansi'
+                'script' => 'vendor/bin/phpstan analyse --ansi',
             ];
         }
 

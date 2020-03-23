@@ -22,7 +22,6 @@ final class GithubActionsGenerator implements GeneratorInterface
 
     public function generate(IntermediaryGenerateObject $intermediaryObject): array
     {
-
         $output = [
             'name' => $intermediaryObject->getService(),
             'on' => [ "pull_request" => null, 'push' => ['branches' => "master"]],

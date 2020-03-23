@@ -52,7 +52,8 @@ final class IntermediaryGenerateObject
         return $this->has('phpstan/phpstan');
     }
 
-    public function hasPhpUnitTests(){
+    public function hasPhpUnitTests()
+    {
         return $this->has('phpunit/phpunit');
     }
 

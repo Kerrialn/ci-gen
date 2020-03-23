@@ -1,9 +1,11 @@
 # ecs.yaml
+services:
+  PHP_CodeSniffer\Standards\Generic\Sniffs\Arrays\DisallowLongArraySyntaxSniff: ~
+  PhpCsFixer\Fixer\ArrayNotation\TrailingCommaInMultilineArrayFixer: ~
+
 parameters:
   sets:
     - 'clean-code'
     - 'psr12'
-
-services:
-  PHP_CodeSniffer\Standards\Generic\Sniffs\Arrays\DisallowLongArraySyntaxSniff: ~
-  PhpCsFixer\Fixer\ArrayNotation\TrailingCommaInMultilineArrayFixer: ~
+  skip:
+    SlevomatCodingStandard\Sniffs\Variables\UnusedVariableSniff.UnusedVariable: null

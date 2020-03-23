@@ -5,7 +5,6 @@ namespace App\Console\Command;
 use App\Contracts\GeneratorInterface;
 use App\Generators\GeneratorSelector;
 use App\Utils\FilenameGenerator;
-use App\Utils\GenerateYamlFile;
 use App\Utils\YamlPrinter;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;

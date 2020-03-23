@@ -2,11 +2,10 @@
 
 namespace App\Tests\Console\Command;
 
-use App\Console\Command\GenerateCommand;
 use PHPUnit\Framework\TestCase;
 
-class GenerateCommandTest extends TestCase {
-
+class GenerateCommandTest extends TestCase
+{
     /**
      * @dataProvider provider
      * @param $data
@@ -20,8 +19,7 @@ class GenerateCommandTest extends TestCase {
     {
         return [
             'my named data' => [true],
-            'my data'       => [true]
+            'my data' => [true],
         ];
     }
-
 }
