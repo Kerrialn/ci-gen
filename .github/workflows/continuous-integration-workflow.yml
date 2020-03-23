@@ -9,7 +9,10 @@ php: '7.4'
 jobs:
     PhpUnit:
         name: 'PHP Unit detected'
+        steps: null
     easy-coding-standards:
         name: 'Easy Coding Standards detected'
+        steps: null
     php-stan:
         name: 'PHP Stan detected'
+        steps: null

@@ -32,16 +32,20 @@ final class GithubActionsGenerator implements GeneratorInterface {
         if ($intermediaryObject->has("phpunit/phpunit"))
         {
             $output['jobs']['PhpUnit']['name'] = 'PHP Unit detected';
+            $output['jobs']['PhpUnit']['steps'] = null;
+
         }
 
         if ($intermediaryObject->hasEasyCodingStandards())
         {
             $output['jobs']['easy-coding-standards']['name']  = 'Easy Coding Standards detected';
+            $output['jobs']['easy-coding-standards']['steps']  = null;
         }
 
         if ($intermediaryObject->hasPhpStan())
         {
             $output['jobs']['php-stan']['name'] = 'PHP Stan detected';
+            $output['jobs']['php-stan']['steps'] = null;
         }
 
 
