@@ -25,23 +25,23 @@ final class GithubActionsGenerator implements GeneratorInterface {
         $output = [
             'name' => $intermediaryObject->getService(),
             'php' => $intermediaryObject->getPhpVersion(),
-            'on' => [ "pull_request" => [] , 'push' => ['branches' => "master"]],
-            'steps' => []
+            'on' => [ "pull_request", 'push' => ['branches' => "master"]],
+            'jobs:' => []
         ];
 
         if ($intermediaryObject->has("phpunit/phpunit"))
         {
-            $output['steps']['PhpUnit'] = 'PHP Unit detected';
+            $output['jobs:']['PhpUnit']['name'] = 'PHP Unit detected';
         }
 
         if ($intermediaryObject->hasEasyCodingStandards())
         {
-            $output['steps']['easy-coding-standards'] = 'Easy Coding Standards detected';
+            $output['jobs:']['easy-coding-standards']['name']  = 'Easy Coding Standards detected';
         }
 
         if ($intermediaryObject->hasPhpStan())
         {
-            $output['steps']['php-stan'] = 'PHP Stan detected';
+            $output['jobs']['php-stan']['name'] = 'PHP Stan detected';
         }
 
         return $output;
