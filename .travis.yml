@@ -1,0 +1,26 @@
+language: php
+
+required: '7.4'
+
+install:
+    - 'composer install'
+
+jobs:
+    include:
+        -
+            name: 'Php Unit'
+            stage: test
+            php: '7.4'
+            script: 'vendor/bin/phpunit --testsuite main'
+        -
+            name: 'Easy Coding Standards'
+            stage: test
+            php: '7.4'
+            script:
+                - 'composer check-cs src'
+                - 'composer check-cs src -- --fix'
+        -
+            name: 'Php Stan'
+            stage: test
+            php: '7.4'
+            script: 'vendor/bin/phpstan analyse --ansi'

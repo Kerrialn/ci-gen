@@ -6,8 +6,8 @@ namespace App\Generators;
 use App\Contracts\GeneratorInterface;
 use App\Intermediary\IntermediaryGenerateObject;
 
-final class TravisGenerator implements GeneratorInterface
-{
+final class TravisGenerator implements GeneratorInterface {
+
     /**
      * @var string
      */
@@ -23,20 +23,40 @@ final class TravisGenerator implements GeneratorInterface
     public function generate(IntermediaryGenerateObject $intermediaryObject): array
     {
         $output = [
-            'name' => $intermediaryObject->getService(),
+            'language' => 'php',
             'required' => $intermediaryObject->getPhpVersion(),
         ];
 
-        if ($intermediaryObject->has("phpunit/phpunit")) {
-            $output['tests'] = 'PHP Unit detected';
+        $output['install'][] = 'composer install';
+
+        if ($intermediaryObject->hasPhpUnitTests())
+        {
+            $output['jobs']['include'][] = [
+                'name' => 'Php Unit',
+                'stage' => 'test',
+                'php' => $intermediaryObject->getPhpVersion(),
+                'script' => 'vendor/bin/phpunit --testsuite main',
+            ];
         }
 
-        if ($intermediaryObject->hasEasyCodingStandards()) {
-            $output['easy-coding-standards'] = 'Easy Coding Standards detected';
+        if ($intermediaryObject->hasEasyCodingStandards())
+        {
+            $output['jobs']['include'][] = [
+                'name' => 'Easy Coding Standards',
+                'stage' => 'test',
+                'php' => $intermediaryObject->getPhpVersion(),
+                'script' => ['composer check-cs src','composer check-cs src -- --fix']
+            ];
         }
 
-        if ($intermediaryObject->hasPhpStan()) {
-            $output['php-stan'] = 'PHP Stan detected';
+        if ($intermediaryObject->hasPhpStan())
+        {
+            $output['jobs']['include'][] = [
+                'name' => 'Php Stan',
+                'stage' => 'test',
+                'php' => $intermediaryObject->getPhpVersion(),
+                'script' => 'vendor/bin/phpstan analyse --ansi'
+            ];
         }
 
         return $output;

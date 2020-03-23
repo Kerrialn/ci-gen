@@ -61,7 +61,6 @@ final class GithubActionsGenerator implements GeneratorInterface
             ];
         }
 
-
         return $output;
     }
 
