@@ -19,7 +19,7 @@ jobs:
             -
                 run: 'composer install --no-progress'
             -
-                run: 'composer check-cs'
+                run: 'vendor/bin/ecs check --ansi'
     phpstan:
         name: 'Static Analysis'
         runs-on: ubuntu-latest
@@ -35,4 +35,4 @@ jobs:
             -
                 run: 'composer install --no-progress'
             -
-                run: 'composer phpstan'
+                run: 'vendor/bin/phpstan analyse --ansi --error-format symplify'

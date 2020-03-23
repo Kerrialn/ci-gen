@@ -22,11 +22,11 @@ final class GithubActionsGenerator implements GeneratorInterface
 
     public function generate(IntermediaryGenerateObject $intermediaryObject): array
     {
+
         $output = [
             'name' => $intermediaryObject->getService(),
             'on' => [ "pull_request" => null, 'push' => ['branches' => "master"]],
         ];
-
 
         if ($intermediaryObject->hasEasyCodingStandards()) {
             $output['jobs']['easy-coding-standards']['name'] = 'Easy Coding Standards detected';
@@ -35,7 +35,7 @@ final class GithubActionsGenerator implements GeneratorInterface
                 ['uses' => 'actions/checkout@v2'],
                 ['uses' => 'shivammathur/setup-php@v1', 'with' => ['php-version' => $intermediaryObject->getPhpVersion(), 'coverage' => 'none']],
                 ['run' => 'composer install --no-progress'],
-                ['run' => 'composer check-cs'],
+                ['run' => 'vendor/bin/ecs check --ansi'],
             ];
         }
 
@@ -46,7 +46,7 @@ final class GithubActionsGenerator implements GeneratorInterface
                 ['uses' => 'actions/checkout@v2'],
                 ['uses' => 'shivammathur/setup-php@v1', 'with' => ['php-version' => $intermediaryObject->getPhpVersion(), 'coverage' => 'none', 'tools' => 'cs2pr']],
                 ['run' => 'composer install --no-progress'],
-                ['run' => 'composer phpstan'],
+                ['run' => 'vendor/bin/phpstan analyse --ansi --error-format symplify'],
             ];
         }
 

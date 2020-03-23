@@ -17,13 +17,9 @@ use Symplify\SmartFileSystem\SmartFileInfo;
 final class GenerateCommand extends Command
 {
     private const NAME = 'generate';
-
     private SymfonyStyle $symfonyStyle;
-
     private GeneratorSelector $generatorSelector;
-
     private YamlPrinter $yamlPrinter;
-
     private FilenameGenerator $filenameGenerator;
 
     /**
@@ -35,7 +31,6 @@ final class GenerateCommand extends Command
      * @param SymfonyStyle $style
      * @param GeneratorSelector $generatorSelector
      * @param GeneratorInterface[] $generators
-     * @param GenerateYamlFile $generateYamlFile
      * @param YamlPrinter $yamlPrinter
      * @param FilenameGenerator $filenameGenerator
      */
@@ -43,7 +38,6 @@ final class GenerateCommand extends Command
         SymfonyStyle $style,
         GeneratorSelector $generatorSelector,
         array $generators,
-        GenerateYamlFile $generateYamlFile,
         YamlPrinter $yamlPrinter,
         FilenameGenerator $filenameGenerator
     ) {
