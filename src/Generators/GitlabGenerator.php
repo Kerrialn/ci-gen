@@ -6,14 +6,14 @@ namespace App\Generators;
 use App\Contracts\GeneratorInterface;
 use App\Intermediary\IntermediaryGenerateObject;
 
-final class GitlabGenerator implements GeneratorInterface
-{
+final class GitlabGenerator implements GeneratorInterface {
+
     /**
      * @var string
      */
     private const SERVICE_NAME = 'Gitlab CI';
-    private const SERVICE_FILE_PATH = '.travis.yml';
-    private const SERVICE_FILENAME = '.travis.yml';
+    private const SERVICE_FILE_PATH = '.gitlab-ci.yml';
+    private const SERVICE_FILENAME = '.gitlab-ci.yml';
 
     public function isMatch(string $service_name): bool
     {
@@ -23,36 +23,39 @@ final class GitlabGenerator implements GeneratorInterface
     public function generate(IntermediaryGenerateObject $intermediaryObject): array
     {
         $output = [
-            'language' => 'php',
-            'required' => $intermediaryObject->getPhpVersion(),
+            'image' => 'php:latest',
+            'stages' => [
+                'test'
+            ],
+            'before_script:' => [
+                'curl -sS https://getcomposer.org/installer | php',
+                'php composer.phar install'
+            ]
         ];
 
         $output['install'][] = 'composer install';
 
-        if ($intermediaryObject->hasPhpUnitTests()) {
-            $output['jobs']['include'][] = [
-                'name' => 'Php Unit',
+        if ($intermediaryObject->hasPhpUnitTests())
+        {
+            $output['phpUnit'] = [
                 'stage' => 'test',
-                'php' => $intermediaryObject->getPhpVersion(),
-                'script' => 'vendor/bin/phpunit --testsuite main',
+                'script' => ['vendor/bin/phpunit']
             ];
         }
 
-        if ($intermediaryObject->hasEasyCodingStandards()) {
-            $output['jobs']['include'][] = [
-                'name' => 'Easy Coding Standards',
+        if ($intermediaryObject->hasEasyCodingStandards())
+        {
+            $output['eastCodingStandards'] = [
                 'stage' => 'test',
-                'php' => $intermediaryObject->getPhpVersion(),
-                'script' => ['composer check-cs src', 'composer check-cs src -- --fix'],
+                'script' => ['vendor/bin/ecs check --ansi']
             ];
         }
 
-        if ($intermediaryObject->hasPhpStan()) {
-            $output['jobs']['include'][] = [
-                'name' => 'Php Stan',
+        if ($intermediaryObject->hasPhpStan())
+        {
+            $output['phpStan'] = [
                 'stage' => 'test',
-                'php' => $intermediaryObject->getPhpVersion(),
-                'script' => 'vendor/bin/phpstan analyse --ansi',
+                'script' => ['vendor/bin/phpstan analyse --ansi']
             ];
         }
 

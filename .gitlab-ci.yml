@@ -1,0 +1,25 @@
+image: 'php:latest'
+
+stages:
+    - test
+'before_script:':
+    - 'curl -sS https://getcomposer.org/installer | php'
+    - 'php composer.phar install'
+
+install:
+    - 'composer install'
+
+phpUnit:
+    stage: test
+    script:
+        - vendor/bin/phpunit
+
+eastCodingStandards:
+    stage: test
+    script:
+        - 'vendor/bin/ecs check --ansi'
+
+phpStan:
+    stage: test
+    script:
+        - 'vendor/bin/phpstan analyse --ansi'
