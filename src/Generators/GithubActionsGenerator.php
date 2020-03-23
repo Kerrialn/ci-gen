@@ -44,6 +44,7 @@ final class GithubActionsGenerator implements GeneratorInterface {
             $output['jobs']['php-stan']['name'] = 'PHP Stan detected';
         }
 
+
         return $output;
     }
 
