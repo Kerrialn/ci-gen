@@ -10,12 +10,12 @@ jobs:
     PhpUnit:
         name: 'PHP Unit detected'
         steps:
-            run: 'composer install --no-progress'
+            - run: 'composer install --no-progress'
     easy-coding-standards:
         name: 'Easy Coding Standards detected'
         steps:
-            run: 'composer install --no-progress'
+            - run: 'composer install --no-progress'
     php-stan:
         name: 'PHP Stan detected'
         steps:
-            run: 'composer install --no-progress'
+            - run: 'composer install --no-progress'
