@@ -11,7 +11,7 @@ Automatically generate the configuration yaml file for continuous integration (C
 
 #### Use cases
 - Setting up a project and want  to use a CI service
-- Switching CI services and don't want the hassle of rewriting your yaml file to be compatible with the new service (not yet implemented) 
+- Switching CI services, just run and generate the yaml file instantly
 
 #### Run process
 1. Install: `composer require kerrialn/ci-gen`
