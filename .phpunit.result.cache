@@ -1,0 +1,1 @@
+C:37:"PHPUnit\Runner\DefaultTestResultCache":240:{a:2:{s:7:"defects";a:0:{}s:5:"times";a:2:{s:87:"App\Tests\Console\Command\GenerateCommandTest::testMethod with data set "my named data"";d:0.002;s:81:"App\Tests\Console\Command\GenerateCommandTest::testMethod with data set "my data"";d:0;}}}
