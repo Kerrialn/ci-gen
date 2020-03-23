@@ -26,14 +26,12 @@ final class GithubActionsGenerator implements GeneratorInterface {
             'name' => $intermediaryObject->getService(),
             'php' => $intermediaryObject->getPhpVersion(),
             'on' => [ "pull_request" => null, 'push' => ['branches' => "master"]],
-            'jobs' => []
         ];
 
         if ($intermediaryObject->has("phpunit/phpunit"))
         {
             $output['jobs']['PhpUnit']['name'] = 'PHP Unit detected';
             $output['jobs']['PhpUnit']['steps'] = [
-                'uses' => 'actions/checkout@v2',
                 'run' => 'composer install --no-progress'
             ];
 
@@ -43,7 +41,6 @@ final class GithubActionsGenerator implements GeneratorInterface {
         {
             $output['jobs']['easy-coding-standards']['name']  = 'Easy Coding Standards detected';
             $output['jobs']['easy-coding-standards']['steps']  = [
-                'uses' => 'actions/checkout@v2',
                 'run' => 'composer install --no-progress'
             ];
         }
@@ -52,7 +49,6 @@ final class GithubActionsGenerator implements GeneratorInterface {
         {
             $output['jobs']['php-stan']['name'] = 'PHP Stan detected';
             $output['jobs']['php-stan']['steps'] = [
-                'uses' => 'actions/checkout@v2',
                 'run' => 'composer install --no-progress'
             ];
         }

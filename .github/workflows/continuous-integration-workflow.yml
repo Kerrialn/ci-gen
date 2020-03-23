@@ -10,15 +10,12 @@ jobs:
     PhpUnit:
         name: 'PHP Unit detected'
         steps:
-            uses: actions/checkout@v2
             run: 'composer install --no-progress'
     easy-coding-standards:
         name: 'Easy Coding Standards detected'
         steps:
-            uses: actions/checkout@v2
             run: 'composer install --no-progress'
     php-stan:
         name: 'PHP Stan detected'
         steps:
-            uses: actions/checkout@v2
             run: 'composer install --no-progress'
