@@ -23,17 +23,10 @@ final class GitlabGenerator implements GeneratorInterface {
     public function generate(IntermediaryGenerateObject $intermediaryObject): array
     {
         $output = [
-            'image' => 'php:latest',
             'stages' => [
                 'test'
             ],
-            'before_script:' => [
-                'curl -sS https://getcomposer.org/installer | php',
-                'php composer.phar install'
-            ]
         ];
-
-        $output['install'][] = 'composer install';
 
         if ($intermediaryObject->hasPhpUnitTests())
         {
@@ -45,7 +38,7 @@ final class GitlabGenerator implements GeneratorInterface {
 
         if ($intermediaryObject->hasEasyCodingStandards())
         {
-            $output['eastCodingStandards'] = [
+            $output['easyCodingStandards'] = [
                 'stage' => 'test',
                 'script' => ['vendor/bin/ecs check --ansi']
             ];
