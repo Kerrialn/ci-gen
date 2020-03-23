@@ -23,8 +23,6 @@ final class GenerateCommand extends Command
 
     private GeneratorSelector $generatorSelector;
 
-    private GenerateYamlFile $generateYamlFile;
-
     private YamlPrinter $yamlPrinter;
 
     private FilenameGenerator $filenameGenerator;
@@ -54,7 +52,6 @@ final class GenerateCommand extends Command
         $this->symfonyStyle = $style;
         $this->generatorSelector = $generatorSelector;
         $this->generators = $generators;
-        $this->generateYamlFile = $generateYamlFile;
         $this->yamlPrinter = $yamlPrinter;
         $this->filenameGenerator = $filenameGenerator;
         parent::__construct();

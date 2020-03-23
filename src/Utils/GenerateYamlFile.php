@@ -4,11 +4,6 @@
 namespace App\Utils;
 
 
-final class GenerateYamlFile {
-
-    public function create(array $generatorOutput) : bool
-    {
-
-
-    }
+final class GenerateYamlFile
+{
 }
