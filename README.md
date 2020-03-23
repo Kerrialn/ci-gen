@@ -22,3 +22,4 @@ Automatically generate the configuration yaml file for continuous integration (C
 #### CI Services Compatibility
 - Travis CI
 - Github Actions
+- Gitlab CI
