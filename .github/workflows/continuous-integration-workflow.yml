@@ -1,0 +1,15 @@
+name: 'Github Actions'
+
+php: '7.4'
+'on':
+    pull_request: null
+    push:
+        branches: master
+
+jobs:
+    PhpUnit:
+        name: 'PHP Unit detected'
+    easy-coding-standards:
+        name: 'Easy Coding Standards detected'
+    php-stan:
+        name: 'PHP Stan detected'
