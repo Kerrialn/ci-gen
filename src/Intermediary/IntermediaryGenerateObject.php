@@ -52,6 +52,10 @@ final class IntermediaryGenerateObject
         return $this->has('phpstan/phpstan');
     }
 
+    public function hasPhpUnitTests(){
+        return $this->has('phpunit/phpunit');
+    }
+
     public function has(string $string): bool
     {
         return $this->checkRequire($string) == true || $this->checkDevRequire($string) == true ?: false;

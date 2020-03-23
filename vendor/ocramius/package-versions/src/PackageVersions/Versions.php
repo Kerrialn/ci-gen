@@ -130,7 +130,7 @@ final class Versions
   'theseer/tokenizer' => '1.1.3@11336f6f84e16a720dae9d8e6ed5019efa85a0f9',
   'tracy/tracy' => 'v2.7.3@344c77293038173f49678d9a95c27da6cbdbccd0',
   'webmozart/assert' => '1.7.0@aed98a490f9a8f78468232db345ab9cf606cf598',
-  '__root__' => 'dev-master@33f8517f7f8e04a5159d4716b2204023b7f2b5d2',
+  '__root__' => 'dev-master@06afbfdf638349d4a5740999619ffa9c04fd7c67',
 );
 
     private function __construct()
