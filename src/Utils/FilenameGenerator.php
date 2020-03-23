@@ -3,9 +3,7 @@
 
 namespace App\Utils;
 
-
 use App\Contracts\GeneratorInterface;
-use App\Exception\ShouldNotHappenException;
 
 final class FilenameGenerator
 {
@@ -25,7 +23,7 @@ final class FilenameGenerator
     public function generateFilename(string $ciService): string
     {
         foreach ($this->generators as $generator) {
-            if (! $generator->isMatch($ciService)) {
+            if (!$generator->isMatch($ciService)) {
                 continue;
             }
 

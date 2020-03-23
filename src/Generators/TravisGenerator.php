@@ -47,11 +47,13 @@ final class TravisGenerator implements GeneratorInterface
         return self::SERVICE_NAME;
     }
 
-    public function getFilename(): string{
+    public function getFilename(): string
+    {
         return self::SERVICE_FILENAME;
     }
 
-    public function getPath(): string{
+    public function getPath(): string
+    {
         return self::SERVICE_FILE_PATH;
     }
 }

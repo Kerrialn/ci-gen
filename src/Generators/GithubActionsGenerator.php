@@ -6,8 +6,8 @@ namespace App\Generators;
 use App\Contracts\GeneratorInterface;
 use App\Intermediary\IntermediaryGenerateObject;
 
-final class GithubActionsGenerator implements GeneratorInterface {
-
+final class GithubActionsGenerator implements GeneratorInterface
+{
     /**
      * @var string
      */
@@ -28,11 +28,10 @@ final class GithubActionsGenerator implements GeneratorInterface {
         ];
 
 
-        if ($intermediaryObject->hasEasyCodingStandards())
-        {
-            $output['jobs']['easy-coding-standards']['name']  = 'Easy Coding Standards detected';
+        if ($intermediaryObject->hasEasyCodingStandards()) {
+            $output['jobs']['easy-coding-standards']['name'] = 'Easy Coding Standards detected';
             $output['jobs']['easy-coding-standards']['runs-on'] = 'ubuntu-latest';
-            $output['jobs']['easy-coding-standards']['steps']  = [
+            $output['jobs']['easy-coding-standards']['steps'] = [
                 ['uses' => 'actions/checkout@v2'],
                 ['uses' => 'shivammathur/setup-php@v1', 'with' => ['php-version' => $intermediaryObject->getPhpVersion(), 'coverage' => 'none']],
                 ['run' => 'composer install --no-progress'],
@@ -40,18 +39,18 @@ final class GithubActionsGenerator implements GeneratorInterface {
             ];
         }
 
-        if ($intermediaryObject->hasPhpStan()){
-            $output['jobs']['phpstan']['name']  = 'Static Analysis';
+        if ($intermediaryObject->hasPhpStan()) {
+            $output['jobs']['phpstan']['name'] = 'Static Analysis';
             $output['jobs']['phpstan']['runs-on'] = 'ubuntu-latest';
-            $output['jobs']['phpstan']['steps']  = [
+            $output['jobs']['phpstan']['steps'] = [
                 ['uses' => 'actions/checkout@v2'],
-                ['uses' => 'shivammathur/setup-php@v1', 'with' => ['php-version' => $intermediaryObject->getPhpVersion(), 'coverage' => 'none', 'tools'=> 'cs2pr']],
+                ['uses' => 'shivammathur/setup-php@v1', 'with' => ['php-version' => $intermediaryObject->getPhpVersion(), 'coverage' => 'none', 'tools' => 'cs2pr']],
                 ['run' => 'composer install --no-progress'],
                 ['run' => 'composer phpstan'],
             ];
         }
 
-            return $output;
+        return $output;
     }
 
     public function getName(): string

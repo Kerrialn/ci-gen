@@ -12,7 +12,6 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 use Symplify\PackageBuilder\Console\ShellCode;
-use Symplify\SmartFileSystem\Exception\FileNotFoundException;
 use Symplify\SmartFileSystem\SmartFileInfo;
 
 final class GenerateCommand extends Command
@@ -47,8 +46,7 @@ final class GenerateCommand extends Command
         GenerateYamlFile $generateYamlFile,
         YamlPrinter $yamlPrinter,
         FilenameGenerator $filenameGenerator
-    )
-    {
+    ) {
         $this->symfonyStyle = $style;
         $this->generatorSelector = $generatorSelector;
         $this->generators = $generators;

@@ -59,7 +59,7 @@ final class IntermediaryGenerateObject
 
     public function checkRequire(string $string)
     {
-        foreach ($this->composerJson->getRequire() as $key => $value) {
+        foreach ($this->composerJson->getRequire() as $key) {
             if ($key != $string) {
                 continue;
             }
@@ -69,7 +69,7 @@ final class IntermediaryGenerateObject
 
     public function checkDevRequire(string $string)
     {
-        foreach ($this->composerJson->getRequireDev() as $key => $value) {
+        foreach ($this->composerJson->getRequireDev() as $key) {
             if ($key != $string) {
                 continue;
             }
