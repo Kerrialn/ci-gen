@@ -1,0 +1,22 @@
+image: 'php:latest'
+
+before_script:
+    - 'php composer install'
+
+stages:
+    - test
+
+phpUnit:
+    stage: test
+    script:
+        - vendor/bin/phpunit
+
+easyCodingStandards:
+    stage: test
+    script:
+        - 'vendor/bin/ecs check --ansi'
+
+phpStan:
+    stage: test
+    script:
+        - 'vendor/bin/phpstan analyse --ansi'

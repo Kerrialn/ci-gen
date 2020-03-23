@@ -24,6 +24,7 @@ final class GitlabGenerator implements GeneratorInterface {
     {
         $output = [
             'image' => 'php:latest',
+            'before_script' => ['php composer install'],
             'stages' => [
                 'test'
             ],
