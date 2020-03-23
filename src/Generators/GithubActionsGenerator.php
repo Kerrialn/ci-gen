@@ -40,13 +40,13 @@ final class GithubActionsGenerator implements GeneratorInterface
         }
 
         if ($intermediaryObject->hasPhpStan()) {
-            $output['jobs']['phpstan']['name'] = 'Static Analysis';
+            $output['jobs']['phpstan']['name'] = 'Php stan';
             $output['jobs']['phpstan']['runs-on'] = 'ubuntu-latest';
             $output['jobs']['phpstan']['steps'] = [
                 ['uses' => 'actions/checkout@v2'],
                 ['uses' => 'shivammathur/setup-php@v1', 'with' => ['php-version' => $intermediaryObject->getPhpVersion(), 'coverage' => 'none', 'tools' => 'cs2pr']],
                 ['run' => 'composer install --no-progress'],
-                ['run' => 'vendor/bin/phpstan analyse --ansi --error-format symplify'],
+                ['run' => 'vendor/bin/phpstan analyse --ansi'],
             ];
         }
 
