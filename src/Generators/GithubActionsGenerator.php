@@ -53,7 +53,6 @@ final class GithubActionsGenerator implements GeneratorInterface
         if ($intermediaryObject->hasPhpUnitTests()) {
             $output['jobs']['phpunit']['name'] = 'Php Unit';
             $output['jobs']['phpunit']['runs-on'] = 'ubuntu-latest';
-            $output['jobs']['phpunit']['strategy'] = ['php' => $intermediaryObject->getPhpVersion()];
             $output['jobs']['phpunit']['steps'] = [
                 ['uses' => 'actions/checkout@v2'],
                 ['uses' => 'shivammathur/setup-php@v1', 'with' => ['php-version' => $intermediaryObject->getPhpVersion(), 'coverage' => 'none']],
