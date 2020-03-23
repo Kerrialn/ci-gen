@@ -27,33 +27,19 @@ final class GithubActionsGenerator implements GeneratorInterface {
             'on' => [ "pull_request" => null, 'push' => ['branches' => "master"]],
         ];
 
-        if ($intermediaryObject->has("phpunit/phpunit"))
-        {
-            $output['jobs']['PhpUnit']['name'] = 'PHP Unit detected';
-            $output['jobs']['PhpUnit']['runs-on'] = 'ubuntu-latest';
-            $output['jobs']['PhpUnit']['steps'] = [
-               - 'run' => 'composer install --no-progress'
-            ];
-
-        }
 
         if ($intermediaryObject->hasEasyCodingStandards())
         {
             $output['jobs']['easy-coding-standards']['name']  = 'Easy Coding Standards detected';
             $output['jobs']['easy-coding-standards']['runs-on'] = 'ubuntu-latest';
             $output['jobs']['easy-coding-standards']['steps']  = [
-              - 'runs-o' => 'composer install --no-progress'
+                ['uses' => 'actions/checkout@v2'],
+                ['uses' => 'shivammathur/setup-php@v1', 'with' => ['php-version' => $intermediaryObject->getPhpVersion(), 'coverage' => 'none']],
+                ['run' => 'composer install --no-progress'],
+                ['run' => 'composer check-cs'],
             ];
         }
 
-        if ($intermediaryObject->hasPhpStan())
-        {
-            $output['jobs']['php-stan']['name'] = 'PHP Stan detected';
-            $output['jobs']['php-stan']['runs-on'] = 'ubuntu-latest';
-            $output['jobs']['php-stan']['steps'] = [
-               - 'run' => 'composer install --no-progress'
-            ];
-        }
 
 
         return $output;

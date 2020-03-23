@@ -5,18 +5,18 @@ name: 'Github Actions'
         branches: master
 
 jobs:
-    PhpUnit:
-        name: 'PHP Unit detected'
-        runs-on: ubuntu-latest
-        steps:
-            - 'composer install --no-progress'
     easy-coding-standards:
         name: 'Easy Coding Standards detected'
         runs-on: ubuntu-latest
         steps:
-            - 'composer install --no-progress'
-    php-stan:
-        name: 'PHP Stan detected'
-        runs-on: ubuntu-latest
-        steps:
-            - 'composer install --no-progress'
+            -
+                uses: actions/checkout@v2
+            -
+                uses: shivammathur/setup-php@v1
+                with:
+                    php-version: '7.4'
+                    coverage: none
+            -
+                run: 'composer install --no-progress'
+            -
+                run: 'composer check-cs'
