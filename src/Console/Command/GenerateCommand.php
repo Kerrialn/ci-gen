@@ -12,15 +12,12 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 use Symplify\PackageBuilder\Console\ShellCode;
-use Symplify\SmartFileSystem\SmartFileInfo;
 
 final class GenerateCommand extends Command
 {
     private const NAME = 'generate';
     private SymfonyStyle $symfonyStyle;
     private GeneratorSelector $generatorSelector;
-    private YamlPrinter $yamlPrinter;
-    private FilenameGenerator $filenameGenerator;
     private PrinterSelector $printerSelector;
 
     /**
@@ -32,23 +29,17 @@ final class GenerateCommand extends Command
      * @param SymfonyStyle $style
      * @param GeneratorSelector $generatorSelector
      * @param GeneratorInterface[] $generators
-     * @param YamlPrinter $yamlPrinter
-     * @param FilenameGenerator $filenameGenerator
      * @param PrinterSelector $printerSelector
      */
     public function __construct(
         SymfonyStyle $style,
         GeneratorSelector $generatorSelector,
         array $generators,
-        YamlPrinter $yamlPrinter,
-        FilenameGenerator $filenameGenerator,
         PrinterSelector $printerSelector
     ) {
         $this->symfonyStyle = $style;
         $this->generatorSelector = $generatorSelector;
         $this->generators = $generators;
-        $this->yamlPrinter = $yamlPrinter;
-        $this->filenameGenerator = $filenameGenerator;
         $this->printerSelector = $printerSelector;
         parent::__construct();
     }

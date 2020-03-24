@@ -5,8 +5,6 @@ namespace App\Generators;
 
 use App\Contracts\GeneratorInterface;
 use App\Intermediary\IntermediaryGenerateObject;
-use Nette\Utils\FileSystem;
-use function _HumbugBox3ab8cff0fda0\iter\rewindable\flatten;
 
 final class DockerfileGenerator implements GeneratorInterface
 {

@@ -7,7 +7,7 @@ namespace App\Utils\Printers;
 use App\Contracts\PrinterInterface;
 use App\Intermediary\IntermediaryGenerateObject;
 
-class PrinterSelector {
+final class PrinterSelector {
 
     private array $printers = [];
 
