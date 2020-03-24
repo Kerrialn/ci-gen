@@ -5,10 +5,13 @@ namespace App\Intermediary;
 
 use Symplify\MonorepoBuilder\ComposerJsonObject\ValueObject\ComposerJson;
 
-final class IntermediaryGenerateObject
-{
+final class IntermediaryGenerateObject {
+
     private ?string $service;
     private ComposerJson $composerJson;
+    private array $fileContent;
+    private string $outputFormat;
+    private string $filename;
 
     /**
      *
@@ -35,6 +38,36 @@ final class IntermediaryGenerateObject
     public function setService(string $service): void
     {
         $this->service = $service;
+    }
+
+    public function getFileContent(): array
+    {
+        return $this->fileContent;
+    }
+
+    public function getOutputFormat(): string
+    {
+        return $this->outputFormat;
+    }
+
+    public function setFileContent($fileContent): void
+    {
+         $this->fileContent = $fileContent;
+    }
+
+    public function setOutputFormat($outputFormat): void
+    {
+         $this->outputFormat = $outputFormat;
+    }
+
+    public function setFilename($filename): void
+    {
+        $this->filename = $filename;
+    }
+
+    public function getFilename(): string
+    {
+        return $this->filename;
     }
 
     public function getPhpVersion(): ?string
@@ -64,8 +97,10 @@ final class IntermediaryGenerateObject
 
     public function checkRequire(string $string)
     {
-        foreach ($this->composerJson->getRequire() as $key => $value) {
-            if ($key != $string) {
+        foreach ($this->composerJson->getRequire() as $key => $value)
+        {
+            if ($key != $string)
+            {
                 continue;
             }
             return true;
@@ -74,11 +109,32 @@ final class IntermediaryGenerateObject
 
     public function checkDevRequire(string $string)
     {
-        foreach ($this->composerJson->getRequireDev() as $key => $value) {
-            if ($key != $string) {
+        foreach ($this->composerJson->getRequireDev() as $key => $value)
+        {
+            if ($key != $string)
+            {
                 continue;
             }
             return true;
         }
     }
+
+    public function checkFramework(string $sting): string
+    {
+        if ($this->has('symfony/framework-bundle'))
+        {
+            return 'symfony/framework-bundle';
+        }
+        if ($this->has('laravel/framework'))
+        {
+            return 'laravel/framework';
+        }
+        if ($this->has('nette/framework'))
+        {
+            return 'nette/framework';
+        }
+
+        return '';
+    }
+
 }

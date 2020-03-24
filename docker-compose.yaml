@@ -1,0 +1,10 @@
+version: '2.2'
+
+services:
+  app:
+    environment:
+      - APACHE_DOCUMENT_ROOT=/var/www/html/app/public
+    build:
+      context: .
+    volumes:
+      - .:/var/www/html
