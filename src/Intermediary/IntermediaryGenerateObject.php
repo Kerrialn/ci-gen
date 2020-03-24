@@ -77,22 +77,22 @@ final class IntermediaryGenerateObject {
 
     public function hasEasyCodingStandards(): bool
     {
-        return $this->has('symplify/easy-coding-standard');
+        return $this->hasPackage('symplify/easy-coding-standard');
     }
 
     public function hasPhpStan(): bool
     {
-        return $this->has('phpstan/phpstan');
+        return $this->hasPackage('phpstan/phpstan');
     }
 
     public function hasPhpUnitTests()
     {
-        return $this->has('phpunit/phpunit');
+        return $this->hasPackage('phpunit/phpunit');
     }
 
-    public function has(string $string): bool
+    public function hasPackage(string $package): bool
     {
-        return $this->checkRequire($string) == true || $this->checkDevRequire($string) == true ?: false;
+        return $this->checkRequire($package) == true || $this->checkDevRequire($package) == true ?: false;
     }
 
     public function checkRequire(string $string)
@@ -117,24 +117,6 @@ final class IntermediaryGenerateObject {
             }
             return true;
         }
-    }
-
-    public function checkFramework(string $sting): string
-    {
-        if ($this->has('symfony/framework-bundle'))
-        {
-            return 'symfony/framework-bundle';
-        }
-        if ($this->has('laravel/framework'))
-        {
-            return 'laravel/framework';
-        }
-        if ($this->has('nette/framework'))
-        {
-            return 'nette/framework';
-        }
-
-        return '';
     }
 
 }
