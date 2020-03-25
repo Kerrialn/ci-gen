@@ -11,7 +11,7 @@ use Symfony\Component\Yaml\Yaml;
 
 final class YamlPrinter implements PrinterInterface
 {
-    private const PRINTER_OUTPUT = 'yaml';
+    private const PRINTER_OUTPUT = 'yml';
 
 
     public function isMatch(string $output): bool
@@ -25,7 +25,7 @@ final class YamlPrinter implements PrinterInterface
         FileSystem::write($intermediaryGenerateObject->getFilename(), $fileContent);
     }
 
-    public function convertFileContent(array $fileContent) : string
+    public function convertFileContent(array $fileContent): string
     {
         $yamlContent = Yaml::dump($fileContent, 100, 4);
 
@@ -33,5 +33,4 @@ final class YamlPrinter implements PrinterInterface
 
         return trim($mainSectionSpacedYamlContent) . PHP_EOL;
     }
-
 }

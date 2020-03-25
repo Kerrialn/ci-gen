@@ -4,9 +4,7 @@ namespace App\Console\Command;
 
 use App\Contracts\GeneratorInterface;
 use App\Generators\GeneratorSelector;
-use App\Utils\FilenameGenerator;
 use App\Utils\Printers\PrinterSelector;
-use App\Utils\Printers\YamlPrinter;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;

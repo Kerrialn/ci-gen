@@ -15,5 +15,4 @@ interface GeneratorInterface
     public function isMatch(string $ciService): bool;
 
     public function generate(IntermediaryGenerateObject $intermediaryObject): IntermediaryGenerateObject;
-
 }

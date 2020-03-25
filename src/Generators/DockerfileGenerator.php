@@ -23,14 +23,14 @@ final class DockerfileGenerator implements GeneratorInterface
     public function generate(IntermediaryGenerateObject $intermediaryObject): IntermediaryGenerateObject
     {
         $output = [
-            'FROM' => $intermediaryObject->getPhpVersion() ,
+            'FROM' => $intermediaryObject->getPhpVersion(),
             'WORKDIR' => '/DOCKER_APPLICATION',
-            'RUN' => 'apt-get update && apt-get install -y \ git \ unzip \ g++ \ libzip-dev \ && pecl -q install \ zip \ && docker-php-ext-configure \ opcache --enable-opcache \ && docker-php-ext-enable \ zip \ opcache'
+            'RUN' => 'apt-get update && apt-get install -y \ git \ unzip \ g++ \ libzip-dev \ && pecl -q install \ zip \ && docker-php-ext-configure \ opcache --enable-opcache \ && docker-php-ext-enable \ zip \ opcache',
         ];
 
         $intermediaryObject->setFileContent($output);
         $intermediaryObject->setOutputFormat(self::SERVICE_OUTPUT_FORMAT);
-        $intermediaryObject->setFilename( self::SERVICE_FILE_PATH);
+        $intermediaryObject->setFilename(self::SERVICE_FILE_PATH);
         return $intermediaryObject;
     }
 
@@ -45,7 +45,7 @@ final class DockerfileGenerator implements GeneratorInterface
         return self::SERVICE_FILE_PATH;
     }
 
-    public function getOutputFormat() : string
+    public function getOutputFormat(): string
     {
         return self::SERVICE_OUTPUT_FORMAT;
     }

@@ -5,11 +5,10 @@ namespace App\Utils\Printers;
 
 use App\Contracts\PrinterInterface;
 use App\Intermediary\IntermediaryGenerateObject;
-use App\Utils\FilenameGenerator;
 use Nette\Utils\FileSystem;
 
-final class TextPrinter implements PrinterInterface {
-
+final class TextPrinter implements PrinterInterface
+{
     private const PRINTER_OUTPUT = 'text';
 
 
@@ -25,17 +24,13 @@ final class TextPrinter implements PrinterInterface {
 
     public function convertFileContent(array $fileContent): string
     {
-
         $string = '';
-        foreach ($fileContent as $key => $value)
-        {
+        foreach ($fileContent as $key => $value) {
             $string .= $key . ' ' . $value . PHP_EOL . PHP_EOL;
         }
 
         $exp = explode("\\", $string);
 
-        return implode('\\ '.PHP_EOL . '   ', $exp);
+        return implode('\\ ' . PHP_EOL . '   ', $exp);
     }
-
-
 }

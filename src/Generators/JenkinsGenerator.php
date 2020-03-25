@@ -6,14 +6,15 @@ namespace App\Generators;
 use App\Contracts\GeneratorInterface;
 use App\Intermediary\IntermediaryGenerateObject;
 
-final class GitlabGenerator implements GeneratorInterface
+final class JenkinsGenerator implements GeneratorInterface
 {
     /**
      * @var string
      */
-    private const SERVICE_NAME = 'Gitlab CI';
-    private const SERVICE_FILE_PATH = '.gitlab-ci';
+    private const SERVICE_NAME = 'Jenkins CI';
+    private const SERVICE_FILE_PATH = '.woloxci/config';
     private const SERVICE_OUTPUT_FORMAT = 'yml';
+
 
     public function isMatch(string $service_name): bool
     {
@@ -23,31 +24,24 @@ final class GitlabGenerator implements GeneratorInterface
     public function generate(IntermediaryGenerateObject $intermediaryObject): IntermediaryGenerateObject
     {
         $output = [
-            'image' => 'php:latest',
-            'stages' => [
-                'test',
+            'config' => [
+                'project_name' => 'Jenkins CI Project',
+                'language' => 'php',
+                'version' => $intermediaryObject->getPhpVersion(),
             ],
         ];
 
         if ($intermediaryObject->hasPhpUnitTests()) {
-            $output['phpUnit'] = [
-                'stage' => 'test',
-                'script' => ['vendor/bin/phpunit'],
-            ];
+            $output['jobs']['steps']['phpUnit'][] = 'vendor/bin/phpunit --testsuite main';
         }
 
         if ($intermediaryObject->hasEasyCodingStandards()) {
-            $output['easyCodingStandards'] = [
-                'stage' => 'test',
-                'script' => ['vendor/bin/ecs check --ansi'],
-            ];
+            $output['jobs']['steps']['easy-coding-standards'][] = 'composer check-cs src';
+            $output['jobs']['steps']['easy-coding-standards'][] = 'composer check-cs src -- --fix';
         }
 
         if ($intermediaryObject->hasPhpStan()) {
-            $output['phpStan'] = [
-                'stage' => 'test',
-                'script' => ['vendor/bin/phpstan analyse --ansi'],
-            ];
+            $output['jobs']['steps']['phpstan'][] = 'vendor/bin/phpstan analyse --ansi';
         }
 
         $intermediaryObject->setFileContent($output);

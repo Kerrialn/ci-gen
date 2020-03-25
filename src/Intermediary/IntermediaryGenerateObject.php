@@ -5,8 +5,8 @@ namespace App\Intermediary;
 
 use Symplify\MonorepoBuilder\ComposerJsonObject\ValueObject\ComposerJson;
 
-final class IntermediaryGenerateObject {
-
+final class IntermediaryGenerateObject
+{
     private ?string $service;
     private ComposerJson $composerJson;
     private array $fileContent;
@@ -52,12 +52,12 @@ final class IntermediaryGenerateObject {
 
     public function setFileContent($fileContent): void
     {
-         $this->fileContent = $fileContent;
+        $this->fileContent = $fileContent;
     }
 
     public function setOutputFormat($outputFormat): void
     {
-         $this->outputFormat = $outputFormat;
+        $this->outputFormat = $outputFormat;
     }
 
     public function setFilename($filename): void
@@ -97,10 +97,8 @@ final class IntermediaryGenerateObject {
 
     public function checkRequire(string $string)
     {
-        foreach ($this->composerJson->getRequire() as $key => $value)
-        {
-            if ($key != $string)
-            {
+        foreach ($this->composerJson->getRequire() as $key => $value) {
+            if ($key != $string) {
                 continue;
             }
             return true;
@@ -109,14 +107,11 @@ final class IntermediaryGenerateObject {
 
     public function checkDevRequire(string $string)
     {
-        foreach ($this->composerJson->getRequireDev() as $key => $value)
-        {
-            if ($key != $string)
-            {
+        foreach ($this->composerJson->getRequireDev() as $key => $value) {
+            if ($key != $string) {
                 continue;
             }
             return true;
         }
     }
-
 }

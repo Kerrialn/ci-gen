@@ -1,0 +1,14 @@
+config:
+    project_name: 'Jenkins CI Project'
+    language: php
+    version: '7.4'
+
+jobs:
+    steps:
+        phpUnit:
+            - 'vendor/bin/phpunit --testsuite main'
+        easy-coding-standards:
+            - 'composer check-cs src'
+            - 'composer check-cs src -- --fix'
+        phpstan:
+            - 'vendor/bin/phpstan analyse --ansi'

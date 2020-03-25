@@ -13,7 +13,7 @@ final class GithubActionsGenerator implements GeneratorInterface
      */
     private const SERVICE_NAME = 'Github Actions';
     private const SERVICE_FILE_PATH = '.github/workflows/continuous-integration-workflow';
-    private const SERVICE_OUTPUT_FORMAT = 'yaml';
+    private const SERVICE_OUTPUT_FORMAT = 'yml';
 
     public function isMatch(string $service_name): bool
     {
@@ -62,7 +62,7 @@ final class GithubActionsGenerator implements GeneratorInterface
 
         $intermediaryObject->setFileContent($output);
         $intermediaryObject->setOutputFormat(self::SERVICE_OUTPUT_FORMAT);
-        $intermediaryObject->setFilename( self::SERVICE_FILE_PATH . '.' . self::SERVICE_OUTPUT_FORMAT);
+        $intermediaryObject->setFilename(self::SERVICE_FILE_PATH . '.' . self::SERVICE_OUTPUT_FORMAT);
         return $intermediaryObject;
     }
 
@@ -77,9 +77,8 @@ final class GithubActionsGenerator implements GeneratorInterface
         return self::SERVICE_FILE_PATH;
     }
 
-    public function getOutputFormat() : string
+    public function getOutputFormat(): string
     {
         return self::SERVICE_OUTPUT_FORMAT;
     }
-
 }

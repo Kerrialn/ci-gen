@@ -3,12 +3,11 @@
 
 namespace App\Utils\Printers;
 
-
 use App\Contracts\PrinterInterface;
 use App\Intermediary\IntermediaryGenerateObject;
 
-final class PrinterSelector {
-
+final class PrinterSelector
+{
     private array $printers = [];
 
     /**
@@ -22,14 +21,11 @@ final class PrinterSelector {
 
     public function generateFileFromObject(IntermediaryGenerateObject $intermediaryGenerateObject)
     {
-        foreach ($this->printers as $printer)
-        {
-            if (!$printer->isMatch($intermediaryGenerateObject->getOutputFormat()))
-            {
+        foreach ($this->printers as $printer) {
+            if (!$printer->isMatch($intermediaryGenerateObject->getOutputFormat())) {
                 continue;
             }
             return $printer->generate($intermediaryGenerateObject);
         }
     }
-
 }

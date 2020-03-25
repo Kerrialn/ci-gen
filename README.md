@@ -19,7 +19,11 @@ Automatically generate the configuration yaml file for continuous integration (C
 3. Done
 
 #### Generators
-- Dockerfile
 - Github Actions
 - Gitlab CI
 - Travis CI
+- Circle CI
+- Jenkins CI
+
+#### Additional generators
+- Dockerfile (beta)
