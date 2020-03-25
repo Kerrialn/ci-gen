@@ -9,6 +9,9 @@ final class IntermediaryGenerateObject
 {
     private ?string $service;
     private ComposerJson $composerJson;
+    private array $fileContent;
+    private string $outputFormat;
+    private string $filename;
 
     /**
      *
@@ -37,6 +40,36 @@ final class IntermediaryGenerateObject
         $this->service = $service;
     }
 
+    public function getFileContent(): array
+    {
+        return $this->fileContent;
+    }
+
+    public function getOutputFormat(): string
+    {
+        return $this->outputFormat;
+    }
+
+    public function setFileContent($fileContent): void
+    {
+        $this->fileContent = $fileContent;
+    }
+
+    public function setOutputFormat($outputFormat): void
+    {
+        $this->outputFormat = $outputFormat;
+    }
+
+    public function setFilename($filename): void
+    {
+        $this->filename = $filename;
+    }
+
+    public function getFilename(): string
+    {
+        return $this->filename;
+    }
+
     public function getPhpVersion(): ?string
     {
         return trim($this->composerJson->getRequire()['php'], '^');
@@ -44,22 +77,22 @@ final class IntermediaryGenerateObject
 
     public function hasEasyCodingStandards(): bool
     {
-        return $this->has('symplify/easy-coding-standard');
+        return $this->hasPackage('symplify/easy-coding-standard');
     }
 
     public function hasPhpStan(): bool
     {
-        return $this->has('phpstan/phpstan');
+        return $this->hasPackage('phpstan/phpstan');
     }
 
     public function hasPhpUnitTests()
     {
-        return $this->has('phpunit/phpunit');
+        return $this->hasPackage('phpunit/phpunit');
     }
 
-    public function has(string $string): bool
+    public function hasPackage(string $package): bool
     {
-        return $this->checkRequire($string) == true || $this->checkDevRequire($string) == true ?: false;
+        return $this->checkRequire($package) == true || $this->checkDevRequire($package) == true ?: false;
     }
 
     public function checkRequire(string $string)

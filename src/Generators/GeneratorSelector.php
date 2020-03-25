@@ -18,8 +18,11 @@ final class GeneratorSelector
      * @param GeneratorInterface[] $generators
      * @param ComposerJsonFactory $composerJsonFactory
      */
-    public function __construct(array $generators, ComposerJsonFactory $composerJsonFactory)
-    {
+    public function __construct(
+        array $generators,
+        ComposerJsonFactory
+                                $composerJsonFactory
+    ) {
         $this->composerJsonFactory = $composerJsonFactory;
         $this->generators = $generators;
     }
@@ -29,7 +32,7 @@ final class GeneratorSelector
         return $this->composerJsonFactory->createFromFilePath(self::COMPOSER_JSON_PATH);
     }
 
-    public function generateFromComposerJson(string $ciService): array
+    public function generateFromComposerJson(string $ciService): IntermediaryGenerateObject
     {
         foreach ($this->generators as $generator) {
             if (!$generator->isMatch($ciService)) {
@@ -44,6 +47,6 @@ final class GeneratorSelector
             return $generator->generate($intermediaryObject);
         }
 
-        return [];
+        throw new \RuntimeException('Could not generateFromComposerJson');
     }
 }

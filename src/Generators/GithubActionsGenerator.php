@@ -12,15 +12,15 @@ final class GithubActionsGenerator implements GeneratorInterface
      * @var string
      */
     private const SERVICE_NAME = 'Github Actions';
-    private const SERVICE_FILE_PATH = '.github/workflows/continuous-integration-workflow.yml';
-    private const SERVICE_FILENAME = 'continuous-integration-workflow.yml';
+    private const SERVICE_FILE_PATH = '.github/workflows/continuous-integration-workflow';
+    private const SERVICE_OUTPUT_FORMAT = 'yml';
 
     public function isMatch(string $service_name): bool
     {
         return $service_name === self::SERVICE_NAME;
     }
 
-    public function generate(IntermediaryGenerateObject $intermediaryObject): array
+    public function generate(IntermediaryGenerateObject $intermediaryObject): IntermediaryGenerateObject
     {
         $output = [
             'name' => $intermediaryObject->getService(),
@@ -60,7 +60,10 @@ final class GithubActionsGenerator implements GeneratorInterface
             ];
         }
 
-        return $output;
+        $intermediaryObject->setFileContent($output);
+        $intermediaryObject->setOutputFormat(self::SERVICE_OUTPUT_FORMAT);
+        $intermediaryObject->setFilename(self::SERVICE_FILE_PATH . '.' . self::SERVICE_OUTPUT_FORMAT);
+        return $intermediaryObject;
     }
 
     public function getName(): string
@@ -68,13 +71,14 @@ final class GithubActionsGenerator implements GeneratorInterface
         return self::SERVICE_NAME;
     }
 
-    public function getFilename(): string
-    {
-        return self::SERVICE_FILENAME;
-    }
 
     public function getPath(): string
     {
         return self::SERVICE_FILE_PATH;
+    }
+
+    public function getOutputFormat(): string
+    {
+        return self::SERVICE_OUTPUT_FORMAT;
     }
 }

@@ -6,14 +6,15 @@ namespace App\Generators;
 use App\Contracts\GeneratorInterface;
 use App\Intermediary\IntermediaryGenerateObject;
 
-final class GitlabGenerator implements GeneratorInterface
+final class CircleGenerator implements GeneratorInterface
 {
     /**
      * @var string
      */
-    private const SERVICE_NAME = 'Gitlab CI';
-    private const SERVICE_FILE_PATH = '.gitlab-ci';
+    private const SERVICE_NAME = 'Circle CI';
+    private const SERVICE_FILE_PATH = '.circleci/config';
     private const SERVICE_OUTPUT_FORMAT = 'yml';
+
 
     public function isMatch(string $service_name): bool
     {
@@ -23,32 +24,40 @@ final class GitlabGenerator implements GeneratorInterface
     public function generate(IntermediaryGenerateObject $intermediaryObject): IntermediaryGenerateObject
     {
         $output = [
-            'image' => 'php:latest',
-            'stages' => [
-                'test',
-            ],
+            'version' => 2,
         ];
 
         if ($intermediaryObject->hasPhpUnitTests()) {
-            $output['phpUnit'] = [
-                'stage' => 'test',
-                'script' => ['vendor/bin/phpunit'],
+            $output['jobs']['test']['steps'][] = [
+                'name' => 'Php Unit',
+                'command' => 'vendor/bin/phpunit --testsuite main',
             ];
         }
 
         if ($intermediaryObject->hasEasyCodingStandards()) {
-            $output['easyCodingStandards'] = [
-                'stage' => 'test',
-                'script' => ['vendor/bin/ecs check --ansi'],
+            $output['jobs']['test']['steps'][] = [
+                'name' => 'Easy Coding Standards',
+                'php' => $intermediaryObject->getPhpVersion(),
+                'command' => ['composer check-cs src', 'composer check-cs src -- --fix'],
             ];
         }
 
         if ($intermediaryObject->hasPhpStan()) {
-            $output['phpStan'] = [
-                'stage' => 'test',
-                'script' => ['vendor/bin/phpstan analyse --ansi'],
+            $output['jobs']['test']['steps'][] = [
+                'name' => 'Php Stan',
+                'command' => 'vendor/bin/phpstan analyse --ansi',
             ];
         }
+
+        $output['workflows'] = [
+            'version' => 2,
+            'build_and_test' => [
+                'jobs' => [
+                    'test',
+                ],
+            ],
+        ];
+
 
         $intermediaryObject->setFileContent($output);
         $intermediaryObject->setOutputFormat(self::SERVICE_OUTPUT_FORMAT);

@@ -1,0 +1,23 @@
+version: 2
+
+jobs:
+    test:
+        steps:
+            -
+                name: 'Php Unit'
+                command: 'vendor/bin/phpunit --testsuite main'
+            -
+                name: 'Easy Coding Standards'
+                php: '7.4'
+                command:
+                    - 'composer check-cs src'
+                    - 'composer check-cs src -- --fix'
+            -
+                name: 'Php Stan'
+                command: 'vendor/bin/phpstan analyse --ansi'
+
+workflows:
+    version: 2
+    build_and_test:
+        jobs:
+            - test

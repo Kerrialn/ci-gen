@@ -18,7 +18,12 @@ Automatically generate the configuration yaml file for continuous integration (C
 2. Select CI service you want to use 
 3. Done
 
-#### CI Services Compatibility
-- Travis CI
+#### Generators
 - Github Actions
 - Gitlab CI
+- Travis CI
+- Circle CI
+- Jenkins CI
+
+#### Additional generators
+- Dockerfile (beta)
