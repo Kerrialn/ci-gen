@@ -5,7 +5,7 @@
     "keywords": ["generate files", "continuous integration", "CI yaml generator"],
     "license": "MIT",
     "authors": [
-        { "name": "Kerrial Newham", "email": "kerrialbeckettnewham@gmail.com" },
+        { "name": "Kerrial Newham", "email": "kerrialbeckettnewham@gmail.com", "homepage": "https://github.com/kerrialn/" },
         { "name": "Tomas Votruba", "email": "tomas.vot@gmail.com", "homepage": "https://tomasvotruba.com" }
     ],
 
