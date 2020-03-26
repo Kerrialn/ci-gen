@@ -14,7 +14,7 @@ Automatically generate the configuration yaml file for continuous integration (C
 
 #### Run process
 1. Install: `composer require kerrialn/ci-gen`
-1. Run: `vendor/bin/cigen generate`
+1. Run: `vendor/bin/ci generate`
 2. Select CI service you want to use 
 3. Done
 
