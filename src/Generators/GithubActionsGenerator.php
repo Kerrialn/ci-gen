@@ -12,6 +12,7 @@ final class GithubActionsGenerator implements GeneratorInterface
      * @var string
      */
     private const SERVICE_NAME = 'Github Actions';
+    private const SERVICE_TYPE = 'ci';
     private const SERVICE_FILE_PATH = '.github/workflows/continuous-integration-workflow';
     private const SERVICE_OUTPUT_FORMAT = 'yml';
 
@@ -60,6 +61,16 @@ final class GithubActionsGenerator implements GeneratorInterface
             ];
         }
 
+
+        if ($intermediaryObject->hasPhpAssumptions())
+        {
+            $output['jobs']['phpAssumptions']['name'] = 'Php Assumptions';
+            $output['jobs']['phpAssumptions']['runs-on'] = 'ubuntu-latest';
+            $output['jobs']['phpAssumptions']['steps'] = [
+                ['run' => 'vendor/bin/phpa src'],
+            ];
+        }
+
         $intermediaryObject->setFileContent($output);
         $intermediaryObject->setOutputFormat(self::SERVICE_OUTPUT_FORMAT);
         $intermediaryObject->setFilename(self::SERVICE_FILE_PATH . '.' . self::SERVICE_OUTPUT_FORMAT);
@@ -80,5 +91,10 @@ final class GithubActionsGenerator implements GeneratorInterface
     public function getOutputFormat(): string
     {
         return self::SERVICE_OUTPUT_FORMAT;
+    }
+
+    public function getType(): string
+    {
+        return self::SERVICE_TYPE;
     }
 }

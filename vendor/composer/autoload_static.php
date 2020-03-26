@@ -82,6 +82,7 @@ class ComposerStaticInit07fa5ceb6bf3a9ccd725044d52ce1758
             'SlevomatCodingStandard\\' => 23,
             'Seld\\PharUtils\\' => 15,
             'Seld\\JsonLint\\' => 14,
+            'Seld\\CliPrompt\\' => 15,
         ),
         'R' => 
         array (
@@ -168,6 +169,7 @@ class ComposerStaticInit07fa5ceb6bf3a9ccd725044d52ce1758
             'Prophecy\\' => 9,
             'PhpParser\\' => 10,
             'PhpCsFixer\\' => 11,
+            'PhpAssumptions\\' => 15,
             'PackageVersions\\' => 16,
             'PHPStan\\PhpDocParser\\' => 21,
             'PHPStan\\' => 8,
@@ -175,6 +177,10 @@ class ComposerStaticInit07fa5ceb6bf3a9ccd725044d52ce1758
         'O' => 
         array (
             'OndraM\\CiDetector\\' => 18,
+        ),
+        'L' => 
+        array (
+            'League\\CLImate\\' => 15,
         ),
         'J' => 
         array (
@@ -422,6 +428,10 @@ class ComposerStaticInit07fa5ceb6bf3a9ccd725044d52ce1758
         'Seld\\JsonLint\\' => 
         array (
             0 => __DIR__ . '/..' . '/seld/jsonlint/src/Seld/JsonLint',
+        ),
+        'Seld\\CliPrompt\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/seld/cli-prompt/src',
         ),
         'Rector\\ZendToSymfony\\' => 
         array (
@@ -743,6 +753,10 @@ class ComposerStaticInit07fa5ceb6bf3a9ccd725044d52ce1758
         array (
             0 => __DIR__ . '/..' . '/friendsofphp/php-cs-fixer/src',
         ),
+        'PhpAssumptions\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/rskuipers/php-assumptions/src/PhpAssumptions',
+        ),
         'PackageVersions\\' => 
         array (
             0 => __DIR__ . '/..' . '/ocramius/package-versions/src/PackageVersions',
@@ -758,6 +772,10 @@ class ComposerStaticInit07fa5ceb6bf3a9ccd725044d52ce1758
         'OndraM\\CiDetector\\' => 
         array (
             0 => __DIR__ . '/..' . '/ondram/ci-detector/src',
+        ),
+        'League\\CLImate\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/league/climate/src',
         ),
         'JsonSchema\\' => 
         array (

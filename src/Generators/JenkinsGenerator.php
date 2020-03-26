@@ -12,6 +12,7 @@ final class JenkinsGenerator implements GeneratorInterface
      * @var string
      */
     private const SERVICE_NAME = 'Jenkins CI';
+    private const SERVICE_TYPE = 'ci';
     private const SERVICE_FILE_PATH = '.woloxci/config';
     private const SERVICE_OUTPUT_FORMAT = 'yml';
 
@@ -44,6 +45,11 @@ final class JenkinsGenerator implements GeneratorInterface
             $output['jobs']['steps']['phpstan'][] = 'vendor/bin/phpstan analyse --ansi';
         }
 
+        if ($intermediaryObject->hasPhpAssumptions())
+        {
+            $output['jobs']['steps']['phpAssumptions'][] = 'vendor/bin/phpa src';
+        }
+
         $intermediaryObject->setFileContent($output);
         $intermediaryObject->setOutputFormat(self::SERVICE_OUTPUT_FORMAT);
         $intermediaryObject->setFilename(self::SERVICE_FILE_PATH . '.' . self::SERVICE_OUTPUT_FORMAT);
@@ -64,5 +70,10 @@ final class JenkinsGenerator implements GeneratorInterface
     public function getOutputFormat(): string
     {
         return self::SERVICE_OUTPUT_FORMAT;
+    }
+
+    public function getType(): string
+    {
+        return self::SERVICE_TYPE;
     }
 }
