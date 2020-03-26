@@ -75,6 +75,7 @@ final class Versions
   'jean85/pretty-package-versions' => '1.2@75c7effcf3f77501d0e0caa75111aff4daa0dd48',
   'jetbrains/phpstorm-stubs' => 'v2019.3@883b6facd78e01c0743b554af86fa590c2573f40',
   'justinrainbow/json-schema' => '5.2.9@44c6787311242a979fa15c704327c20e7221a0e4',
+  'league/climate' => '3.5.2@6b53a28a58ad9f5f63042e291eb870cf0d02a9c9',
   'myclabs/deep-copy' => '1.9.5@b2c28789e80a97badd14145fda39b545d83ca3ef',
   'nette/di' => 'v3.0.3@77d69061cbf8f9cfb7363dd983136f51213d3e41',
   'nette/neon' => 'v3.1.2@3c3dcbc6bf6c80dc97b1fc4ba9a22ae67930fc0e',
@@ -102,6 +103,7 @@ final class Versions
   'phpunit/phpunit' => '8.5.2@018b6ac3c8ab20916db85fa91bf6465acb64d1e0',
   'psr/simple-cache' => '1.0.1@408d5eafb83c57f6365a3ca330ff23aa4a5fa39b',
   'rector/rector' => 'v0.7.7@12c029742de3d770bd99182efa145077f4991568',
+  'rskuipers/php-assumptions' => '0.8.0@10f82ca2a268d6624553d2de4659ed6451d9ac60',
   'sebastian/code-unit-reverse-lookup' => '1.0.1@4419fcdb5eabb9caa61a27c7a1db532a6b55dd18',
   'sebastian/comparator' => '3.0.2@5de4fc177adf9bce8df98d8d141a7559d7ccf6da',
   'sebastian/diff' => '3.0.2@720fcc7e9b5cf384ea68d9d930d480907a0c1a29',
@@ -114,6 +116,7 @@ final class Versions
   'sebastian/resource-operations' => '2.0.1@4d7a795d35b889bf80a0cc04e08d77cedfa917a9',
   'sebastian/type' => '1.1.3@3aaaa15fa71d27650d62a948be022fe3b48541a3',
   'sebastian/version' => '2.0.1@99732be0ddb3361e16ad77b68ba41efc8e979019',
+  'seld/cli-prompt' => '1.0.3@a19a7376a4689d4d94cab66ab4f3c816019ba8dd',
   'seld/jsonlint' => '1.7.2@e2e5d290e4d2a4f0eb449f510071392e00e10d19',
   'seld/phar-utils' => '1.1.0@8800503d56b9867d43d9c303b9cbcc26016e82f0',
   'slevomat/coding-standard' => '6.1.5@d767b5e302ff096327466c97fec3cb57f6d16086',
@@ -130,7 +133,7 @@ final class Versions
   'theseer/tokenizer' => '1.1.3@11336f6f84e16a720dae9d8e6ed5019efa85a0f9',
   'tracy/tracy' => 'v2.7.3@344c77293038173f49678d9a95c27da6cbdbccd0',
   'webmozart/assert' => '1.7.0@aed98a490f9a8f78468232db345ab9cf606cf598',
-  '__root__' => 'dev-master@06afbfdf638349d4a5740999619ffa9c04fd7c67',
+  '__root__' => 'dev-development@b64aaaa206dc85f0a872538be66a7d2e7e6eabc0',
 );
 
     private function __construct()

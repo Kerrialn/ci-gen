@@ -50,7 +50,7 @@ final class GenerateCommand extends Command
             $generatorNames[] = $generator->getName();
         }
 
-        $ciService = $this->symfonyStyle->choice('Please select a CI service:', $generatorNames);
+        $ciService = $this->symfonyStyle->choice('What do you want to generate?', $generatorNames);
         $this->symfonyStyle->progressStart(0);
         $intermediaryObject = $this->generatorSelector->generateFromComposerJson($ciService);
         $this->symfonyStyle->progressAdvance(50);
@@ -65,6 +65,6 @@ final class GenerateCommand extends Command
     protected function configure(): void
     {
         $this->setName(self::NAME);
-        $this->setDescription('generate a CI Service yaml file');
+        $this->setDescription('Generate continuous integration config yaml files or a dockerfile');
     }
 }

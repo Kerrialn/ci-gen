@@ -1,6 +1,15 @@
 {
+    "name": "kerrialn/ci-gen",
+    "version" : "1.0",
+    "description": "Generate continuous integration yaml config files or a dockerfile",
+    "keywords": ["generate files", "continuous integration", "CI yaml generator"],
+    "license": "MIT",
+    "authors": [
+        { "name": "Kerrial Newham", "email": "kerrialbeckettnewham@gmail.com" },
+        { "name": "Tomas Votruba", "email": "tomas.vot@gmail.com", "homepage": "https://tomasvotruba.com" }
+    ],
+
     "type": "project",
-    "license": "proprietary",
     "require": {
         "php": "^7.4",
         "ext-ctype": "*",
@@ -22,6 +31,7 @@
         "phpstan/phpstan": "^0.12.3",
         "phpunit/phpunit": "^8.5",
         "rector/rector": "^0.7.7",
+        "rskuipers/php-assumptions": "^0.8.0",
         "symplify/easy-coding-standard": "^7.2.8",
         "symplify/monorepo-builder": "^7.2",
         "symplify/phpstan-extensions": "^7.2.8"

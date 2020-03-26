@@ -12,6 +12,6 @@ final class ApplicationConsole extends Application
     public function __construct(GenerateCommand $generateCommand)
     {
         $this->add($generateCommand);
-        parent::__construct('Example Console');
+        parent::__construct(   '1.0' );
     }
 }

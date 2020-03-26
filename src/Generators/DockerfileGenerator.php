@@ -12,6 +12,7 @@ final class DockerfileGenerator implements GeneratorInterface
      * @var string
      */
     private const SERVICE_NAME = 'Dockerfile';
+    private const SERVICE_TYPE = 'docker';
     private const SERVICE_FILE_PATH = 'Dockerfile';
     private const SERVICE_OUTPUT_FORMAT = 'text';
 
@@ -48,5 +49,10 @@ final class DockerfileGenerator implements GeneratorInterface
     public function getOutputFormat(): string
     {
         return self::SERVICE_OUTPUT_FORMAT;
+    }
+
+    public function getType(): string
+    {
+        return self::SERVICE_TYPE;
     }
 }

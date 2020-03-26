@@ -56,6 +56,9 @@
     "justinrainbow/json-schema": {
         "version": "5.2.9"
     },
+    "league/climate": {
+        "version": "3.5.2"
+    },
     "myclabs/deep-copy": {
         "version": "1.9.5"
     },
@@ -181,6 +184,9 @@
     "rector/rector": {
         "version": "v0.7.7"
     },
+    "rskuipers/php-assumptions": {
+        "version": "0.8.0"
+    },
     "sebastian/code-unit-reverse-lookup": {
         "version": "1.0.1"
     },
@@ -216,6 +222,9 @@
     },
     "sebastian/version": {
         "version": "2.0.1"
+    },
+    "seld/cli-prompt": {
+        "version": "1.0.3"
     },
     "seld/jsonlint": {
         "version": "1.7.2"

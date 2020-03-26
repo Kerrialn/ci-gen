@@ -6,12 +6,13 @@ namespace App\Generators;
 use App\Contracts\GeneratorInterface;
 use App\Intermediary\IntermediaryGenerateObject;
 
-final class GitlabGenerator implements GeneratorInterface
-{
+final class GitlabGenerator implements GeneratorInterface {
+
     /**
      * @var string
      */
     private const SERVICE_NAME = 'Gitlab CI';
+    private const SERVICE_TYPE = 'ci';
     private const SERVICE_FILE_PATH = '.gitlab-ci';
     private const SERVICE_OUTPUT_FORMAT = 'yml';
 
@@ -29,24 +30,34 @@ final class GitlabGenerator implements GeneratorInterface
             ],
         ];
 
-        if ($intermediaryObject->hasPhpUnitTests()) {
+        if ($intermediaryObject->hasPhpUnitTests())
+        {
             $output['phpUnit'] = [
                 'stage' => 'test',
                 'script' => ['vendor/bin/phpunit'],
             ];
         }
 
-        if ($intermediaryObject->hasEasyCodingStandards()) {
+        if ($intermediaryObject->hasEasyCodingStandards())
+        {
             $output['easyCodingStandards'] = [
                 'stage' => 'test',
                 'script' => ['vendor/bin/ecs check --ansi'],
             ];
         }
 
-        if ($intermediaryObject->hasPhpStan()) {
+        if ($intermediaryObject->hasPhpStan())
+        {
             $output['phpStan'] = [
                 'stage' => 'test',
                 'script' => ['vendor/bin/phpstan analyse --ansi'],
+            ];
+        }
+
+        if ($intermediaryObject->hasPhpAssumptions())
+        {
+            $output['phpAssumptions'] = ['stage' => 'Php Assumptions',
+                'script' => ['vendor/bin/phpa src'],
             ];
         }
 
@@ -70,5 +81,10 @@ final class GitlabGenerator implements GeneratorInterface
     public function getOutputFormat(): string
     {
         return self::SERVICE_OUTPUT_FORMAT;
+    }
+
+    public function getType(): string
+    {
+        return self::SERVICE_TYPE;
     }
 }
