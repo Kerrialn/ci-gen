@@ -1,3 +1,6 @@
+imports:
+    - { resource: '../vendor/symplify/composer-json-manipulator/config/config.yaml' }
+
 services:
     _defaults:
         public: true
@@ -14,9 +17,4 @@ services:
         factory: ['@Symplify\PackageBuilder\Console\Style\SymfonyStyleFactory', 'create']
 
     # composer json factory
-    Symplify\MonorepoBuilder\ComposerJsonObject\ComposerJsonFactory: null
-    Symplify\MonorepoBuilder\FileSystem\JsonFileManager:
-        arguments:
-            $inlineSections: []
-
     Symfony\Component\Filesystem\Filesystem: null

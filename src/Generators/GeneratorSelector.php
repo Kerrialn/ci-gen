@@ -6,7 +6,7 @@ namespace App\Generators;
 
 use App\Contracts\GeneratorInterface;
 use App\Intermediary\IntermediaryGenerateObject;
-use Symplify\MonorepoBuilder\ComposerJsonObject\ComposerJsonFactory;
+use Symplify\ComposerJsonManipulator\ComposerJsonFactory;
 
 final class GeneratorSelector
 {

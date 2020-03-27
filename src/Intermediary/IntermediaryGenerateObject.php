@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Intermediary;
 
-use Symplify\MonorepoBuilder\ComposerJsonObject\ValueObject\ComposerJson;
+use Symplify\ComposerJsonManipulator\ValueObject\ComposerJson;
 
 final class IntermediaryGenerateObject
 {
@@ -14,23 +14,15 @@ final class IntermediaryGenerateObject
     private string $outputFormat;
     private string $filename;
 
-
     public function __construct(?string $name, ComposerJson $composerJson)
     {
         $this->service = $name;
         $this->composerJson = $composerJson;
     }
 
-
     public function getService(): string
     {
         return $this->service;
-    }
-
-
-    public function setService(string $service): void
-    {
-        $this->service = $service;
     }
 
     public function getFileContent(): array
@@ -70,50 +62,26 @@ final class IntermediaryGenerateObject
 
     public function hasEasyCodingStandards(): bool
     {
-        return $this->hasPackage('symplify/easy-coding-standard');
+        return $this->composerJson->hasPackage('symplify/easy-coding-standard');
     }
 
     public function hasPhpStan(): bool
     {
-        return $this->hasPackage('phpstan/phpstan');
+        return $this->composerJson->hasPackage('phpstan/phpstan');
     }
 
     public function hasPhpUnitTests()
     {
-        return $this->hasPackage('phpunit/phpunit');
+        return $this->composerJson->hasPackage('phpunit/phpunit');
     }
 
     public function hasPhpAssumptions()
     {
-        return $this->hasPackage('rskuipers/php-assumptions');
+        return $this->composerJson->hasPackage('rskuipers/php-assumptions');
     }
 
     public function hasPackage(string $package): bool
     {
-        return $this->isPackageInRequire($package) || $this->isPackageInRequireDev($package);
-    }
-
-    private function isPackageInRequire(string $string): bool
-    {
-        foreach ($this->composerJson->getRequire() as $key => $value) {
-            if ($key !== $string) {
-                continue;
-            }
-            return true;
-        }
-
-        return false;
-    }
-
-    private function isPackageInRequireDev(string $string): bool
-    {
-        foreach ($this->composerJson->getRequireDev() as $key => $value) {
-            if ($key !== $string) {
-                continue;
-            }
-            return true;
-        }
-
-        return false;
+        return $this->composerJson->hasPackage($package);
     }
 }
