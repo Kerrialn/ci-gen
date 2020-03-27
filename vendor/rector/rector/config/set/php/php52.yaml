@@ -1,3 +1,0 @@
-services:
-    Rector\Php52\Rector\Property\VarToPublicPropertyRector: null
-    Rector\Php52\Rector\Switch_\ContinueToBreakInSwitchRector: null

@@ -1,6 +1,5 @@
 <?php
 
-
 namespace App\Utils\Printers;
 
 use App\Contracts\PrinterInterface;
@@ -29,7 +28,7 @@ final class TextPrinter implements PrinterInterface
             $string .= $key . ' ' . $value . PHP_EOL . PHP_EOL;
         }
 
-        $exp = explode("\\", $string);
+        $exp = explode('\\', $string);
 
         return implode('\\ ' . PHP_EOL . '   ', $exp);
     }

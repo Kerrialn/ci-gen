@@ -44,18 +44,19 @@
     },
     "autoload": {
         "psr-4": {
-            "App\\": "src/"
+            "App\\": "src"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "App\\Tests\\": "tests/"
+            "App\\Tests\\": "tests"
         }
     },
     "scripts": {
         "check-cs": "vendor/bin/ecs check src tests --ansi",
         "fix-cs": "vendor/bin/ecs check src tests --ansi --fix",
-        "phpstan": "vendor/bin/phpstan analyse --ansi --error-format symplify"
+        "phpstan": "vendor/bin/phpstan analyse --ansi --error-format symplify",
+        "rector": "vendor/bin/rector process --ansi"
     },
     "extra": {
         "symfony": {

@@ -1,6 +1,5 @@
 <?php
 
-
 namespace App\Utils\Printers;
 
 use App\Contracts\PrinterInterface;

@@ -1,6 +1,5 @@
 <?php
 
-
 namespace App\Intermediary;
 
 use Symplify\MonorepoBuilder\ComposerJsonObject\ValueObject\ComposerJson;
@@ -13,28 +12,20 @@ final class IntermediaryGenerateObject
     private string $outputFormat;
     private string $filename;
 
-    /**
-     *
-     * @param string|null $name
-     * @param ComposerJson $composerJson
-     */
+
     public function __construct(?string $name, ComposerJson $composerJson)
     {
         $this->service = $name;
         $this->composerJson = $composerJson;
     }
 
-    /**
-     * @return string
-     */
+
     public function getService(): string
     {
         return $this->service;
     }
 
-    /**
-     * @param string $service
-     */
+
     public function setService(string $service): void
     {
         $this->service = $service;
@@ -90,32 +81,37 @@ final class IntermediaryGenerateObject
         return $this->hasPackage('phpunit/phpunit');
     }
 
-    public function hasPhpAssumptions(){
+    public function hasPhpAssumptions()
+    {
         return $this->hasPackage('rskuipers/php-assumptions');
     }
 
     public function hasPackage(string $package): bool
     {
-        return $this->checkRequire($package) == true || $this->checkDevRequire($package) == true ?: false;
+        return $this->isPackageInRequire($package) || $this->isPackageInRequireDev($package);
     }
 
-    public function checkRequire(string $string)
+    private function isPackageInRequire(string $string): bool
     {
         foreach ($this->composerJson->getRequire() as $key => $value) {
-            if ($key != $string) {
+            if ($key !== $string) {
                 continue;
             }
             return true;
         }
+
+        return false;
     }
 
-    public function checkDevRequire(string $string)
+    private function isPackageInRequireDev(string $string): bool
     {
         foreach ($this->composerJson->getRequireDev() as $key => $value) {
-            if ($key != $string) {
+            if ($key !== $string) {
                 continue;
             }
             return true;
         }
+
+        return false;
     }
 }

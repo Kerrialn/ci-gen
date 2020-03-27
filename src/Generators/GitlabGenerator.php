@@ -1,13 +1,12 @@
 <?php
 
-
 namespace App\Generators;
 
 use App\Contracts\GeneratorInterface;
 use App\Intermediary\IntermediaryGenerateObject;
 
-final class GitlabGenerator implements GeneratorInterface {
-
+final class GitlabGenerator implements GeneratorInterface
+{
     /**
      * @var string
      */
@@ -30,32 +29,28 @@ final class GitlabGenerator implements GeneratorInterface {
             ],
         ];
 
-        if ($intermediaryObject->hasPhpUnitTests())
-        {
+        if ($intermediaryObject->hasPhpUnitTests()) {
             $output['phpUnit'] = [
                 'stage' => 'test',
                 'script' => ['vendor/bin/phpunit'],
             ];
         }
 
-        if ($intermediaryObject->hasEasyCodingStandards())
-        {
+        if ($intermediaryObject->hasEasyCodingStandards()) {
             $output['easyCodingStandards'] = [
                 'stage' => 'test',
                 'script' => ['vendor/bin/ecs check --ansi'],
             ];
         }
 
-        if ($intermediaryObject->hasPhpStan())
-        {
+        if ($intermediaryObject->hasPhpStan()) {
             $output['phpStan'] = [
                 'stage' => 'test',
                 'script' => ['vendor/bin/phpstan analyse --ansi'],
             ];
         }
 
-        if ($intermediaryObject->hasPhpAssumptions())
-        {
+        if ($intermediaryObject->hasPhpAssumptions()) {
             $output['phpAssumptions'] = ['stage' => 'Php Assumptions',
                 'script' => ['vendor/bin/phpa src'],
             ];

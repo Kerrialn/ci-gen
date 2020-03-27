@@ -1,6 +1,5 @@
 <?php
 
-
 namespace App\Generators;
 
 use App\Contracts\GeneratorInterface;
@@ -25,7 +24,7 @@ final class GithubActionsGenerator implements GeneratorInterface
     {
         $output = [
             'name' => $intermediaryObject->getService(),
-            'on' => [ "pull_request" => null, 'push' => ['branches' => "master"]],
+            'on' => ['pull_request' => null, 'push' => ['branches' => 'master']],
         ];
 
         if ($intermediaryObject->hasEasyCodingStandards()) {
@@ -61,9 +60,7 @@ final class GithubActionsGenerator implements GeneratorInterface
             ];
         }
 
-
-        if ($intermediaryObject->hasPhpAssumptions())
-        {
+        if ($intermediaryObject->hasPhpAssumptions()) {
             $output['jobs']['phpAssumptions']['name'] = 'Php Assumptions';
             $output['jobs']['phpAssumptions']['runs-on'] = 'ubuntu-latest';
             $output['jobs']['phpAssumptions']['steps'] = [

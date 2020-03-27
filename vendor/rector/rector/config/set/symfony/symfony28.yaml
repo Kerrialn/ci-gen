@@ -1,3 +1,0 @@
-services:
-    # Yaml::parse('file.yml')   →   Yaml::parse(file_get_contents('file.yml'))
-    Rector\Symfony\Rector\Yaml\ParseFileRector: null

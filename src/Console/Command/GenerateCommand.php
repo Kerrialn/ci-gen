@@ -24,10 +24,7 @@ final class GenerateCommand extends Command
     private array $generators;
 
     /**
-     * @param SymfonyStyle $style
-     * @param GeneratorSelector $generatorSelector
      * @param GeneratorInterface[] $generators
-     * @param PrinterSelector $printerSelector
      */
     public function __construct(
         SymfonyStyle $style,
