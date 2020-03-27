@@ -12,7 +12,7 @@ class GenerateCommandTest extends TestCase
      * @dataProvider provider
      * @param $data
      */
-    public function testMethod($data)
+    public function testMethod($data): void
     {
         $this->assertTrue($data);
     }
