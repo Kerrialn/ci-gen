@@ -88,10 +88,10 @@ final class IntermediaryGenerateObject
 
     public function hasPackage(string $package): bool
     {
-        return $this->checkRequire($package) === true || $this->checkDevRequire($package) === true ?: false;
+        return $this->isPackageInRequire($package) || $this->isPackageInRequireDev($package);
     }
 
-    public function checkRequire(string $string)
+    private function isPackageInRequire(string $string): bool
     {
         foreach ($this->composerJson->getRequire() as $key => $value) {
             if ($key !== $string) {
@@ -99,9 +99,11 @@ final class IntermediaryGenerateObject
             }
             return true;
         }
+
+        return false;
     }
 
-    public function checkDevRequire(string $string)
+    private function isPackageInRequireDev(string $string): bool
     {
         foreach ($this->composerJson->getRequireDev() as $key => $value) {
             if ($key !== $string) {
@@ -109,5 +111,7 @@ final class IntermediaryGenerateObject
             }
             return true;
         }
+
+        return false;
     }
 }
