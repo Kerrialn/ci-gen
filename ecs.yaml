@@ -4,6 +4,9 @@ services:
     PhpCsFixer\Fixer\ArrayNotation\TrailingCommaInMultilineArrayFixer: null
 
 parameters:
+    paths:
+        - "src"
+
     sets:
         - 'common'
         - 'clean-code'
