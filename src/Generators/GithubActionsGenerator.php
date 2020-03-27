@@ -62,8 +62,7 @@ final class GithubActionsGenerator implements GeneratorInterface
         }
 
 
-        if ($intermediaryObject->hasPhpAssumptions())
-        {
+        if ($intermediaryObject->hasPhpAssumptions()) {
             $output['jobs']['phpAssumptions']['name'] = 'Php Assumptions';
             $output['jobs']['phpAssumptions']['runs-on'] = 'ubuntu-latest';
             $output['jobs']['phpAssumptions']['steps'] = [

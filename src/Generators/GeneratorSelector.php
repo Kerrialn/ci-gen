@@ -7,8 +7,8 @@ use App\Contracts\GeneratorInterface;
 use App\Intermediary\IntermediaryGenerateObject;
 use App\Utils\ComposerJsonFactory;
 
-final class GeneratorSelector {
-
+final class GeneratorSelector
+{
     private array $generators = [];
     private ComposerJsonFactory $composerJsonFactory;
 
@@ -19,8 +19,7 @@ final class GeneratorSelector {
     public function __construct(
         array $generators,
         ComposerJsonFactory $composerJsonFactory
-    )
-    {
+    ) {
         $this->composerJsonFactory = $composerJsonFactory;
         $this->generators = $generators;
     }
@@ -28,10 +27,8 @@ final class GeneratorSelector {
 
     public function generateFromComposerJson(string $ciService): IntermediaryGenerateObject
     {
-        foreach ($this->generators as $generator)
-        {
-            if (!$generator->isMatch($ciService))
-            {
+        foreach ($this->generators as $generator) {
+            if (!$generator->isMatch($ciService)) {
                 continue;
             }
 

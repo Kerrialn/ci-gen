@@ -90,7 +90,8 @@ final class IntermediaryGenerateObject
         return $this->hasPackage('phpunit/phpunit');
     }
 
-    public function hasPhpAssumptions(){
+    public function hasPhpAssumptions()
+    {
         return $this->hasPackage('rskuipers/php-assumptions');
     }
 

@@ -45,8 +45,7 @@ final class JenkinsGenerator implements GeneratorInterface
             $output['jobs']['steps']['phpstan'][] = 'vendor/bin/phpstan analyse --ansi';
         }
 
-        if ($intermediaryObject->hasPhpAssumptions())
-        {
+        if ($intermediaryObject->hasPhpAssumptions()) {
             $output['jobs']['steps']['phpAssumptions'][] = 'vendor/bin/phpa src';
         }
 

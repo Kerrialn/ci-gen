@@ -6,8 +6,8 @@ namespace App\Generators;
 use App\Contracts\GeneratorInterface;
 use App\Intermediary\IntermediaryGenerateObject;
 
-final class CircleGenerator implements GeneratorInterface {
-
+final class CircleGenerator implements GeneratorInterface
+{
     /**
      * @var string
      */
@@ -28,16 +28,14 @@ final class CircleGenerator implements GeneratorInterface {
             'version' => 2,
         ];
 
-        if ($intermediaryObject->hasPhpUnitTests())
-        {
+        if ($intermediaryObject->hasPhpUnitTests()) {
             $output['jobs']['test']['steps'][] = [
                 'name' => 'Php Unit',
                 'command' => 'vendor/bin/phpunit --testsuite main',
             ];
         }
 
-        if ($intermediaryObject->hasEasyCodingStandards())
-        {
+        if ($intermediaryObject->hasEasyCodingStandards()) {
             $output['jobs']['test']['steps'][] = [
                 'name' => 'Easy Coding Standards',
                 'php' => $intermediaryObject->getPhpVersion(),
@@ -45,16 +43,14 @@ final class CircleGenerator implements GeneratorInterface {
             ];
         }
 
-        if ($intermediaryObject->hasPhpStan())
-        {
+        if ($intermediaryObject->hasPhpStan()) {
             $output['jobs']['test']['steps'][] = [
                 'name' => 'Php Stan',
                 'command' => 'vendor/bin/phpstan analyse --ansi',
             ];
         }
 
-        if ($intermediaryObject->hasPhpAssumptions())
-        {
+        if ($intermediaryObject->hasPhpAssumptions()) {
             $output['jobs']['test']['steps'][] = [
                 'name' => 'Php Assumptions',
                 'command' => 'vendor/bin/phpa src',
