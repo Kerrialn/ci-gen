@@ -1,6 +1,5 @@
 <?php
 
-
 namespace App\Intermediary;
 
 use Symplify\MonorepoBuilder\ComposerJsonObject\ValueObject\ComposerJson;
@@ -13,28 +12,20 @@ final class IntermediaryGenerateObject
     private string $outputFormat;
     private string $filename;
 
-    /**
-     *
-     * @param string|null $name
-     * @param ComposerJson $composerJson
-     */
+
     public function __construct(?string $name, ComposerJson $composerJson)
     {
         $this->service = $name;
         $this->composerJson = $composerJson;
     }
 
-    /**
-     * @return string
-     */
+
     public function getService(): string
     {
         return $this->service;
     }
 
-    /**
-     * @param string $service
-     */
+
     public function setService(string $service): void
     {
         $this->service = $service;
@@ -97,13 +88,13 @@ final class IntermediaryGenerateObject
 
     public function hasPackage(string $package): bool
     {
-        return $this->checkRequire($package) == true || $this->checkDevRequire($package) == true ?: false;
+        return $this->checkRequire($package) === true || $this->checkDevRequire($package) === true ?: false;
     }
 
     public function checkRequire(string $string)
     {
         foreach ($this->composerJson->getRequire() as $key => $value) {
-            if ($key != $string) {
+            if ($key !== $string) {
                 continue;
             }
             return true;
@@ -113,7 +104,7 @@ final class IntermediaryGenerateObject
     public function checkDevRequire(string $string)
     {
         foreach ($this->composerJson->getRequireDev() as $key => $value) {
-            if ($key != $string) {
+            if ($key !== $string) {
                 continue;
             }
             return true;

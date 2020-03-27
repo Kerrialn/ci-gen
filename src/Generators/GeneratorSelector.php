@@ -1,6 +1,5 @@
 <?php
 
-
 namespace App\Generators;
 
 use App\Contracts\GeneratorInterface;
@@ -14,7 +13,6 @@ final class GeneratorSelector
 
     /**
      * @param GeneratorInterface[] $generators
-     * @param ComposerJsonFactory $composerJsonFactory
      */
     public function __construct(
         array $generators,
@@ -28,7 +26,7 @@ final class GeneratorSelector
     public function generateFromComposerJson(string $ciService): IntermediaryGenerateObject
     {
         foreach ($this->generators as $generator) {
-            if (!$generator->isMatch($ciService)) {
+            if (! $generator->isMatch($ciService)) {
                 continue;
             }
 

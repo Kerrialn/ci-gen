@@ -1,6 +1,5 @@
 <?php
 
-
 namespace App\Generators;
 
 use App\Contracts\GeneratorInterface;

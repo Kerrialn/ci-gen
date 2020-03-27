@@ -1,6 +1,5 @@
 <?php
 
-
 namespace App\Utils\Printers;
 
 use App\Contracts\PrinterInterface;
@@ -11,7 +10,6 @@ final class PrinterSelector
     private array $printers = [];
 
     /**
-     *
      * @param PrinterInterface[] $printers
      */
     public function __construct(array $printers)
@@ -22,7 +20,7 @@ final class PrinterSelector
     public function generateFileFromObject(IntermediaryGenerateObject $intermediaryGenerateObject)
     {
         foreach ($this->printers as $printer) {
-            if (!$printer->isMatch($intermediaryGenerateObject->getOutputFormat())) {
+            if (! $printer->isMatch($intermediaryGenerateObject->getOutputFormat())) {
                 continue;
             }
             return $printer->generate($intermediaryGenerateObject);

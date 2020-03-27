@@ -1,6 +1,5 @@
 <?php
 
-
 namespace App\Utils;
 
 use App\Contracts\GeneratorInterface;
@@ -23,7 +22,7 @@ final class FilenameGenerator
     public function generateFilename(string $ciService): string
     {
         foreach ($this->generators as $generator) {
-            if (!$generator->isMatch($ciService)) {
+            if (! $generator->isMatch($ciService)) {
                 continue;
             }
 

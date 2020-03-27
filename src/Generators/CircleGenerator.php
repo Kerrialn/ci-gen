@@ -1,6 +1,5 @@
 <?php
 
-
 namespace App\Generators;
 
 use App\Contracts\GeneratorInterface;
@@ -56,7 +55,6 @@ final class CircleGenerator implements GeneratorInterface
                 'command' => 'vendor/bin/phpa src',
             ];
         }
-
 
         $output['workflows'] = [
             'version' => 2,
