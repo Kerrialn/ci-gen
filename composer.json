@@ -55,7 +55,8 @@
     "scripts": {
         "check-cs": "vendor/bin/ecs check src tests --ansi",
         "fix-cs": "vendor/bin/ecs check src tests --ansi --fix",
-        "phpstan": "vendor/bin/phpstan analyse --ansi --error-format symplify"
+        "phpstan": "vendor/bin/phpstan analyse --ansi --error-format symplify",
+        "rector": "vendor/bin/rector process --ansi"
     },
     "extra": {
         "symfony": {
