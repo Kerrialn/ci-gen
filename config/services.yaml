@@ -13,6 +13,8 @@ services:
     Symfony\Component\Console\Style\SymfonyStyle:
         factory: ['@Symplify\PackageBuilder\Console\Style\SymfonyStyleFactory', 'create']
 
+    # composer json factory
+    Symplify\MonorepoBuilder\ComposerJsonObject\ComposerJsonFactory: null
     Symplify\MonorepoBuilder\FileSystem\JsonFileManager:
         arguments:
             $inlineSections: []

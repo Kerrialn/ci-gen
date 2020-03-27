@@ -6,11 +6,20 @@ namespace App\Generators;
 
 use App\Contracts\GeneratorInterface;
 use App\Intermediary\IntermediaryGenerateObject;
-use App\Utils\ComposerJsonFactory;
+use Symplify\MonorepoBuilder\ComposerJsonObject\ComposerJsonFactory;
 
 final class GeneratorSelector
 {
+    /**
+     * @var string
+     */
+    private const COMPOSER_JSON_PATH = __DIR__ . '/../../composer.json';
+
+    /**
+     * @var GeneratorInterface[]
+     */
     private array $generators = [];
+
     private ComposerJsonFactory $composerJsonFactory;
 
     /**
@@ -34,7 +43,7 @@ final class GeneratorSelector
 
             $intermediaryObject = new IntermediaryGenerateObject(
                 $generator->getName(),
-                $this->composerJsonFactory->getComposerJson(),
+                $this->composerJsonFactory->createFromFilePath(self::COMPOSER_JSON_PATH),
             );
 
             return $generator->generate($intermediaryObject);
