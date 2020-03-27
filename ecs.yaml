@@ -4,10 +4,15 @@ services:
     PhpCsFixer\Fixer\ArrayNotation\TrailingCommaInMultilineArrayFixer: null
 
 parameters:
+    paths:
+        - "src"
+
     sets:
         - 'common'
         - 'clean-code'
         - 'psr12'
+        - 'php70'
+        - 'php71'
 
     skip:
         SlevomatCodingStandard\Sniffs\Variables\UnusedVariableSniff.UnusedVariable: null
