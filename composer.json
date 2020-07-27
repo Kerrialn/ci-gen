@@ -1,6 +1,5 @@
 {
     "name": "kerrialn/ci-gen",
-    "version" : "v1.0",
     "description": "Generate continuous integration yaml config files or a dockerfile",
     "keywords": ["generate files", "continuous integration", "CI yaml generator"],
     "license": "MIT",
