@@ -5,6 +5,9 @@
     "composer/composer": {
         "version": "1.10.1"
     },
+    "composer/package-versions-deprecated": {
+        "version": "1.10.99"
+    },
     "composer/semver": {
         "version": "1.5.1"
     },
@@ -103,6 +106,9 @@
     },
     "ondram/ci-detector": {
         "version": "3.3.0"
+    },
+    "paragonie/random_compat": {
+        "version": "v9.99.99"
     },
     "phar-io/manifest": {
         "version": "1.0.3"
@@ -337,14 +343,23 @@
     "symfony/polyfill-intl-idn": {
         "version": "v1.14.0"
     },
+    "symfony/polyfill-intl-normalizer": {
+        "version": "v1.18.0"
+    },
     "symfony/polyfill-mbstring": {
         "version": "v1.14.0"
+    },
+    "symfony/polyfill-php70": {
+        "version": "v1.18.0"
     },
     "symfony/polyfill-php72": {
         "version": "v1.14.0"
     },
     "symfony/polyfill-php73": {
         "version": "v1.14.0"
+    },
+    "symfony/polyfill-php80": {
+        "version": "v1.18.0"
     },
     "symfony/process": {
         "version": "v5.0.5"
@@ -390,11 +405,17 @@
     "symplify/composer-json-manipulator": {
         "version": "7.3-dev"
     },
+    "symplify/console-color-diff": {
+        "version": "v7.3.18"
+    },
     "symplify/easy-coding-standard": {
         "version": "v7.2.0"
     },
     "symplify/package-builder": {
         "version": "v7.2.8"
+    },
+    "symplify/parameter-name-guard": {
+        "version": "v7.3.18"
     },
     "symplify/phpstan-extensions": {
         "version": "v7.2.8"
