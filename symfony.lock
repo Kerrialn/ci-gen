@@ -17,6 +17,9 @@
     "composer/xdebug-handler": {
         "version": "1.4.1"
     },
+    "dealerdirect/phpcodesniffer-composer-installer": {
+        "version": "v0.7.0"
+    },
     "doctrine/annotations": {
         "version": "1.0",
         "recipe": {
